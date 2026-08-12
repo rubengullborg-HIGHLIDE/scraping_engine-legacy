@@ -28,20 +28,35 @@ Do not mix these two paths. Full import can collect names, descriptions, images,
 │   ├── 003_kaufmann_products.sql
 │   ├── 004_kaufmann_aarhus_inventory.sql
 │   ├── 005_clean_aarhus_inventory_interface.sql
-│   └── 006_kaufmann_inventory_snapshots.sql
+│   ├── 006_kaufmann_inventory_snapshots.sql
+│   ├── 007_romerhus_products.sql
+│   ├── 008_lakor_products.sql
+│   ├── 009_rains_products.sql
+│   ├── 010_stoy_products.sql
+│   ├── 011_stoy_remove_unpublished_fields.sql
+│   ├── 012_shoechapter_products.sql
+│   └── 013_shoechapter_nullable_aarhus_total_stock.sql
 ├── scrapers/
 │   ├── base.py
 │   ├── full_import/
 │   │   ├── base.py
 │   │   ├── kaufmann.py
+│   │   ├── lakor.py
+│   │   ├── rains.py
 │   │   ├── romerhus.py
+│   │   ├── shoechapter.py
+│   │   ├── stoy.py
 │   │   └── st_valentin.py
 │   └── stores/
 │       ├── kaufmann.py
 │       └── st_valentin.py
 └── scripts/
     ├── import_kaufmann_products.py
+    ├── import_lakor_products.py
+    ├── import_rains_products.py
     ├── import_romerhus_products.py
+    ├── import_shoechapter_products.py
+    ├── import_stoy_products.py
     ├── refresh_kaufmann_inventory.py
     └── refresh_inventory.py
 ```
@@ -65,6 +80,292 @@ These are store-specific catalog scrapers. They are allowed to parse broad produ
 - store/source info
 
 Kaufmann full import is currently wired through `scripts/import_kaufmann_products.py`. Other full-import scrapers are still saved implementations until dedicated runners are added.
+
+### LAKOR Full Import
+
+Location:
+
+- `scripts/import_lakor_products.py`
+- `scrapers/full_import/lakor.py`
+- `migrations/008_lakor_products.sql`
+
+LAKOR is a Shopify storefront. Import `all-clothing` catalogue products into
+the dedicated `lakor_products` table. Shopify's collection feed omits product
+type, so it is discovery only: hydrate each product from its `.js` feed and
+keep only established clothing types. Do not import accessories, headwear,
+posters, or gift cards.
+
+Each Shopify product represents one colour and its Shopify variants represent
+sizes. The stable row key is `source_parent_id + source_color_id`: the first
+component of LAKOR's SKU (for example `L1015`) is `source_parent_id` and the
+Shopify product id is `source_color_id`. Keep the exact SKU colour as `color`.
+Follow every product-page colour-swatch link during import so a direct URL or
+limited batch still imports all linked colours of a style. Derive
+`color_group` deterministically from LAKOR's displayed swatch hex value and
+retain that exact hex value in `raw` for debugging or future remapping.
+
+LAKOR product pages expose product-specific sections. Store them without
+mixing in LAKOR's generic brand marketing blocks:
+
+- `Historien` is `description`.
+- `Highlights` is a list in `highlights`.
+- `Specifikationer` is retained in `specifications`; map colour, material,
+  fit, wash instruction, and country of origin into dedicated fields.
+- Preserve model notes and size-guide measurements in `model_info` and
+  `size_guide`.
+
+Shopify supplies the live online `available` flag per size, and
+`compare_at_price` supplies the former price during a sale. It does not expose
+online-stock counts.
+
+LAKOR's public variant endpoint is:
+
+```text
+GET /variants/{shopify_variant_id}?section_id=store-availability
+```
+
+It provides per-size local availability notices for LAKOR's own stores:
+
+```text
+lakor-aarhus       LAKOR Shop Aarhus
+lakor-copenhagen   LAKOR Shop KBH
+lakor-aalborg      LAKOR Shop Aalborg
+```
+
+It never provides local quantities. Use `local_inventory` with
+`stock_known: false`, `total_stock: null`, and `stock: null`. When a notice
+only says "vores butikker", retain that positive overall signal in
+`local_available` and `raw`. LAKOR uses its generic “i vores butikker” wording
+for availability in all three tracked shops; map that size to all store keys.
+When availability is restricted, the endpoint explicitly names the remaining
+shops instead. It never provides local quantities.
+
+Useful commands:
+
+```bash
+python scripts/import_lakor_products.py --discover-only --preview 10
+python scripts/import_lakor_products.py --dry-run --limit 1 --no-delay
+python scripts/import_lakor_products.py --url https://www.lakor.dk/products/sport-cola-stripe-short-sleeve-shirt-harbor-blue --dry-run --no-delay
+```
+
+### Rains Full Import
+
+Location:
+
+- `scripts/import_rains_products.py`
+- `scrapers/full_import/rains.py`
+- `migrations/009_rains_products.sql`
+
+Rains is a Shopify storefront where each product is a style, the first variant
+option is colour, and the second is size. Import one `rains_products` row per
+colour. Use the Rains style number as `source_parent_id` and the normalized
+style-colour SKU prefix as `source_color_id`, for example `19030 + 19030-177`.
+
+Do not rely only on the broad `mens-clothing` and `mens-outerwear`
+collections. The default discovery set combines and deduplicates all men's
+clothing navigation subcollections, including knitwear, woven, fleece,
+bottoms, and every outerwear subtype. Collection feeds are discovery only;
+hydrate each style from its product `.js` feed and product HTML.
+
+The public inventory endpoint returns all Danish stores in one request:
+
+```text
+GET https://rains-locations-api.vercel.app/api/get-inventory?locale=dk
+```
+
+Normalize Shopify SKUs such as `19030\\177\\L` to the inventory endpoint's
+`19030-177-L` form. Missing SKUs in a warehouse mean zero stock. Store exact
+quantities for all sizes in `local_inventory` under these stable keys:
+
+```text
+rains-aarhus         Rains Aarhus, Klostertorv
+rains-copenhagen     Rains København, Amagertorv
+rains-frederiksberg  Rains Frederiksberg, Gammel Kongevej
+```
+
+Keep source warehouse identifiers and addresses under `raw`. Use
+`local_total_stock`, `local_available`, `aarhus_total_stock`, and
+`aarhus_available` as query-friendly summaries. Shopify's `available` flag is
+webshop availability only and belongs in `webshop_sizes`.
+
+Rains product HTML also exposes descriptions, materials, functional details,
+features, care instructions, the full category path, model measurements, and
+size-guide measurements. Preserve compare-at prices as `list_price` only when
+they exceed the current price. Full imports write incrementally in bounded
+Supabase batches instead of waiting until the entire catalogue is hydrated.
+
+Useful commands:
+
+```bash
+python scripts/import_rains_products.py --discover-only --preview 10
+python scripts/import_rains_products.py --dry-run --limit 1 --no-delay
+python scripts/import_rains_products.py --url https://www.dk.rains.com/products/fleece-zip-jacket-male --dry-run --no-delay
+python scripts/import_rains_products.py
+```
+
+### STOY Full Import
+
+Location:
+
+- `scripts/import_stoy_products.py`
+- `scrapers/full_import/stoy.py`
+- `migrations/010_stoy_products.sql`
+- `migrations/011_stoy_remove_unpublished_fields.sql` (only for databases
+  that already applied the original STOY migration)
+
+STOY is a Shopify storefront. Import the union of its canonical men's
+`all-clothing-for-men` and `footwear-for-men` collections into the dedicated
+`stoy_products` table, deduplicating any overlap. This intentionally includes
+shoes but excludes accessories, home, fragrance, and other non-product categories.
+
+Each Shopify product is one colour and its Shopify variants are sizes. The
+stable row key is `source_parent_id + source_color_id`: use STOY's manufacturer
+style reference as `source_parent_id` when it is available, and the Shopify
+product id as `source_color_id`. Keep the full manufacturer style code and
+other Shopify identifiers in `source_product_number`, `webshop_sizes`, and
+`raw`, not in the clean inventory object.
+
+STOY server-renders the **"Se tilgængelighed i vores butikker"** panel in each
+product page. It exposes size-level availability for these two stores but no
+quantities:
+
+```text
+stoy-aarhus       STOY Aarhus, Store Torv 4
+stoy-copenhagen   STOY København, Landemærket 8
+```
+
+Use `local_inventory` with `stock_known: false`, `total_stock: null`, and
+`stock: null`. Do not infer stock counts from a positive availability dot or
+from Shopify's online `available` flag. The latter belongs only in
+`webshop_sizes`. Store the rendered source labels and addresses under `raw`.
+Use `local_available` and `aarhus_available` as query-friendly summaries;
+the total-stock columns remain zero because quantities are unknown.
+
+Product pages include STOY's color swatch, composition, country of origin,
+fit guidance, category taxonomy, related colours, collection membership, and
+images. Store the source product metafields in `specifications`; STOY does not
+publish a separate highlights or care-instructions field, so do not create
+placeholder columns for those. When present, parse the product-specific
+`Størrelse & Pasform` accordion into `model_info` and `size_guide`.
+
+Useful commands:
+
+```bash
+python scripts/import_stoy_products.py --discover-only --preview 10
+python scripts/import_stoy_products.py --dry-run --limit 1 --no-delay
+python scripts/import_stoy_products.py --url https://stoy.com/da/products/example --dry-run --no-delay
+python scripts/import_stoy_products.py
+```
+
+### Shoe Chapter Full Import
+
+Location:
+
+- `scripts/import_shoechapter_products.py`
+- `scrapers/full_import/shoechapter.py`
+- `migrations/012_shoechapter_products.sql`
+- `migrations/013_shoechapter_nullable_aarhus_total_stock.sql` (only for
+  databases that already applied the original Shoe Chapter migration)
+
+Shoe Chapter is a Shopify storefront. Import men's footwear from the
+`collections/men` collection into the dedicated `shoechapter_products` table.
+The collection includes non-footwear lifestyle items such as socks and
+magazines, so the importer keeps Shopify `Sneakers` products only.
+
+Each Shopify product is one colour and its Shopify variants are sizes. The
+stable row key is `source_parent_id + source_color_id`: derive
+`source_parent_id` from the variant SKU with the size suffix removed, and use
+the Shopify product id as `source_color_id`. Product pages link other colours
+under `Andre farver`; follow those links during direct URL imports so a single
+test URL imports the full colour family.
+
+Shoe Chapter product pages render exact Aarhus shop stock in the product main
+section:
+
+```text
+shoechapter-aarhus   Shoe Chapter Aarhus, Store Torv 6
+```
+
+The rendered inventory text exposes per-size counts such as `Kun 1 enhed
+tilbage`. Store this as known stock in `local_inventory` with
+`stock_known: true` and exact `stock` values when every available size has a
+count. Some available sizes render only as `På lager`; when this happens, keep
+that size available with `stock: null`, set the store-level exact
+`total_stock` and `aarhus_total_stock` to null, and set `local_total_stock` to
+the sum of known exact size counts as a lower bound. Shopify's `available`
+flag is webshop availability only and belongs in `webshop_sizes`.
+
+Product pages expose description, feature bullets, related colours, tags,
+images, colour text, fit guidance, and brand-specific size-guide tables. Store
+the feature bullets in `highlights`, size tables in `size_guide`, and source
+debug metadata in `raw`. Do not create placeholder `model_info`,
+`care_instructions`, or `collections` columns unless the site starts exposing
+real data for them.
+
+Useful commands:
+
+```bash
+python scripts/import_shoechapter_products.py --discover-only --preview 10
+python scripts/import_shoechapter_products.py --dry-run --limit 1 --no-delay
+python scripts/import_shoechapter_products.py --url https://shoechapter.com/products/new-balance-u991ac2-wind-chime-brilliant-white --dry-run --no-delay
+python scripts/import_shoechapter_products.py
+```
+
+### Skagen Clothing Full Import
+
+Location:
+
+- `scripts/import_skagen_clothing_products.py`
+- `scrapers/full_import/skagen_clothing.py`
+- `migrations/014_skagen_clothing_products.sql`
+
+Skagen Clothing is a Shopify storefront. Discover products from the broad
+`alt-toj-til-maend` collection and import them into the dedicated
+`skagen_clothing_products` table. The source collection currently contains
+203 clothing products after excluding the seven non-clothing product types:
+Mystery Box, Accessories, Beanie, and Gavekort. Filter on product type rather
+than the `ACCESSORIES` tag or collection because Skagen also classifies three
+real tank tops as accessories.
+
+Each Shopify product represents one colour and its variants represent sizes.
+Follow the product-page colour swatches so a direct URL or limited discovery
+batch imports all linked colours. Use the common stable swatch-handle prefix as
+`source_parent_id` because Skagen's SKU prefixes are inconsistent across some
+linked colours; fall back to the normalized SKU style prefix for products with
+no linked colours. Use the Shopify product id as `source_color_id`, and retain
+the normalized SKU reference, all variant SKUs, and colour-link source data in
+`raw`.
+
+The product page server-renders exact, size-level inventory in its
+`data-variant-inventories` JSON. The "Se butik" drawer reads this same JSON and
+does not make a separate stock request. Fetch product HTML with cache-busting
+and no-cache request headers, and store exact quantities for:
+
+```text
+skagen-aarhus       Skagen Clothing Aarhus, Store Torv 14
+skagen-copenhagen   Skagen Clothing Copenhagen, Klosterstræde 10
+```
+
+Do not count the internal Viby J warehouse (`8260`) or `Fiktiv location`
+(`8240`) in clean local inventory or summary totals. Preserve all original
+locations in `raw`. `local_total_stock` is the sum of known exact stock across
+the two tracked shops; `aarhus_total_stock` is exact when the inventory payload
+is present and otherwise null.
+
+Skagen product pages expose description paragraphs, bullet highlights,
+material compositions, fit language, a three-point fit indicator, model text,
+an image-based Size Guide, tags, images, and product type. Store these fields
+without adding placeholder fields such as country of origin, which Skagen does
+not publish consistently.
+
+Useful commands:
+
+```bash
+python scripts/import_skagen_clothing_products.py --discover-only --preview 10
+python scripts/import_skagen_clothing_products.py --dry-run --limit 1 --no-delay
+python scripts/import_skagen_clothing_products.py --url https://skagen-clothing.dk/products/example --dry-run --no-delay
+python scripts/import_skagen_clothing_products.py
+```
 
 ### Rømerhus Full Import
 
