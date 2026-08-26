@@ -44,12 +44,18 @@ class SupabaseCatalogClient:
             headers["Authorization"] = f"Bearer {supabase_key}"
         self.session.headers.update(headers)
 
-    def upsert_products(self, table: str, rows: list[dict[str, Any]]) -> None:
+    def upsert_products(
+        self,
+        table: str,
+        rows: list[dict[str, Any]],
+        *,
+        on_conflict: str = "source_parent_id,source_color_id",
+    ) -> None:
         if not rows:
             return
         response = self.session.post(
             f"{self.supabase_url}/rest/v1/{quote(table)}",
-            params={"on_conflict": "source_parent_id,source_color_id"},
+            params={"on_conflict": on_conflict},
             headers={"Prefer": "resolution=merge-duplicates,return=minimal"},
             data=json.dumps(rows, ensure_ascii=False),
             timeout=60,

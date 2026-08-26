@@ -706,6 +706,34 @@ kaufmann_inventory_snapshots
 
 It stores one snapshot per Kaufmann variant per UTC day via `unique (kaufmann_product_id, checked_bucket)`. It does not store full `raw`, images, descriptions, brand metadata, or other stable catalog fields.
 
+The sequential non-Kaufmann refresh is handled by
+`scripts/refresh_store_inventory.py`. It refreshes Rains, Rømerhus, SuitClub,
+CEJF, Skagen Clothing, Shoe Chapter, STOY, and LAKOR in a fixed sequence and
+patches existing product rows by database `id` only. It must not create catalog
+rows or rewrite stable metadata.
+
+Non-Kaufmann daily history is stored in the shared
+`store_inventory_snapshots` table created by
+`migrations/018_store_inventory_snapshots.sql`. Store one lean observation per
+`store + product_id + UTC day`; a retry on the same day upserts the existing
+observation. Keep source identity, prices, webshop sizes, clean local inventory,
+summary totals, availability, and refresh status. Do not copy catalog metadata
+or `raw` into snapshots. A failed fetch that does not update the product row
+must not create a misleading inventory snapshot.
+
+Weekly non-Kaufmann catalog reconciliation is handled by
+`scripts/sync_store_catalogs.py` and
+`migrations/019_store_product_lifecycle.sql`. It invokes the existing eight
+full import scripts sequentially. Use each importer's `updated_at` written
+after the orchestration start time as the successful seen-set: seen rows are
+activated and have their catalog miss counter reset, while absent rows advance
+one miss. Confirm a product as `missing` only after two consecutive successful
+weekly imports omit it. On confirmation, clear its inventory, retain it as a
+soft tombstone, and write a `catalog_missing` dynamic snapshot. Never advance
+catalog misses after a failed importer, a limited test import, a dry run, or
+when fewer than 50% of previously publishable rows were refreshed. Reappearing
+rows become active again automatically.
+
 Useful Kaufmann refresh commands:
 
 ```bash

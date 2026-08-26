@@ -5,10 +5,10 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-WorkingDirectory=/opt/highlide/scraping_engine
+WorkingDirectory=/root/scraping_engine
 Environment=PYTHONUNBUFFERED=1
-ExecStart=/usr/bin/flock -n /tmp/highlide-kaufmann-refresh.lock /bin/bash /opt/highlide/scraping_engine/scripts/run_kaufmann_refresh.sh
+ExecStart=/usr/bin/flock -n /tmp/highlide-inventory-refresh.lock /bin/bash /root/scraping_engine/scripts/run_kaufmann_refresh.sh
 TimeoutStartSec=12h
 Nice=10
-StandardOutput=append:/opt/highlide/scraping_engine/logs/kaufmann_refresh.log
-StandardError=append:/opt/highlide/scraping_engine/logs/kaufmann_refresh.log
+StandardOutput=append:/root/scraping_engine/logs/kaufmann_refresh.log
+StandardError=append:/root/scraping_engine/logs/kaufmann_refresh.log
