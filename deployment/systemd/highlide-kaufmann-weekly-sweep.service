@@ -1,0 +1,14 @@
+[Unit]
+Description=HIGHLIDE Kaufmann weekly lifecycle sweep
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/highlide/scraping_engine
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/flock -n /tmp/highlide-kaufmann-refresh.lock /bin/bash /opt/highlide/scraping_engine/scripts/run_kaufmann_refresh.sh --include-unavailable
+TimeoutStartSec=12h
+Nice=10
+StandardOutput=append:/opt/highlide/scraping_engine/logs/kaufmann_refresh.log
+StandardError=append:/opt/highlide/scraping_engine/logs/kaufmann_refresh.log

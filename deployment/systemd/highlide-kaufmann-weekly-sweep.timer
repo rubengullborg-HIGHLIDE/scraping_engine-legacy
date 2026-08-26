@@ -1,0 +1,11 @@
+[Unit]
+Description=Run HIGHLIDE Kaufmann full lifecycle sweep every Sunday
+
+[Timer]
+OnCalendar=Sun *-*-* 02:15:00
+Persistent=true
+RandomizedDelaySec=15m
+Unit=highlide-kaufmann-weekly-sweep.service
+
+[Install]
+WantedBy=timers.target

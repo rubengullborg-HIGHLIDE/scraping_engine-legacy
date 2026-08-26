@@ -287,8 +287,21 @@ class KaufmanScraper(BaseScraper):
                       await new Promise((resolve) => setTimeout(resolve, 350));
                     }
 
+                    const sourceAvailable = Boolean(store.available);
                     const sizes = summarizeSizes();
-                    const aarhusTotalStock = sizes.reduce((sum, size) => sum + Number(size.aarhus_total_stock || 0), 0);
+                    let aarhusTotalStock = sizes.reduce((sum, size) => sum + Number(size.aarhus_total_stock || 0), 0);
+                    const aarhusInventory = summarizeAarhusInventory(sizes);
+                    if (!sourceAvailable) {
+                      aarhusTotalStock = 0;
+                      for (const storeSummary of Object.values(aarhusInventory.stores || {})) {
+                        storeSummary.available = false;
+                        storeSummary.total_stock = 0;
+                        for (const sizeSummary of Object.values(storeSummary.sizes || {})) {
+                          sizeSummary.available = false;
+                          sizeSummary.stock = 0;
+                        }
+                      }
+                    }
                     const images = (store.images || [])
                       .map((image) => image.full_src || image.src || image.thumb_big_src || image.thumb_src)
                       .filter(Boolean);
@@ -313,14 +326,17 @@ class KaufmanScraper(BaseScraper):
                       images,
                       webshop_sizes: sizes.map((size) => ({
                         size: size.size,
-                        in_stock: Number(size.webshop_stock || 0) > 0,
-                        stock: size.webshop_stock,
+                        in_stock: sourceAvailable && Number(size.webshop_stock || 0) > 0,
+                        stock: sourceAvailable ? size.webshop_stock : 0,
                         source_size_variant_id: size.source_size_variant_id,
                         source_product_number: size.source_product_number,
                       })),
-                      aarhus_inventory: summarizeAarhusInventory(sizes),
+                      aarhus_inventory: aarhusInventory,
                       aarhus_total_stock: aarhusTotalStock,
-                      aarhus_available: aarhusTotalStock > 0,
+                      aarhus_available: sourceAvailable && aarhusTotalStock > 0,
+                      source_available: sourceAvailable,
+                      publication_status: sourceAvailable ? 'active' : 'unavailable',
+                      status_reason: sourceAvailable ? null : 'source_available_false',
                       raw: {
                         tracking,
                         aarhus_store_seo_urls: aarhusSeoUrls,
@@ -340,6 +356,16 @@ class KaufmanScraper(BaseScraper):
             for variant in variants:
                 if not variant.get("source_parent_id"):
                     variant["source_parent_id"] = self._source_parent_id_from_url(url)
+                variant["status_checked_at"] = scraped_at
+                variant["discontinued_at"] = (
+                    None if variant.get("source_available") else scraped_at
+                )
+                variant["last_inventory_checked_at"] = scraped_at
+                variant["last_seen_in_catalog_at"] = scraped_at
+                variant["consecutive_source_misses"] = 0
+                variant["consecutive_catalog_misses"] = 0
+                variant["last_refresh_error"] = None
+                variant["last_refresh_error_at"] = None
                 variant["scraped_at"] = scraped_at
                 variant["updated_at"] = scraped_at
                 cleaned.append(variant)

@@ -17,6 +17,14 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from scrapers.stores.kaufmann_variations import (
+    KaufmannVariationClient,
+    KaufmannVariationUnavailable,
+    clean_product_url,
+    variation_rows_from_payload,
+)
+
+
 LOG = logging.getLogger("refresh_kaufmann_inventory")
 
 DYNAMIC_PRODUCT_COLUMNS = (
@@ -26,6 +34,15 @@ DYNAMIC_PRODUCT_COLUMNS = (
     "aarhus_inventory",
     "aarhus_total_stock",
     "aarhus_available",
+    "source_available",
+    "publication_status",
+    "status_reason",
+    "status_checked_at",
+    "discontinued_at",
+    "last_inventory_checked_at",
+    "consecutive_source_misses",
+    "last_refresh_error",
+    "last_refresh_error_at",
     "scraped_at",
     "updated_at",
 )
@@ -45,10 +62,14 @@ SNAPSHOT_COLUMNS = (
     "aarhus_inventory",
     "aarhus_total_stock",
     "aarhus_available",
+    "source_available",
+    "publication_status",
+    "status_reason",
     "updated_at",
 )
 
 EMPTY_AARHUS_INVENTORY = {"stores": {}}
+MISSING_COLOR_CONFIRMATIONS = 2
 
 
 def load_dotenv(path: Path) -> None:
@@ -70,13 +91,16 @@ def env(name: str, default: Optional[str] = None) -> Optional[str]:
 
 
 class SupabaseKaufmannRefreshClient:
-    def __init__(self, supabase_url: str, supabase_key: str):
+    def __init__(self, supabase_url: str, supabase_key: str, timeout_seconds: float = 60):
         try:
             import requests
         except ModuleNotFoundError as exc:
-            raise RuntimeError("Install dependencies first: python3 -m pip install -r requirements.txt") from exc
+            raise RuntimeError(
+                "Install dependencies first: python3 -m pip install -r requirements.txt"
+            ) from exc
 
         self.supabase_url = supabase_url.rstrip("/")
+        self.timeout_seconds = timeout_seconds
         self.session = requests.Session()
         headers = {
             "apikey": supabase_key,
@@ -92,6 +116,8 @@ class SupabaseKaufmannRefreshClient:
     def list_existing_variants(
         self,
         table: str,
+        *,
+        include_unavailable: bool = False,
         page_size: int = 1000,
     ) -> list[dict[str, Any]]:
         rows: list[dict[str, Any]] = []
@@ -103,16 +129,29 @@ class SupabaseKaufmannRefreshClient:
                 "source_color_id",
                 "source_url",
                 "canonical_url",
+                "source_available",
+                "publication_status",
+                "status_reason",
+                "discontinued_at",
+                "last_inventory_checked_at",
+                "consecutive_source_misses",
                 "updated_at",
             )
         )
 
         while True:
             end = start + page_size - 1
+            params = {
+                "select": select,
+                "order": "last_inventory_checked_at.asc.nullsfirst,updated_at.asc,id.asc",
+            }
+            if not include_unavailable:
+                params["publication_status"] = "eq.active"
             response = self.session.get(
                 self._table_url(table),
-                params={"select": select, "order": "updated_at.asc,id.asc"},
+                params=params,
                 headers={"Range": f"{start}-{end}"},
+                timeout=self.timeout_seconds,
             )
             response.raise_for_status()
             batch = response.json()
@@ -129,6 +168,7 @@ class SupabaseKaufmannRefreshClient:
             params={"on_conflict": "id"},
             headers={"Prefer": "resolution=merge-duplicates,return=minimal"},
             data=json.dumps(rows, ensure_ascii=False),
+            timeout=self.timeout_seconds,
         )
         response.raise_for_status()
 
@@ -140,50 +180,66 @@ class SupabaseKaufmannRefreshClient:
             params={"on_conflict": "kaufmann_product_id,checked_bucket"},
             headers={"Prefer": "resolution=merge-duplicates,return=minimal"},
             data=json.dumps(rows, ensure_ascii=False),
+            timeout=self.timeout_seconds,
         )
         response.raise_for_status()
+
+    def close(self) -> None:
+        self.session.close()
 
 
 def product_pages_from_rows(rows: list[dict[str, Any]]) -> list[dict[str, str]]:
     pages: "OrderedDict[str, dict[str, str]]" = OrderedDict()
     for row in rows:
         canonical_url = row.get("canonical_url")
+        source_parent_id = row.get("source_parent_id") or ""
         if not canonical_url:
             continue
+        key = source_parent_id or canonical_url
         pages.setdefault(
-            canonical_url,
+            key,
             {
                 "canonical_url": canonical_url,
-                "source_parent_id": row.get("source_parent_id") or "",
+                "source_parent_id": source_parent_id,
             },
         )
     return list(pages.values())
 
 
-def rows_by_canonical_url(rows: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+def rows_by_source_parent_id(
+    rows: list[dict[str, Any]],
+) -> dict[str, list[dict[str, Any]]]:
     grouped: dict[str, list[dict[str, Any]]] = {}
     for row in rows:
-        canonical_url = row.get("canonical_url")
-        if not canonical_url:
-            continue
-        grouped.setdefault(canonical_url, []).append(row)
+        source_parent_id = row.get("source_parent_id")
+        if source_parent_id:
+            grouped.setdefault(str(source_parent_id), []).append(row)
     return grouped
 
 
 def dynamic_product_payload(scraped_row: dict[str, Any]) -> dict[str, Any]:
-    return {column: scraped_row[column] for column in DYNAMIC_PRODUCT_COLUMNS if column in scraped_row}
+    return {
+        column: scraped_row[column]
+        for column in DYNAMIC_PRODUCT_COLUMNS
+        if column in scraped_row
+    }
 
 
 def dynamic_product_upsert_row(
     product_row: dict[str, Any],
     scraped_row: dict[str, Any],
 ) -> dict[str, Any]:
+    dynamic = dynamic_product_payload(scraped_row)
+    if scraped_row.get("source_available") is False:
+        dynamic["discontinued_at"] = (
+            product_row.get("discontinued_at") or scraped_row.get("discontinued_at")
+        )
     return {
         "id": product_row["id"],
         "source_parent_id": product_row["source_parent_id"],
         "source_color_id": product_row["source_color_id"],
         "source_url": product_row["source_url"],
-        **dynamic_product_payload(scraped_row),
+        **dynamic,
     }
 
 
@@ -206,17 +262,32 @@ def snapshot_payload(
         "current_price": scraped_row.get("current_price"),
         "list_price": scraped_row.get("list_price"),
         "webshop_sizes": scraped_row.get("webshop_sizes") or [],
-        "aarhus_inventory": scraped_row.get("aarhus_inventory") or EMPTY_AARHUS_INVENTORY,
+        "aarhus_inventory": scraped_row.get("aarhus_inventory")
+        or EMPTY_AARHUS_INVENTORY,
         "aarhus_total_stock": scraped_row.get("aarhus_total_stock") or 0,
         "aarhus_available": bool(scraped_row.get("aarhus_available")),
+        "source_available": scraped_row.get("source_available"),
+        "publication_status": scraped_row.get("publication_status"),
+        "status_reason": scraped_row.get("status_reason"),
     }
     return {column: payload[column] for column in SNAPSHOT_COLUMNS}
 
 
-def unavailable_product_payload(checked_at: str, canonical_url: Optional[str]) -> dict[str, Any]:
+def unavailable_product_payload(
+    product_row: dict[str, Any],
+    checked_at: str,
+    reason: str,
+) -> dict[str, Any]:
     return {
-        "current_price": None,
-        "list_price": None,
+        "source_available": False,
+        "publication_status": "unavailable",
+        "status_reason": reason,
+        "status_checked_at": checked_at,
+        "discontinued_at": product_row.get("discontinued_at") or checked_at,
+        "last_inventory_checked_at": checked_at,
+        "consecutive_source_misses": 0,
+        "last_refresh_error": None,
+        "last_refresh_error_at": None,
         "webshop_sizes": [],
         "aarhus_inventory": EMPTY_AARHUS_INVENTORY,
         "aarhus_total_stock": 0,
@@ -229,41 +300,87 @@ def unavailable_product_payload(checked_at: str, canonical_url: Optional[str]) -
 def unavailable_product_upsert_row(
     product_row: dict[str, Any],
     checked_at: str,
-    canonical_url: Optional[str],
+    reason: str,
 ) -> dict[str, Any]:
     return {
         "id": product_row["id"],
         "source_parent_id": product_row["source_parent_id"],
         "source_color_id": product_row["source_color_id"],
         "source_url": product_row["source_url"],
-        **unavailable_product_payload(checked_at, canonical_url),
+        **unavailable_product_payload(product_row, checked_at, reason),
     }
 
 
 def unavailable_snapshot_payload(
     product_row: dict[str, Any],
     checked_at: str,
+    reason: str,
+    *,
+    refresh_status: str = "page_unavailable",
 ) -> dict[str, Any]:
+    unavailable = unavailable_product_payload(product_row, checked_at, reason)
     return snapshot_payload(
         product_row,
-        {
-            "current_price": None,
-            "list_price": None,
-            "webshop_sizes": [],
-            "aarhus_inventory": EMPTY_AARHUS_INVENTORY,
-            "aarhus_total_stock": 0,
-            "aarhus_available": False,
-        },
+        unavailable,
         checked_at,
-        refresh_status="page_unavailable",
+        refresh_status=refresh_status,
     )
 
 
-def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
-    from scrapers.full_import.kaufmann import KaufmanScraper
+def missing_color_product_payload(
+    product_row: dict[str, Any],
+    checked_at: str,
+) -> tuple[dict[str, Any], bool]:
+    misses = int(product_row.get("consecutive_source_misses") or 0) + 1
+    confirmed = misses >= MISSING_COLOR_CONFIRMATIONS
+    payload: dict[str, Any] = {
+        "consecutive_source_misses": misses,
+        "status_checked_at": checked_at,
+        "last_refresh_error": None,
+        "last_refresh_error_at": None,
+        "updated_at": checked_at,
+    }
+    if confirmed:
+        payload.update(
+            unavailable_product_payload(
+                product_row,
+                checked_at,
+                "color_missing_from_variation_twice",
+            )
+        )
+        payload["consecutive_source_misses"] = misses
+    return payload, confirmed
 
+
+def partial_product_upsert_row(
+    product_row: dict[str, Any],
+    payload: dict[str, Any],
+) -> dict[str, Any]:
+    return {
+        "id": product_row["id"],
+        "source_parent_id": product_row["source_parent_id"],
+        "source_color_id": product_row["source_color_id"],
+        "source_url": product_row["source_url"],
+        **payload,
+    }
+
+
+def refresh_error_payload(message: str, checked_at: str) -> dict[str, Any]:
+    return {
+        "last_refresh_error": message[:1000],
+        "last_refresh_error_at": checked_at,
+    }
+
+
+def refresh_status_for_row(scraped_row: dict[str, Any]) -> str:
+    return "ok" if scraped_row.get("source_available") is True else "source_unavailable"
+
+
+def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
     load_dotenv(ROOT / ".env")
-    products_table = args.products_table or env("KAUFMANN_PRODUCTS_TABLE", "kaufmann_products")
+    products_table = args.products_table or env(
+        "KAUFMANN_PRODUCTS_TABLE", "kaufmann_products"
+    )
     snapshots_table = args.snapshots_table or env(
         "KAUFMANN_INVENTORY_SNAPSHOTS_TABLE",
         "kaufmann_inventory_snapshots",
@@ -279,22 +396,50 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
         if supabase_url and supabase_key
         else None
     )
-    scraper = KaufmanScraper()
+    variation_client = KaufmannVariationClient(
+        timeout_seconds=args.request_timeout,
+        max_retries=args.max_retries,
+    )
 
     refreshed_variants = 0
     unavailable_variants = 0
+    missing_variants = 0
     skipped_new_variants = 0
     failed_pages = 0
+    stopped_early = False
+    started_monotonic = time.monotonic()
+    pending_product_updates: list[dict[str, Any]] = []
+    pending_snapshots: list[dict[str, Any]] = []
+
+    def flush_pending() -> None:
+        if args.dry_run or client is None:
+            return
+        if pending_product_updates:
+            client.upsert_products_by_id(products_table, pending_product_updates)
+            pending_product_updates.clear()
+        if pending_snapshots:
+            client.upsert_snapshots(snapshots_table, pending_snapshots)
+            pending_snapshots.clear()
 
     try:
         if args.url:
+            requested_urls = {clean_product_url(url) for url in args.url}
             if client is None:
-                existing_rows = []
-                pages = [{"canonical_url": scraper._clean_product_url(url), "source_parent_id": ""} for url in args.url]
+                existing_rows: list[dict[str, Any]] = []
+                pages = [
+                    {"canonical_url": url, "source_parent_id": ""}
+                    for url in sorted(requested_urls)
+                ]
             else:
-                existing_rows = client.list_existing_variants(products_table)
-                requested_urls = {scraper._clean_product_url(url) for url in args.url}
-                pages = [page for page in product_pages_from_rows(existing_rows) if page["canonical_url"] in requested_urls]
+                existing_rows = client.list_existing_variants(
+                    products_table,
+                    include_unavailable=True,
+                )
+                pages = [
+                    page
+                    for page in product_pages_from_rows(existing_rows)
+                    if page["canonical_url"] in requested_urls
+                ]
                 if args.dry_run:
                     matched_urls = {page["canonical_url"] for page in pages}
                     pages.extend(
@@ -303,8 +448,14 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                     )
         else:
             if client is None:
-                raise RuntimeError("SUPABASE_URL and SUPABASE_SECRET_KEY are required unless --dry-run uses --url.")
-            existing_rows = client.list_existing_variants(products_table)
+                raise RuntimeError(
+                    "SUPABASE_URL and SUPABASE_SECRET_KEY are required unless "
+                    "--dry-run uses --url."
+                )
+            existing_rows = client.list_existing_variants(
+                products_table,
+                include_unavailable=args.include_unavailable,
+            )
             pages = product_pages_from_rows(existing_rows)
 
         if args.offset:
@@ -312,85 +463,82 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
         if args.limit:
             pages = pages[: args.limit]
 
-        rows_by_variant = {
-            (row["source_parent_id"], row["source_color_id"]): row
-            for row in existing_rows
-            if row.get("source_parent_id") and row.get("source_color_id")
-        }
-        page_rows = rows_by_canonical_url(existing_rows)
-
-        LOG.info("Loaded %s Kaufmann product pages for refresh.", len(pages))
+        parent_rows = rows_by_source_parent_id(existing_rows)
+        LOG.info(
+            "Loaded %s Kaufmann product pages for HTTP variation refresh%s.",
+            len(pages),
+            " (including unavailable)" if args.include_unavailable else "",
+        )
 
         for index, page in enumerate(pages, start=1):
+            if args.max_runtime_minutes and (
+                time.monotonic() - started_monotonic
+            ) >= args.max_runtime_minutes * 60:
+                stopped_early = True
+                LOG.warning(
+                    "Stopping cleanly after reaching the %.1f minute runtime budget.",
+                    args.max_runtime_minutes,
+                )
+                break
+
             canonical_url = page["canonical_url"]
+            source_parent_id = page.get("source_parent_id") or ""
             if index > 1 and not args.no_delay:
                 time.sleep(random.uniform(args.min_delay, args.max_delay))
 
             checked_at = datetime.now(timezone.utc).isoformat()
+            product_rows = parent_rows.get(source_parent_id, []) if source_parent_id else []
             try:
-                LOG.info("[%s/%s] Refreshing %s", index, len(pages), canonical_url)
-                scraped_rows = scraper.parse_product_variants_with_js(
+                if not source_parent_id:
+                    source_parent_id = variation_client.resolve_source_parent_id(
+                        canonical_url
+                    )
+                    product_rows = parent_rows.get(source_parent_id, [])
+
+                LOG.info(
+                    "[%s/%s] Refreshing %s via parent=%s",
+                    index,
+                    len(pages),
                     canonical_url,
-                    allow_unavailable=True,
+                    source_parent_id,
+                )
+                payload = variation_client.fetch_payload(source_parent_id)
+                scraped_rows = variation_rows_from_payload(
+                    payload,
+                    source_parent_id,
+                    canonical_url,
+                    checked_at=checked_at,
                 )
 
-                if not scraped_rows:
-                    product_rows = page_rows.get(canonical_url, [])
-                    LOG.warning(
-                        "No variants found for %s. Marking %s existing variants unavailable.",
-                        canonical_url,
-                        len(product_rows),
-                    )
-                    for product_row in product_rows:
-                        if args.dry_run:
-                            LOG.info(
-                                "Dry run unavailable update for id=%s: %s",
-                                product_row["id"],
-                                json.dumps(unavailable_product_payload(checked_at, canonical_url)),
-                            )
-                        unavailable_variants += 1
-                    if product_rows and not args.dry_run:
-                        assert client is not None
-                        client.upsert_products_by_id(
-                            products_table,
-                            [
-                                unavailable_product_upsert_row(
-                                    product_row,
-                                    checked_at,
-                                    canonical_url,
-                                )
-                                for product_row in product_rows
-                            ],
-                        )
-                        client.upsert_snapshots(
-                            snapshots_table,
-                            [
-                                unavailable_snapshot_payload(product_row, checked_at)
-                                for product_row in product_rows
-                            ],
-                        )
-                    continue
+                product_rows_by_color = {
+                    str(row["source_color_id"]): row for row in product_rows
+                }
+                returned_colors: set[str] = set()
 
-                product_updates = []
-                snapshots = []
                 for scraped_row in scraped_rows:
-                    source_parent_id = scraped_row.get("source_parent_id")
-                    source_color_id = scraped_row.get("source_color_id")
-                    product_row = rows_by_variant.get((source_parent_id, source_color_id))
+                    source_color_id = str(scraped_row["source_color_id"])
+                    returned_colors.add(source_color_id)
+                    product_row = product_rows_by_color.get(source_color_id)
                     if not product_row:
                         if args.dry_run and client is None:
                             LOG.info(
                                 "Dry run scraped unmatched variant: %s",
-                                json.dumps(dynamic_product_payload(scraped_row), ensure_ascii=False),
+                                json.dumps(
+                                    dynamic_product_payload(scraped_row),
+                                    ensure_ascii=False,
+                                ),
                             )
                             refreshed_variants += 1
+                            if scraped_row.get("source_available") is False:
+                                unavailable_variants += 1
                             continue
                         skipped_new_variants += 1
                         LOG.warning(
-                            "Skipping new Kaufmann variant not already in table: parent=%s color=%s url=%s",
+                            "Skipping new Kaufmann variant not already in table: "
+                            "parent=%s color=%s url=%s",
                             source_parent_id,
                             source_color_id,
-                            scraped_row.get("source_url"),
+                            canonical_url,
                         )
                         continue
 
@@ -398,34 +546,141 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                         LOG.info(
                             "Dry run dynamic update for id=%s: %s",
                             product_row["id"],
-                            json.dumps(dynamic_product_payload(scraped_row), ensure_ascii=False),
+                            json.dumps(
+                                dynamic_product_payload(scraped_row),
+                                ensure_ascii=False,
+                            ),
                         )
                     else:
-                        product_updates.append(
+                        pending_product_updates.append(
                             dynamic_product_upsert_row(product_row, scraped_row)
                         )
-                        snapshots.append(snapshot_payload(product_row, scraped_row, checked_at))
+                        pending_snapshots.append(
+                            snapshot_payload(
+                                product_row,
+                                scraped_row,
+                                checked_at,
+                                refresh_status=refresh_status_for_row(scraped_row),
+                            )
+                        )
                     refreshed_variants += 1
+                    if scraped_row.get("source_available") is False:
+                        unavailable_variants += 1
 
-                if product_updates:
-                    assert client is not None
-                    client.upsert_products_by_id(products_table, product_updates)
-                    client.upsert_snapshots(snapshots_table, snapshots)
+                for product_row in product_rows:
+                    source_color_id = str(product_row["source_color_id"])
+                    if source_color_id in returned_colors:
+                        continue
+                    missing_payload, confirmed = missing_color_product_payload(
+                        product_row,
+                        checked_at,
+                    )
+                    missing_variants += 1
+                    if args.dry_run:
+                        LOG.warning(
+                            "Dry run missing color update for id=%s confirmed=%s: %s",
+                            product_row["id"],
+                            confirmed,
+                            json.dumps(missing_payload, ensure_ascii=False),
+                        )
+                    else:
+                        pending_product_updates.append(
+                            partial_product_upsert_row(product_row, missing_payload)
+                        )
+                        if confirmed:
+                            pending_snapshots.append(
+                                unavailable_snapshot_payload(
+                                    product_row,
+                                    checked_at,
+                                    "color_missing_from_variation_twice",
+                                    refresh_status="color_missing",
+                                )
+                            )
+                    if confirmed:
+                        unavailable_variants += 1
 
-            except Exception:
+                if len(pending_product_updates) >= args.write_batch_size:
+                    flush_pending()
+
+            except KaufmannVariationUnavailable as exc:
+                reason = f"variation_http_{exc.status_code}"
+                LOG.warning(
+                    "Variation endpoint unavailable for %s. Marking %s variants unavailable.",
+                    canonical_url,
+                    len(product_rows),
+                )
+                for product_row in product_rows:
+                    if args.dry_run:
+                        LOG.info(
+                            "Dry run unavailable update for id=%s: %s",
+                            product_row["id"],
+                            json.dumps(
+                                unavailable_product_payload(
+                                    product_row,
+                                    checked_at,
+                                    reason,
+                                ),
+                                ensure_ascii=False,
+                            ),
+                        )
+                    else:
+                        pending_product_updates.append(
+                            unavailable_product_upsert_row(
+                                product_row,
+                                checked_at,
+                                reason,
+                            )
+                        )
+                        pending_snapshots.append(
+                            unavailable_snapshot_payload(
+                                product_row,
+                                checked_at,
+                                reason,
+                            )
+                        )
+                    unavailable_variants += 1
+                if len(pending_product_updates) >= args.write_batch_size:
+                    flush_pending()
+
+            except Exception as exc:
                 failed_pages += 1
                 LOG.exception("Failed to refresh Kaufmann product page %s", canonical_url)
+                if product_rows and not args.dry_run:
+                    error = refresh_error_payload(str(exc), checked_at)
+                    pending_product_updates.extend(
+                        partial_product_upsert_row(product_row, error)
+                        for product_row in product_rows
+                    )
+                    if len(pending_product_updates) >= args.write_batch_size:
+                        try:
+                            flush_pending()
+                        except Exception:
+                            LOG.exception(
+                                "Failed to persist Kaufmann refresh error for %s",
+                                canonical_url,
+                            )
+
+        if not args.dry_run:
+            try:
+                flush_pending()
+            except Exception:
+                failed_pages += 1
+                LOG.exception("Failed to flush final Kaufmann refresh batch")
 
     finally:
-        scraper.close()
+        variation_client.close()
+        if client is not None:
+            client.close()
 
     LOG.info(
         "Kaufmann refresh complete. refreshed_variants=%s unavailable_variants=%s "
-        "skipped_new_variants=%s failed_pages=%s",
+        "missing_variants=%s skipped_new_variants=%s failed_pages=%s stopped_early=%s",
         refreshed_variants,
         unavailable_variants,
+        missing_variants,
         skipped_new_variants,
         failed_pages,
+        stopped_early,
     )
     return 1 if failed_pages else 0
 
@@ -433,26 +688,80 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
 def parse_args() -> argparse.Namespace:
     load_dotenv(ROOT / ".env")
     parser = argparse.ArgumentParser(
-        description="Refresh dynamic Kaufmann price and Aarhus inventory fields."
+        description=(
+            "Refresh Kaufmann price, inventory, and publication status through "
+            "the public variation endpoint without Playwright."
+        )
     )
-    parser.add_argument("--products-table", default=env("KAUFMANN_PRODUCTS_TABLE", "kaufmann_products"))
+    parser.add_argument(
+        "--products-table",
+        default=env("KAUFMANN_PRODUCTS_TABLE", "kaufmann_products"),
+    )
     parser.add_argument(
         "--snapshots-table",
-        default=env("KAUFMANN_INVENTORY_SNAPSHOTS_TABLE", "kaufmann_inventory_snapshots"),
+        default=env(
+            "KAUFMANN_INVENTORY_SNAPSHOTS_TABLE",
+            "kaufmann_inventory_snapshots",
+        ),
     )
     parser.add_argument("--url", action="append", help="Refresh a specific Kaufmann product URL.")
     parser.add_argument("--limit", type=int, help="Limit product pages for testing.")
     parser.add_argument("--offset", type=int, default=0, help="Skip this many product pages.")
     parser.add_argument("--dry-run", action="store_true", help="Scrape without writing to Supabase.")
+    parser.add_argument(
+        "--include-unavailable",
+        action="store_true",
+        help="Also recheck soft-tombstoned products; intended for weekly classification sweeps.",
+    )
     parser.add_argument("--no-delay", action="store_true", help="Disable polite delay for local tests.")
-    parser.add_argument("--min-delay", type=float, default=float(env("KAUFMANN_REFRESH_MIN_DELAY", "1.5")))
-    parser.add_argument("--max-delay", type=float, default=float(env("KAUFMANN_REFRESH_MAX_DELAY", "3.0")))
+    parser.add_argument(
+        "--min-delay",
+        type=float,
+        default=float(env("KAUFMANN_REFRESH_MIN_DELAY", "1.5")),
+    )
+    parser.add_argument(
+        "--max-delay",
+        type=float,
+        default=float(env("KAUFMANN_REFRESH_MAX_DELAY", "3.0")),
+    )
+    parser.add_argument(
+        "--request-timeout",
+        type=float,
+        default=float(env("KAUFMANN_REFRESH_REQUEST_TIMEOUT", "30")),
+    )
+    parser.add_argument(
+        "--max-retries",
+        type=int,
+        default=int(env("KAUFMANN_REFRESH_MAX_RETRIES", "2")),
+    )
+    parser.add_argument(
+        "--write-batch-size",
+        type=int,
+        default=int(env("KAUFMANN_REFRESH_WRITE_BATCH_SIZE", "50")),
+    )
+    parser.add_argument(
+        "--max-runtime-minutes",
+        type=float,
+        default=float(env("KAUFMANN_REFRESH_MAX_RUNTIME_MINUTES", "0")),
+        help="Stop cleanly after this many minutes; 0 disables the budget.",
+    )
     parser.add_argument(
         "--log-level",
         default=env("LOG_LEVEL", "INFO"),
         choices=["DEBUG", "INFO", "WARNING", "ERROR"],
     )
-    return parser.parse_args()
+    arguments = parser.parse_args()
+    if arguments.min_delay < 0 or arguments.max_delay < arguments.min_delay:
+        parser.error("delay values must satisfy 0 <= min-delay <= max-delay")
+    if arguments.request_timeout <= 0:
+        parser.error("--request-timeout must be greater than 0")
+    if arguments.max_retries < 0:
+        parser.error("--max-retries cannot be negative")
+    if arguments.write_batch_size < 1:
+        parser.error("--write-batch-size must be at least 1")
+    if arguments.max_runtime_minutes < 0:
+        parser.error("--max-runtime-minutes cannot be negative")
+    return arguments
 
 
 if __name__ == "__main__":

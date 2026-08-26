@@ -1,8 +1,8 @@
 [Unit]
-Description=Run HIGHLIDE Kaufmann inventory refresh daily
+Description=Run HIGHLIDE Kaufmann active-product refresh Monday through Saturday
 
 [Timer]
-OnCalendar=*-*-* 02:15:00
+OnCalendar=Mon..Sat *-*-* 02:15:00
 Persistent=true
 RandomizedDelaySec=15m
 Unit=highlide-kaufmann-refresh.service

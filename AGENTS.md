@@ -35,28 +35,37 @@ Do not mix these two paths. Full import can collect names, descriptions, images,
 │   ├── 010_stoy_products.sql
 │   ├── 011_stoy_remove_unpublished_fields.sql
 │   ├── 012_shoechapter_products.sql
-│   └── 013_shoechapter_nullable_aarhus_total_stock.sql
+│   ├── 013_shoechapter_nullable_aarhus_total_stock.sql
+│   ├── 014_skagen_clothing_products.sql
+│   ├── 015_suitclub_products.sql
+│   └── 016_cejf_products.sql
 ├── scrapers/
 │   ├── base.py
 │   ├── full_import/
 │   │   ├── base.py
+│   │   ├── cejf.py
 │   │   ├── kaufmann.py
 │   │   ├── lakor.py
 │   │   ├── rains.py
 │   │   ├── romerhus.py
 │   │   ├── shoechapter.py
+│   │   ├── skagen_clothing.py
 │   │   ├── stoy.py
+│   │   ├── suitclub.py
 │   │   └── st_valentin.py
 │   └── stores/
 │       ├── kaufmann.py
 │       └── st_valentin.py
 └── scripts/
+    ├── import_cejf_products.py
     ├── import_kaufmann_products.py
     ├── import_lakor_products.py
     ├── import_rains_products.py
     ├── import_romerhus_products.py
     ├── import_shoechapter_products.py
+    ├── import_skagen_clothing_products.py
     ├── import_stoy_products.py
+    ├── import_suitclub_products.py
     ├── refresh_kaufmann_inventory.py
     └── refresh_inventory.py
 ```
@@ -365,6 +374,128 @@ python scripts/import_skagen_clothing_products.py --discover-only --preview 10
 python scripts/import_skagen_clothing_products.py --dry-run --limit 1 --no-delay
 python scripts/import_skagen_clothing_products.py --url https://skagen-clothing.dk/products/example --dry-run --no-delay
 python scripts/import_skagen_clothing_products.py
+```
+
+### SuitClub Full Import
+
+Location:
+
+- `scripts/import_suitclub_products.py`
+- `scrapers/full_import/suitclub.py`
+- `migrations/015_suitclub_products.sql`
+
+SuitClub's complete-suit pages are Shopify bundle shells whose real inventory
+belongs to separate blazer, trouser, and vest products. Import the union of
+the public `enkelte-dele`, `toej`, and `sko-til-jakkesaet` collections into the
+dedicated `suitclub_products` table. This covers atomic suit parts, shirts,
+knitwear, T-shirts, and shoes. Deduplicate on Shopify product id and filter on
+the allowed product types so accessories remain excluded. Do not import
+`Two-piece suit`, `Three-piece suit`, or `MTM` parent products as ordinary
+inventory rows.
+
+Each atomic Shopify product represents one independently purchasable colour.
+Use its Shopify product id as the stable `source_product_id`; do not derive a
+style id from SuitClub SKUs because SKU prefixes can change between sizes of
+the same product. Blazers and vests generally expose size variants, while
+trousers can expose both `Pasform` and `Størrelse`. Preserve a trouser's full
+variant label, for example `Regular fit / 48 (M)`, so fit variants never
+overwrite each other.
+
+Product pages publish product-specific descriptions, material and detail
+sections, fit guidance, model measurements, collections, colour relations,
+and matching blazer/trouser/vest references in `#stape-product-data`. Prefer
+the visible `Materiale` section over conflicting legacy metafields. Retain
+matching parts and related colours as relationships; they do not change row
+identity.
+
+Keep Shopify's merchant-defined product type in `product_type`, for example
+`Suit pants`, `Strik`, or `Sko`. Map `category` and `category_path` to a stable
+HIGHLIDE taxonomy such as `Clothing / Suits / Trousers`, `Clothing / Knitwear`,
+or `Footwear / Shoes`. Shopify `vendor` remains the clean `brand`: SuitClub
+uses vendor labels such as MBO, ERKON, Shirtmakers, HVIID, and Ahler. Prestige,
+Premium, Exclusive, and Heritage are collections, not brands; retain them in
+`specifications.collection`, tags, and the complete `collections` metadata.
+
+SuitClub embeds a public Shopify Storefront API endpoint and public storefront
+token in its theme. Discover and validate this configuration from the product
+page rather than committing the token. Query `StoreAvailability.quantityAvailable`
+for exact size-level inventory. Keep the internal `Lager Aarhus` location
+separate as exact webshop stock in `webshop_sizes`, and store only the four
+physical shops in clean `local_inventory`:
+
+```text
+suitclub-aarhus       SuitClub Aarhus, Guldsmedgade 42
+suitclub-copenhagen   SuitClub Copenhagen, Bredgade 21
+suitclub-odense       SuitClub Odense, Kongensgade 2
+suitclub-aalborg      SuitClub Aalborg, Slotsgade 2
+```
+
+`local_total_stock` is the exact sum across the four physical shops and
+`aarhus_total_stock` is the exact physical Aarhus total. Leave quantities and
+availability null when the Storefront product or required location data is
+missing; never convert incomplete API data to zero. Batch Storefront queries
+and retain the default polite delays for a full import.
+
+Useful commands:
+
+```bash
+python scripts/import_suitclub_products.py --discover-only --preview 10
+python scripts/import_suitclub_products.py --dry-run --limit 1 --no-delay
+python scripts/import_suitclub_products.py --url https://suitclub.dk/products/prestige-navy-blazer --dry-run --no-delay
+python scripts/import_suitclub_products.py
+```
+
+### CEJF Full Import
+
+Location:
+
+- `scripts/import_cejf_products.py`
+- `scrapers/full_import/cejf.py`
+- `migrations/016_cejf_products.sql`
+
+CEJF is a small Shopify storefront. Import the public `men` collection into
+the dedicated `cejf_products` table. The collection currently contains only
+men's clothing and every product carries the `men` tag; retain that explicit
+tag check so women's products are never imported through a future feed error
+or direct URL. Shopify product type and SKU are currently empty for every
+product, so do not create top-level placeholder columns for them. Use the
+stable Shopify product id as `source_product_id`.
+
+Each Shopify product represents one colour and has six size variants from XS
+through 2XL. The collection feed already contains the complete descriptions,
+images, prices, tags, and live Shopify webshop `available` flag, so a normal
+full import needs only the paginated collection request. Product descriptions
+publish fabric descriptions, fit language, and country of origin. Preserve
+their full source text, extract exact material phrases rather than guessing a
+composition, and map title-based product categories to Shirts, Overshirts,
+Jackets, or Pants. CEJF does not publish separate highlights, model info,
+size-guide, or care fields, so do not add placeholder columns for them.
+
+CEJF lists one physical shop at Graven 3B in Aarhus, but its storefront does
+not publish local pickup inventory. The public Shopify Storefront API returns
+empty `storeAvailability` and `locations`, while exact `quantityAvailable`
+requires a scope the storefront has not exposed. CEJF-specific verification
+established that its Shopify size availability is the usable boolean signal
+for its single Aarhus shop. Map each variant's online `available` flag to the
+Aarhus size's `available` field, but never infer a quantity. Keep exact online
+counts unknown in `webshop_sizes`, and represent the physical shop as:
+
+```text
+cejf-aarhus    Ćejf Aarhus, Graven 3B
+```
+
+Use `stock_known: false`, `stock: null`, and `total_stock: null` for local
+inventory. Set store-, local-, and Aarhus-level `available` summaries from
+the per-size booleans. Keep `local_total_stock` and `aarhus_total_stock` null
+until the store exposes reliable counts.
+
+Useful commands:
+
+```bash
+python scripts/import_cejf_products.py --discover-only --preview 10
+python scripts/import_cejf_products.py --dry-run --limit 1 --no-delay
+python scripts/import_cejf_products.py --url https://cejf.dk/products/classic-men-s-shirt-4-way-stretch-navy --dry-run --no-delay
+python scripts/import_cejf_products.py
 ```
 
 ### Rømerhus Full Import
