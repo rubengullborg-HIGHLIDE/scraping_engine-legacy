@@ -1,0 +1,11 @@
+[Unit]
+Description=Run HIGHLIDE non-Kaufmann full catalog sync weekly
+
+[Timer]
+OnCalendar=Sun *-*-* 12:15:00
+Persistent=true
+RandomizedDelaySec=30m
+Unit=highlide-store-catalog-sync.service
+
+[Install]
+WantedBy=timers.target

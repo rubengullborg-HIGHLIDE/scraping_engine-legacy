@@ -1,0 +1,11 @@
+[Unit]
+Description=Run HIGHLIDE non-Kaufmann inventory refresh daily
+
+[Timer]
+OnCalendar=*-*-* 08:15:00
+Persistent=true
+RandomizedDelaySec=15m
+Unit=highlide-store-refresh.service
+
+[Install]
+WantedBy=timers.target

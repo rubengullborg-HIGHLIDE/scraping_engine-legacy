@@ -1,0 +1,14 @@
+[Unit]
+Description=HIGHLIDE sequential weekly non-Kaufmann catalog sync
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/root/scraping_engine
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/flock -w 86400 /tmp/highlide-inventory-refresh.lock /bin/bash /root/scraping_engine/scripts/run_store_catalog_sync.sh --all
+TimeoutStartSec=40h
+Nice=10
+StandardOutput=append:/root/scraping_engine/logs/store_catalog_sync.log
+StandardError=append:/root/scraping_engine/logs/store_catalog_sync.log
