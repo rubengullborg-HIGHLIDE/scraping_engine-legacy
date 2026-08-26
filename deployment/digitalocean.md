@@ -1,6 +1,6 @@
 # DigitalOcean Deployment
 
-This guide deploys the Kaufmann daily inventory refresh on a Linux droplet.
+This guide deploys Kaufmann's lightweight HTTP inventory and lifecycle refresh on a Linux droplet.
 
 Assumed server path:
 
@@ -90,21 +90,25 @@ Kaufmann refresh complete. refreshed_variants=...
 ```bash
 sudo cp deployment/systemd/highlide-kaufmann-refresh.service /etc/systemd/system/
 sudo cp deployment/systemd/highlide-kaufmann-refresh.timer /etc/systemd/system/
+sudo cp deployment/systemd/highlide-kaufmann-weekly-sweep.service /etc/systemd/system/
+sudo cp deployment/systemd/highlide-kaufmann-weekly-sweep.timer /etc/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl enable --now highlide-kaufmann-refresh.timer
+sudo systemctl enable --now highlide-kaufmann-refresh.timer highlide-kaufmann-weekly-sweep.timer
 ```
 
 Check timer status:
 
 ```bash
-systemctl list-timers highlide-kaufmann-refresh.timer
+systemctl list-timers highlide-kaufmann-refresh.timer highlide-kaufmann-weekly-sweep.timer
 systemctl status highlide-kaufmann-refresh.timer
+systemctl status highlide-kaufmann-weekly-sweep.timer
 ```
 
 Run manually:
 
 ```bash
 sudo systemctl start highlide-kaufmann-refresh.service
+sudo systemctl start highlide-kaufmann-weekly-sweep.service
 ```
 
 Read service status:
@@ -120,21 +124,23 @@ tail -f /opt/highlide/scraping_engine/logs/kaufmann_refresh.log
 journalctl -u highlide-kaufmann-refresh.service -f
 ```
 
-The service uses `flock`, so a second refresh will not start if the previous one is still running.
-The service allows up to `12h` runtime because a full Kaufmann refresh can take several hours.
+Both services use the same `flock`, so they cannot run in parallel. The refresh reads Kaufmann's public variation endpoint and does not launch Playwright. The `12h` timeout is a conservative safety ceiling.
 
 ## 7. Cron Fallback
 
 If you prefer cron:
 
 ```cron
-15 2 * * * cd /opt/highlide/scraping_engine && /bin/bash scripts/run_kaufmann_refresh.sh >> logs/kaufmann_refresh.log 2>&1
+15 2 * * 1-6 cd /opt/highlide/scraping_engine && /usr/bin/flock -n /tmp/highlide-kaufmann-refresh.lock /bin/bash scripts/run_kaufmann_refresh.sh >> logs/kaufmann_refresh.log 2>&1
+15 2 * * 0 cd /opt/highlide/scraping_engine && /usr/bin/flock -n /tmp/highlide-kaufmann-refresh.lock /bin/bash scripts/run_kaufmann_refresh.sh --include-unavailable >> logs/kaufmann_refresh.log 2>&1
 ```
 
 ## 8. Operational Notes
 
-- The timer runs daily at `02:15` in the server's local timezone, with up to `15m` randomized delay.
+- Active products refresh Monday through Saturday. Sunday's sweep also rechecks soft-tombstoned products so a product can become active again.
+- Both timers start at `02:15` in the server's local timezone, with up to `15m` randomized delay.
 - Set the droplet timezone with `sudo timedatectl set-timezone Europe/Copenhagen` if you want the timer interpreted as Copenhagen time.
 - `kaufmann_products` remains the current/live table.
 - `kaufmann_inventory_snapshots` receives one row per Kaufmann variant per UTC day.
 - The refresh does not rewrite stable catalog fields or `raw`.
+- `publication_status = 'active'` is the publishable state. `unavailable` rows are retained as soft tombstones rather than deleted.
