@@ -72,6 +72,20 @@ EMPTY_AARHUS_INVENTORY = {"stores": {}}
 MISSING_COLOR_CONFIRMATIONS = 2
 
 
+class SupabaseWriteError(RuntimeError):
+    """A Supabase batch write failed and the refresh must stop safely."""
+
+
+def uniform_key_batches(
+    rows: list[dict[str, Any]],
+) -> list[list[dict[str, Any]]]:
+    """Partition PostgREST bulk rows so every object has identical keys."""
+    grouped: "OrderedDict[tuple[str, ...], list[dict[str, Any]]]" = OrderedDict()
+    for row in rows:
+        grouped.setdefault(tuple(sorted(row)), []).append(row)
+    return list(grouped.values())
+
+
 def load_dotenv(path: Path) -> None:
     if not path.exists():
         return
@@ -112,6 +126,18 @@ class SupabaseKaufmannRefreshClient:
 
     def _table_url(self, table: str) -> str:
         return f"{self.supabase_url}/rest/v1/{quote(table)}"
+
+    @staticmethod
+    def _raise_write_error(response: Any, table: str) -> None:
+        if response.ok:
+            return
+        body = (response.text or "").strip()
+        if len(body) > 2000:
+            body = body[:2000] + "..."
+        raise SupabaseWriteError(
+            f"Supabase write to {table} returned HTTP {response.status_code}: "
+            f"{body or '<empty response body>'}"
+        )
 
     def list_existing_variants(
         self,
@@ -170,7 +196,7 @@ class SupabaseKaufmannRefreshClient:
             data=json.dumps(rows, ensure_ascii=False),
             timeout=self.timeout_seconds,
         )
-        response.raise_for_status()
+        self._raise_write_error(response, table)
 
     def upsert_snapshots(self, table: str, rows: list[dict[str, Any]]) -> None:
         if not rows:
@@ -182,7 +208,7 @@ class SupabaseKaufmannRefreshClient:
             data=json.dumps(rows, ensure_ascii=False),
             timeout=self.timeout_seconds,
         )
-        response.raise_for_status()
+        self._raise_write_error(response, table)
 
     def close(self) -> None:
         self.session.close()
@@ -407,6 +433,7 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
     skipped_new_variants = 0
     failed_pages = 0
     stopped_early = False
+    write_failed = False
     started_monotonic = time.monotonic()
     pending_product_updates: list[dict[str, Any]] = []
     pending_snapshots: list[dict[str, Any]] = []
@@ -414,12 +441,20 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
     def flush_pending() -> None:
         if args.dry_run or client is None:
             return
-        if pending_product_updates:
-            client.upsert_products_by_id(products_table, pending_product_updates)
-            pending_product_updates.clear()
-        if pending_snapshots:
-            client.upsert_snapshots(snapshots_table, pending_snapshots)
-            pending_snapshots.clear()
+        for batch in uniform_key_batches(pending_product_updates):
+            client.upsert_products_by_id(products_table, batch)
+            signature = tuple(sorted(batch[0]))
+            pending_product_updates[:] = [
+                row
+                for row in pending_product_updates
+                if tuple(sorted(row)) != signature
+            ]
+        for batch in uniform_key_batches(pending_snapshots):
+            client.upsert_snapshots(snapshots_table, batch)
+            signature = tuple(sorted(batch[0]))
+            pending_snapshots[:] = [
+                row for row in pending_snapshots if tuple(sorted(row)) != signature
+            ]
 
     try:
         if args.url:
@@ -599,9 +634,6 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                     if confirmed:
                         unavailable_variants += 1
 
-                if len(pending_product_updates) >= args.write_batch_size:
-                    flush_pending()
-
             except KaufmannVariationUnavailable as exc:
                 reason = f"variation_http_{exc.status_code}"
                 LOG.warning(
@@ -639,9 +671,6 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                             )
                         )
                     unavailable_variants += 1
-                if len(pending_product_updates) >= args.write_batch_size:
-                    flush_pending()
-
             except Exception as exc:
                 failed_pages += 1
                 LOG.exception("Failed to refresh Kaufmann product page %s", canonical_url)
@@ -651,21 +680,31 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                         partial_product_upsert_row(product_row, error)
                         for product_row in product_rows
                     )
-                    if len(pending_product_updates) >= args.write_batch_size:
-                        try:
-                            flush_pending()
-                        except Exception:
-                            LOG.exception(
-                                "Failed to persist Kaufmann refresh error for %s",
-                                canonical_url,
-                            )
 
-        if not args.dry_run:
+            if len(pending_product_updates) >= args.write_batch_size:
+                try:
+                    flush_pending()
+                except SupabaseWriteError as exc:
+                    failed_pages += 1
+                    stopped_early = True
+                    write_failed = True
+                    LOG.error(
+                        "Stopping Kaufmann refresh after a Supabase write failure: %s",
+                        exc,
+                    )
+                    break
+
+        if not args.dry_run and not write_failed:
             try:
                 flush_pending()
-            except Exception:
+            except SupabaseWriteError as exc:
                 failed_pages += 1
-                LOG.exception("Failed to flush final Kaufmann refresh batch")
+                stopped_early = True
+                write_failed = True
+                LOG.error(
+                    "Failed to flush final Kaufmann refresh batch: %s",
+                    exc,
+                )
 
     finally:
         variation_client.close()
@@ -674,13 +713,15 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
 
     LOG.info(
         "Kaufmann refresh complete. refreshed_variants=%s unavailable_variants=%s "
-        "missing_variants=%s skipped_new_variants=%s failed_pages=%s stopped_early=%s",
+        "missing_variants=%s skipped_new_variants=%s failed_pages=%s "
+        "stopped_early=%s write_failed=%s",
         refreshed_variants,
         unavailable_variants,
         missing_variants,
         skipped_new_variants,
         failed_pages,
         stopped_early,
+        write_failed,
     )
     return 1 if failed_pages else 0
 

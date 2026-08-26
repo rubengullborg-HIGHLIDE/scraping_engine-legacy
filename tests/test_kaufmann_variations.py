@@ -12,9 +12,11 @@ from scrapers.stores.kaufmann_variations import (
 from scripts.refresh_kaufmann_inventory import (
     dynamic_product_upsert_row,
     missing_color_product_payload,
+    partial_product_upsert_row,
     refresh_status_for_row,
     snapshot_payload,
     unavailable_product_payload,
+    uniform_key_batches,
 )
 
 
@@ -180,6 +182,34 @@ class KaufmannVariationParserTests(unittest.TestCase):
 
 
 class KaufmannRefreshLifecycleTests(unittest.TestCase):
+    def test_mixed_full_and_partial_updates_form_uniform_postgrest_batches(self) -> None:
+        scraped = variation_rows_from_payload(
+            variation_payload(
+                source_available=True,
+                webshop_stock=1,
+                aarhus_stock=1,
+            ),
+            "parent-1",
+            "https://www.kaufmann.dk/produkt/example",
+            checked_at=CHECKED_AT,
+        )[0]
+        full_updates = [
+            dynamic_product_upsert_row(product_row(id=row_id), scraped)
+            for row_id in range(1, 51)
+        ]
+        missing_payload, _ = missing_color_product_payload(product_row(), CHECKED_AT)
+        partial_update = partial_product_upsert_row(
+            product_row(id=2620),
+            missing_payload,
+        )
+
+        batches = uniform_key_batches(full_updates + [partial_update])
+
+        self.assertEqual([50, 1], [len(batch) for batch in batches])
+        for batch in batches:
+            expected_keys = set(batch[0])
+            self.assertTrue(all(set(row) == expected_keys for row in batch))
+
     def test_missing_color_requires_two_successful_confirmations(self) -> None:
         first_payload, first_confirmed = missing_color_product_payload(
             product_row(),
