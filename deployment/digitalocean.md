@@ -106,6 +106,17 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now highlide-kaufmann-refresh.timer highlide-kaufmann-weekly-sweep.timer highlide-store-refresh.timer highlide-store-catalog-sync.timer
 ```
 
+After the systemd unit files have been installed once, all continual scraping
+timers can be controlled from the repository with:
+
+```bash
+./scripts/continual_scraping_on.sh
+./scripts/continual_scraping_off.sh
+```
+
+The off script disables future scheduled runs but deliberately allows any
+scraper service already in progress to finish safely.
+
 Check timer status:
 
 ```bash
