@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from scrapers.stores.kaufmann_variations import (
     KaufmannVariationParseError,
@@ -17,6 +19,8 @@ from scripts.refresh_kaufmann_inventory import (
     snapshot_payload,
     unavailable_product_payload,
     uniform_key_batches,
+    unknown_source_color_ids,
+    write_new_variant_candidates,
 )
 
 
@@ -182,6 +186,35 @@ class KaufmannVariationParserTests(unittest.TestCase):
 
 
 class KaufmannRefreshLifecycleTests(unittest.TestCase):
+    def test_unknown_colour_ids_are_detected_without_treating_known_colours_as_new(self) -> None:
+        scraped_rows = [
+            {"source_color_id": "known-colour"},
+            {"source_color_id": "new-colour"},
+        ]
+        existing_rows = [product_row(source_color_id="known-colour")]
+
+        self.assertEqual(
+            {"new-colour"},
+            unknown_source_color_ids(scraped_rows, existing_rows),
+        )
+
+    def test_unknown_colour_candidate_file_is_sorted_and_deduplicated(self) -> None:
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "candidates.json"
+            write_new_variant_candidates(
+                str(path),
+                {
+                    "https://www.kaufmann.dk/produkt/item-2",
+                    "https://www.kaufmann.dk/produkt/item-1",
+                },
+            )
+
+            self.assertEqual(
+                '[\n  "https://www.kaufmann.dk/produkt/item-1",\n'
+                '  "https://www.kaufmann.dk/produkt/item-2"\n]\n',
+                path.read_text(encoding="utf-8"),
+            )
+
     def test_mixed_full_and_partial_updates_form_uniform_postgrest_batches(self) -> None:
         scraped = variation_rows_from_payload(
             variation_payload(

@@ -7,6 +7,7 @@ import os
 import re
 import subprocess
 import sys
+import uuid
 from collections import OrderedDict
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -29,6 +30,7 @@ from scripts.refresh_store_inventory import (  # noqa: E402
     snapshot_payload,
     unavailable_payload,
 )
+from scripts.catalog_sync_tracking import CatalogSyncRunRecorder, utc_now  # noqa: E402
 
 
 LOG = logging.getLogger("sync_store_catalogs")
@@ -398,13 +400,51 @@ def sync_catalogs(args: argparse.Namespace) -> int:
         if not args.dry_run
         else None
     )
+    recorder = (
+        CatalogSyncRunRecorder(
+            str(supabase_url),
+            str(supabase_key),
+            table=args.sync_runs_table,
+            timeout_seconds=args.supabase_timeout,
+            max_retries=args.max_retries,
+        )
+        if not args.dry_run and not args.limit
+        else None
+    )
+    batch_id = str(uuid.uuid4())
     failed_stores = 0
     try:
         for store_key in selected:
             catalog = CATALOG_SPECS[store_key]
             rows_before = client.list_rows(store_key) if client is not None else []
             import_started_at = datetime.now(timezone.utc)
-            return_code = run_importer(catalog, args)
+            run_id = (
+                recorder.start(
+                    batch_id=batch_id,
+                    store=store_key,
+                    run_type="weekly_catalog_sync",
+                    started_at=import_started_at.isoformat(),
+                    rows_before=len(rows_before),
+                    details={
+                        "miss_confirmations": args.miss_confirmations,
+                        "min_seen_ratio": args.min_seen_ratio,
+                    },
+                )
+                if recorder is not None
+                else None
+            )
+            try:
+                return_code = run_importer(catalog, args)
+            except Exception as exc:
+                failed_stores += 1
+                LOG.exception("%s importer could not be started.", store_key)
+                if recorder is not None and run_id is not None:
+                    recorder.fail(
+                        run_id,
+                        str(exc),
+                        rows_after=len(rows_before),
+                    )
+                continue
             if return_code:
                 failed_stores += 1
                 LOG.error(
@@ -412,6 +452,13 @@ def sync_catalogs(args: argparse.Namespace) -> int:
                     store_key,
                     return_code,
                 )
+                if recorder is not None and run_id is not None:
+                    recorder.fail(
+                        run_id,
+                        f"Importer exited with status {return_code}",
+                        rows_after=len(rows_before),
+                        details={"import_return_code": return_code},
+                    )
                 continue
             if args.dry_run or args.limit:
                 LOG.info(
@@ -421,8 +468,13 @@ def sync_catalogs(args: argparse.Namespace) -> int:
                 continue
 
             assert client is not None
-            checked_at = datetime.now(timezone.utc).isoformat()
-            rows_after = client.list_rows(store_key)
+            checked_at = utc_now()
+            try:
+                rows_after = client.list_rows(store_key)
+            except Exception as exc:
+                if recorder is not None and run_id is not None:
+                    recorder.fail(run_id, str(exc), rows_after=len(rows_before))
+                raise
             try:
                 stats = reconcile_catalog(
                     store_key,
@@ -434,7 +486,9 @@ def sync_catalogs(args: argparse.Namespace) -> int:
                     miss_confirmations=args.miss_confirmations,
                     min_seen_ratio=args.min_seen_ratio,
                 )
-            except SupabasePatchError:
+            except Exception as exc:
+                if recorder is not None and run_id is not None:
+                    recorder.fail(run_id, str(exc), rows_after=len(rows_after))
                 raise
             LOG.info(
                 "%s catalog sync complete. before=%s after=%s seen=%s new=%s "
@@ -449,9 +503,29 @@ def sync_catalogs(args: argparse.Namespace) -> int:
                 stats.confirmed_missing,
                 stats.missing_check_skipped,
             )
+            if recorder is not None and run_id is not None:
+                recorder.finish(
+                    run_id,
+                    status="safety_blocked" if stats.missing_check_skipped else "success",
+                    completed_at=utc_now(),
+                    rows_after=stats.rows_after,
+                    products_seen=stats.seen,
+                    new_products=stats.new,
+                    reactivated_products=stats.reactivated,
+                    absent_products=stats.first_misses + stats.confirmed_missing,
+                    confirmed_missing_products=stats.confirmed_missing,
+                    missing_check_skipped=stats.missing_check_skipped,
+                    error_message=(
+                        "Catalog safety threshold blocked absence reconciliation"
+                        if stats.missing_check_skipped
+                        else None
+                    ),
+                )
             if stats.missing_check_skipped:
                 failed_stores += 1
     finally:
+        if recorder is not None:
+            recorder.close()
         if client is not None:
             client.close()
     LOG.info("Weekly catalog sync complete. stores=%s failed_stores=%s", len(selected), failed_stores)
@@ -497,6 +571,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--snapshots-table",
         default=env("STORE_INVENTORY_SNAPSHOTS_TABLE", "store_inventory_snapshots"),
+    )
+    parser.add_argument(
+        "--sync-runs-table",
+        default=env("CATALOG_SYNC_RUNS_TABLE", "catalog_sync_runs"),
     )
     parser.add_argument("--supabase-timeout", type=float, default=float(env("STORE_REFRESH_SUPABASE_TIMEOUT", "60")))
     parser.add_argument("--max-retries", type=int, default=int(env("STORE_REFRESH_MAX_RETRIES", "2")))

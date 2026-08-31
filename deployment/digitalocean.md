@@ -73,13 +73,16 @@ Use the server-side Supabase secret key. Do not use a frontend publishable key f
 
 Before deploying the non-Kaufmann jobs to a new Supabase environment, apply
 `migrations/018_store_inventory_snapshots.sql` and
-`migrations/019_store_product_lifecycle.sql`. The production HIGHLIDE project
-already has both migrations.
+`migrations/019_store_product_lifecycle.sql`. Apply
+`migrations/020_product_discovery_tracking.sql` before deploying catalogue-run
+tracking and Kaufmann discovery.
 
 ```bash
 mkdir -p logs
 bash scripts/run_kaufmann_refresh.sh --dry-run --url https://www.kaufmann.dk/produkt/boss-orange-196321 --no-delay
 bash scripts/run_kaufmann_refresh.sh --limit 1 --no-delay
+.venv/bin/python scripts/sync_kaufmann_catalog.py --discover-only --preview 3
+.venv/bin/python scripts/sync_kaufmann_catalog.py --dry-run --limit 3 --no-delay
 bash scripts/run_store_refresh.sh --all --limit 1 --dry-run --no-delay
 bash scripts/run_store_refresh.sh --all --limit 1 --no-delay
 bash scripts/run_store_catalog_sync.sh --store cejf --limit 1 --dry-run --no-delay
@@ -163,7 +166,7 @@ If you prefer cron:
 
 ```cron
 15 2 * * 1-6 cd /root/scraping_engine && /usr/bin/flock -n /tmp/highlide-inventory-refresh.lock /bin/bash scripts/run_kaufmann_refresh.sh >> logs/kaufmann_refresh.log 2>&1
-15 2 * * 0 cd /root/scraping_engine && /usr/bin/flock -n /tmp/highlide-inventory-refresh.lock /bin/bash scripts/run_kaufmann_refresh.sh --include-unavailable >> logs/kaufmann_refresh.log 2>&1
+15 2 * * 0 cd /root/scraping_engine && /usr/bin/flock -n /tmp/highlide-inventory-refresh.lock /bin/bash scripts/run_kaufmann_weekly.sh >> logs/kaufmann_refresh.log 2>&1
 15 8 * * * cd /root/scraping_engine && /usr/bin/flock -w 43200 /tmp/highlide-inventory-refresh.lock /bin/bash scripts/run_store_refresh.sh --all >> logs/store_refresh.log 2>&1
 15 12 * * 0 cd /root/scraping_engine && /usr/bin/flock -w 86400 /tmp/highlide-inventory-refresh.lock /bin/bash scripts/run_store_catalog_sync.sh --all >> logs/store_catalog_sync.log 2>&1
 ```
@@ -175,7 +178,7 @@ If you prefer cron:
   | Schedule | Service | Arguments | Rows checked |
   | --- | --- | --- | --- |
   | Monday-Saturday | `highlide-kaufmann-refresh.service` | none | `publication_status = 'active'` |
-  | Sunday | `highlide-kaufmann-weekly-sweep.service` | `--include-unavailable` | every existing Kaufmann product |
+  | Sunday | `highlide-kaufmann-weekly-sweep.service` | sitemap diff, then `--include-unavailable` | new Kaufmann pages, then every existing Kaufmann product |
   | Daily | `highlide-store-refresh.service` | `--all` | active rows in all eight non-Kaufmann tables |
   | Sunday | `highlide-store-catalog-sync.service` | `--all` | complete catalogs for all eight non-Kaufmann stores |
 
@@ -200,7 +203,9 @@ If you prefer cron:
 - `kaufmann_inventory_snapshots` receives one row per Kaufmann variant per UTC day.
 - The refresh does not rewrite stable catalog fields or `raw`.
 - `publication_status = 'active'` is the publishable state. `unavailable` rows are retained as soft tombstones rather than deleted.
-- Kaufmann's Sunday lifecycle sweep does not discover new Kaufmann products; Kaufmann new-product discovery still requires its separate full importer. The non-Kaufmann weekly catalog sync does discover and insert new products.
+- Kaufmann's Sunday job runs the lightweight all-row variation sweep first. In addition to lifecycle updates, that sweep records known pages whose response contains an unknown colour ID. The catalogue step then full-imports only those affected pages plus URLs newly found in the sitemap. This detects new colours on old URLs without a second all-page pass or a weekly Playwright import of every known page.
+- Every successful full catalogue job writes a summary to `catalog_sync_runs`, including seen, new, reactivated, absent, confirmed-missing, and failed counts. Rows from one eight-store invocation share a `batch_id`.
+- Every product table already has an immutable `first_seen_at` timestamp. New-product filters should use this field; ordinary catalogue and inventory upserts do not rewrite it.
 
 Useful snapshot query:
 

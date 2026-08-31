@@ -1,5 +1,5 @@
 [Unit]
-Description=HIGHLIDE Kaufmann weekly lifecycle sweep
+Description=HIGHLIDE Kaufmann weekly catalogue discovery and lifecycle sweep
 Wants=network-online.target
 After=network-online.target
 
@@ -7,7 +7,7 @@ After=network-online.target
 Type=oneshot
 WorkingDirectory=/root/scraping_engine
 Environment=PYTHONUNBUFFERED=1
-ExecStart=/usr/bin/flock -n /tmp/highlide-inventory-refresh.lock /bin/bash /root/scraping_engine/scripts/run_kaufmann_refresh.sh --include-unavailable
+ExecStart=/usr/bin/flock -n /tmp/highlide-inventory-refresh.lock /bin/bash /root/scraping_engine/scripts/run_kaufmann_weekly.sh
 TimeoutStartSec=12h
 Nice=10
 StandardOutput=append:/root/scraping_engine/logs/kaufmann_refresh.log

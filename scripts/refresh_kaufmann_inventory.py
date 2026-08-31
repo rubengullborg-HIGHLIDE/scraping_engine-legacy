@@ -402,6 +402,22 @@ def refresh_status_for_row(scraped_row: dict[str, Any]) -> str:
     return "ok" if scraped_row.get("source_available") is True else "source_unavailable"
 
 
+def write_new_variant_candidates(path: str, urls: set[str]) -> None:
+    Path(path).write_text(
+        json.dumps(sorted(urls), ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
+def unknown_source_color_ids(
+    scraped_rows: list[dict[str, Any]],
+    product_rows: list[dict[str, Any]],
+) -> set[str]:
+    known = {str(row["source_color_id"]) for row in product_rows}
+    returned = {str(row["source_color_id"]) for row in scraped_rows}
+    return returned - known
+
+
 def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
     load_dotenv(ROOT / ".env")
     products_table = args.products_table or env(
@@ -437,6 +453,7 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
     started_monotonic = time.monotonic()
     pending_product_updates: list[dict[str, Any]] = []
     pending_snapshots: list[dict[str, Any]] = []
+    new_variant_candidate_urls: set[str] = set()
 
     def flush_pending() -> None:
         if args.dry_run or client is None:
@@ -548,6 +565,8 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                 product_rows_by_color = {
                     str(row["source_color_id"]): row for row in product_rows
                 }
+                if unknown_source_color_ids(scraped_rows, product_rows):
+                    new_variant_candidate_urls.add(canonical_url)
                 returned_colors: set[str] = set()
 
                 for scraped_row in scraped_rows:
@@ -711,6 +730,17 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
         if client is not None:
             client.close()
 
+    if args.new_variant_candidates_output:
+        write_new_variant_candidates(
+            args.new_variant_candidates_output,
+            new_variant_candidate_urls,
+        )
+        LOG.info(
+            "Wrote %s unknown-colour candidate pages to %s.",
+            len(new_variant_candidate_urls),
+            args.new_variant_candidates_output,
+        )
+
     LOG.info(
         "Kaufmann refresh complete. refreshed_variants=%s unavailable_variants=%s "
         "missing_variants=%s skipped_new_variants=%s failed_pages=%s "
@@ -753,6 +783,13 @@ def parse_args() -> argparse.Namespace:
         "--include-unavailable",
         action="store_true",
         help="Also recheck soft-tombstoned products; intended for weekly classification sweeps.",
+    )
+    parser.add_argument(
+        "--new-variant-candidates-output",
+        help=(
+            "Write a JSON list of product-page URLs containing unknown colour IDs. "
+            "Used by the weekly catalogue job; refresh itself never inserts rows."
+        ),
     )
     parser.add_argument("--no-delay", action="store_true", help="Disable polite delay for local tests.")
     parser.add_argument(

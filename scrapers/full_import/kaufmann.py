@@ -46,15 +46,25 @@ class BaseScraper(ABC):
 
 
 class KaufmanScraper(BaseScraper):
-    def __init__(self):
+    def __init__(self, launch_browser: bool = True):
         self.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Accept-Language": "da-DK,da;q=0.9",
         }
+        self._playwright = None
+        self._browser = None
+        if launch_browser:
+            self._ensure_browser()
+
+    def _ensure_browser(self) -> None:
+        if self._browser is not None:
+            return
         self._playwright = sync_playwright().start()
         self._browser = self._playwright.chromium.launch(headless=True)
 
     def fetch_html_with_js(self, url):
+        self._ensure_browser()
+        assert self._browser is not None
         page = self._browser.new_page()
         page.goto(url, wait_until="networkidle")
         try:
@@ -117,6 +127,8 @@ class KaufmanScraper(BaseScraper):
         url: str,
         allow_unavailable: bool = False,
     ) -> list[dict[str, Any]]:
+        self._ensure_browser()
+        assert self._browser is not None
         page = self._browser.new_page()
         try:
             response = page.goto(url, wait_until="domcontentloaded", timeout=30000)
@@ -374,8 +386,12 @@ class KaufmanScraper(BaseScraper):
             page.close()
 
     def close(self):
-        self._browser.close()
-        self._playwright.stop()
+        if self._browser is not None:
+            self._browser.close()
+            self._browser = None
+        if self._playwright is not None:
+            self._playwright.stop()
+            self._playwright = None
 
     def _looks_like_unavailable_page(self, page: Any) -> bool:
         text = page.locator("body").inner_text(timeout=3000).lower()
