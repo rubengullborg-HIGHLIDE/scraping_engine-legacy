@@ -13,6 +13,8 @@ from bs4 import BeautifulSoup
 
 
 BASE_URL = "https://stoy.com/da"
+MARKET_COUNTRY = "DK"
+EXPECTED_CURRENCY = "DKK"
 # Both are canonical men's catalogue collections. Keep accessories out of the
 # default set, but footwear is an intentional HIGHLIDE product category.
 MEN_COLLECTION_HANDLES = ("all-clothing-for-men", "footwear-for-men")
@@ -42,7 +44,8 @@ class StoyScraper:
             while True:
                 response = self.session.get(
                     f"{BASE_URL}/collections/{collection_handle}/products.json",
-                    params={"limit": 250, "page": page}, timeout=30,
+                    params={"limit": 250, "page": page, "country": MARKET_COUNTRY},
+                    timeout=30,
                 )
                 response.raise_for_status()
                 batch = response.json().get("products", [])
@@ -62,13 +65,21 @@ class StoyScraper:
 
     def fetch_product(self, url_or_handle: str) -> dict[str, Any]:
         handle = self._handle_from_url(url_or_handle)
-        response = self.session.get(f"{BASE_URL}/products/{handle}.js", timeout=30)
+        response = self.session.get(
+            f"{BASE_URL}/products/{handle}.js",
+            params={"country": MARKET_COUNTRY},
+            timeout=30,
+        )
         response.raise_for_status()
         return response.json()
 
     def fetch_product_page(self, url_or_handle: str) -> str:
         handle = self._handle_from_url(url_or_handle)
-        response = self.session.get(f"{BASE_URL}/products/{handle}", timeout=30)
+        response = self.session.get(
+            f"{BASE_URL}/products/{handle}",
+            params={"country": MARKET_COUNTRY},
+            timeout=30,
+        )
         response.raise_for_status()
         return response.text
 
@@ -77,6 +88,13 @@ class StoyScraper:
         product_id = int(product["id"])
         handle = product.get("handle") or self._handle_from_url(str(product_id))
         canonical_url = f"{BASE_URL}/products/{handle}"
+        page_currency = self._page_currency(page_html)
+        if page_currency != EXPECTED_CURRENCY:
+            raise ValueError(
+                "Refusing to store a STOY price outside the Danish market: "
+                f"expected {EXPECTED_CURRENCY}, got {page_currency or 'unknown'} "
+                f"for {canonical_url}"
+            )
         page_data, inventory, store_source = self._page_data(page_html)
         custom = (page_data.get("metafields") or {}).get("custom") or {}
         variants = [variant for variant in product.get("variants", []) if variant.get("id") is not None]
@@ -146,6 +164,8 @@ class StoyScraper:
                 "shopify_product_id": str(product_id),
                 "shopify_handle": handle,
                 "shopify_product_type": product.get("type"),
+                "market_country": MARKET_COUNTRY,
+                "page_currency": page_currency,
                 "manufacturer_style_code": style_code,
                 "color_swatch": custom.get("color_swatch"),
                 "connected_products": custom.get("connected_products") or [],
@@ -189,6 +209,26 @@ class StoyScraper:
             store["available"] = any(sizes.values())
             raw[slug] = {"name": label, "address": store.get("address"), "sizes": sizes}
         return product_data, inventory, raw
+
+    @staticmethod
+    def _page_currency(html: str) -> str | None:
+        """Read the active presentment currency from STOY's rendered page."""
+        soup = BeautifulSoup(html, "html.parser")
+        currency_meta = soup.select_one('meta[property="og:price:currency"]')
+        if currency_meta:
+            currency = str(currency_meta.get("content") or "").strip().upper()
+            if currency:
+                return currency
+
+        match = re.search(r"Shopify\.currency\s*=\s*(\{.*?\})\s*;", html, flags=re.DOTALL)
+        if match:
+            try:
+                currency_data = json.loads(match.group(1))
+            except json.JSONDecodeError:
+                return None
+            currency = str(currency_data.get("active") or "").strip().upper()
+            return currency or None
+        return None
 
     @classmethod
     def _specifications(cls, custom: dict[str, Any]) -> dict[str, Any]:

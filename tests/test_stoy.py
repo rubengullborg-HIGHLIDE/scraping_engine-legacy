@@ -6,6 +6,47 @@ from scrapers.full_import.stoy import StoyScraper
 
 
 class StoyScraperTests(unittest.TestCase):
+    def test_product_row_accepts_dkk_and_converts_shopify_subunits(self) -> None:
+        row = StoyScraper().product_to_row(
+            {
+                "id": 1,
+                "handle": "pants",
+                "title": "Pants",
+                "price": 740000,
+                "compare_at_price": None,
+                "variants": [],
+            },
+            """
+              <meta property="og:price:currency" content="DKK">
+              <script id="stape-product-data" type="application/json">{"metafields": {"custom": {}}}</script>
+            """,
+        )
+
+        self.assertEqual(7400.0, row["current_price"])
+        self.assertEqual("DKK", row["currency"])
+        self.assertEqual("DK", row["raw"]["market_country"])
+        self.assertEqual("DKK", row["raw"]["page_currency"])
+
+    def test_product_row_rejects_non_dkk_market_price(self) -> None:
+        with self.assertRaisesRegex(ValueError, "expected DKK, got EUR"):
+            StoyScraper().product_to_row(
+                {
+                    "id": 1,
+                    "handle": "pants",
+                    "price": 94295,
+                    "variants": [],
+                },
+                '<meta property="og:price:currency" content="EUR">',
+            )
+
+    def test_page_currency_falls_back_to_shopify_currency_state(self) -> None:
+        self.assertEqual(
+            "DKK",
+            StoyScraper._page_currency(
+                '<script>Shopify.currency = {"active":"DKK","rate":"1.0"};</script>'
+            ),
+        )
+
     def test_store_availability_has_two_stores_and_no_quantities(self) -> None:
         product_data, inventory, raw = StoyScraper._page_data("""
           <script id="stape-product-data" type="application/json">{"metafields": {"custom": {}}}</script>
