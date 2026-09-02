@@ -12,10 +12,24 @@ from bs4 import BeautifulSoup
 
 
 BASE_URL = "https://bestseller-stores.dk"
+NEWS_COLLECTION_HANDLE = "nyheder-test"
 MEN_COLLECTION_HANDLES = (
     "overtoj-maend", "t-shirts-poloer", "skjorter-maend", "jeans-maend",
     "bukser-maend", "shorts-maend", "strik-cardigans-maend",
-    "sweatshirts-maend", "jakkesaet-maend",
+    "sweatshirts-maend", "jakkesaet-maend", NEWS_COLLECTION_HANDLE,
+)
+NEWS_ALLOWED_CATEGORY_PREFIXES = (
+    "footwear_",
+    "jeans_",
+    "knit_",
+    "outerwear_",
+    "shirts_",
+    "shorts_",
+    "socks_",
+    "sweatshirts_",
+    "t-shirts & tops_",
+    "tailoring_",
+    "trousers_",
 )
 TRACKED_STORE_SLUGS = {
     61382557882: "romerhus-aarhus",
@@ -35,7 +49,7 @@ class RomerhusScraper:
         })
 
     def discover_products(self, collection_handles: Iterable[str] = MEN_COLLECTION_HANDLES) -> list[dict[str, Any]]:
-        """Return unique Shopify products from the men's navigation collections."""
+        """Return unique products from men's categories and eligible new arrivals."""
         by_id: dict[int, dict[str, Any]] = {}
         for handle in collection_handles:
             page = 1
@@ -49,12 +63,30 @@ class RomerhusScraper:
                 if not batch:
                     break
                 for product in batch:
+                    if handle == NEWS_COLLECTION_HANDLE and not self.is_news_catalog_product(product):
+                        continue
                     if product.get("id") is not None:
                         by_id[int(product["id"])] = product
                 if len(batch) < 250:
                     break
                 page += 1
         return list(by_id.values())
+
+    @staticmethod
+    def is_news_catalog_product(product: dict[str, Any]) -> bool:
+        """Keep men's clothing, socks, and footwear from the mixed news feed."""
+        tags = {
+            str(tag).strip().casefold()
+            for tag in product.get("tags", [])
+            if str(tag).strip()
+        }
+        if "news-mænd" not in tags:
+            return False
+        return any(
+            tag.startswith(prefix)
+            for tag in tags
+            for prefix in NEWS_ALLOWED_CATEGORY_PREFIXES
+        )
 
     def fetch_product(self, url_or_handle: str) -> dict[str, Any]:
         handle = self._handle_from_url(url_or_handle)

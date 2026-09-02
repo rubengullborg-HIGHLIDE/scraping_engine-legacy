@@ -530,13 +530,14 @@ gammeltorv-copenhagen BESTSELLER København – Gammeltorv
 `local_inventory` follows the clean `{"stores": {...}}` interface. Keep source
 location ids and raw variant-stock data in `raw`; use `local_total_stock`,
 `local_available`, `aarhus_total_stock`, and `aarhus_available` for summaries.
-The default discovery set covers the men's clothing-category collections and
-excludes news, brand, and accessories collections because they can contain
-non-clothing duplicates such as caps. Pass `--collection nyheder-test` when a
-new-arrivals-only import is intentionally wanted. Catalogue collection feeds
-are used only for discovery; the importer then reads each product's Shopify
-product feed to retain the full description, price, type, colour, and material
-data. Keep the default polite delay enabled for a full import.
+The default discovery set combines the men's clothing-category collections
+with `nyheder-test`. The mixed news feed is filtered to products tagged
+`News-mænd` whose BESTSELLER taxonomy identifies clothing, socks, or footwear;
+accessory groups such as bags, belts, headwear, scarves, ties, and mittens stay
+excluded. Catalogue collection feeds are used only for discovery; the importer
+then reads each product's Shopify product feed to retain the full description,
+price, type, colour, and material data. Keep the default polite delay enabled
+for a full import.
 
 Useful commands:
 
