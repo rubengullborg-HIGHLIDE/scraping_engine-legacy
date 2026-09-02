@@ -8,6 +8,7 @@ import os
 import random
 import sys
 import time
+import uuid
 from collections import OrderedDict
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -44,7 +45,7 @@ class RefreshStats:
     pages: int = 0
     updated: int = 0
     unavailable: int = 0
-    snapshots: int = 0
+    history_observations: int = 0
     failed: int = 0
     skipped: int = 0
 
@@ -184,16 +185,18 @@ class SupabaseInventoryClient:
         supabase_url: str,
         supabase_key: str,
         *,
-        snapshots_table: str,
-        snapshot_batch_size: int = 50,
+        history_table: str,
+        runs_table: str,
+        history_batch_size: int = 50,
         timeout_seconds: float = 60,
         max_retries: int = 2,
     ) -> None:
         self.supabase_url = supabase_url.rstrip("/")
-        self.snapshots_table = snapshots_table
-        self.snapshot_batch_size = snapshot_batch_size
+        self.history_table = history_table
+        self.runs_table = runs_table
+        self.history_batch_size = history_batch_size
         self.timeout_seconds = timeout_seconds
-        self.pending_snapshots: list[dict[str, Any]] = []
+        self.pending_history: list[dict[str, Any]] = []
         self.session = requests.Session()
         headers = {
             "apikey": supabase_key,
@@ -270,19 +273,18 @@ class SupabaseInventoryClient:
             f"{response.status_code}: {body or '<empty response body>'}"
         )
 
-    def queue_snapshot(self, payload: dict[str, Any]) -> None:
-        self.pending_snapshots.append(payload)
-        if len(self.pending_snapshots) >= self.snapshot_batch_size:
-            self.flush_snapshots()
+    def queue_history_observation(self, payload: dict[str, Any]) -> None:
+        self.pending_history.append(payload)
+        if len(self.pending_history) >= self.history_batch_size:
+            self.flush_history()
 
-    def flush_snapshots(self) -> None:
-        if not self.pending_snapshots:
+    def flush_history(self) -> None:
+        if not self.pending_history:
             return
         response = self.session.post(
-            self._table_url(self.snapshots_table),
-            params={"on_conflict": "store,product_id,checked_bucket"},
-            headers={"Prefer": "resolution=merge-duplicates,return=minimal"},
-            data=json.dumps(self.pending_snapshots, ensure_ascii=False),
+            self._table_url(self.history_table),
+            headers={"Prefer": "return=minimal"},
+            data=json.dumps(self.pending_history, ensure_ascii=False),
             timeout=self.timeout_seconds,
         )
         if not response.ok:
@@ -290,10 +292,39 @@ class SupabaseInventoryClient:
             if len(body) > 2000:
                 body = body[:2000] + "..."
             raise SupabasePatchError(
-                f"Supabase snapshot upsert into {self.snapshots_table} returned HTTP "
+                f"Supabase history insert into {self.history_table} returned HTTP "
                 f"{response.status_code}: {body or '<empty response body>'}"
             )
-        self.pending_snapshots.clear()
+        self.pending_history.clear()
+
+    def create_refresh_run(self, payload: dict[str, Any]) -> None:
+        response = self.session.post(
+            self._table_url(self.runs_table),
+            headers={"Prefer": "return=minimal"},
+            data=json.dumps(payload, ensure_ascii=False),
+            timeout=self.timeout_seconds,
+        )
+        if not response.ok:
+            body = (response.text or "").strip()
+            raise SupabasePatchError(
+                f"Supabase refresh-run insert into {self.runs_table} returned HTTP "
+                f"{response.status_code}: {body[:2000] or '<empty response body>'}"
+            )
+
+    def update_refresh_run(self, run_id: str, payload: dict[str, Any]) -> None:
+        response = self.session.patch(
+            self._table_url(self.runs_table),
+            params={"id": f"eq.{run_id}"},
+            headers={"Prefer": "return=minimal"},
+            data=json.dumps(payload, ensure_ascii=False),
+            timeout=self.timeout_seconds,
+        )
+        if not response.ok:
+            body = (response.text or "").strip()
+            raise SupabasePatchError(
+                f"Supabase refresh-run update in {self.runs_table} returned HTTP "
+                f"{response.status_code}: {body[:2000] or '<empty response body>'}"
+            )
 
     def close(self) -> None:
         self.session.close()
@@ -338,7 +369,7 @@ def dynamic_payload(spec: StoreSpec, full_row: dict[str, Any]) -> dict[str, Any]
     return {column: full_row[column] for column in spec.dynamic_columns}
 
 
-def snapshot_checked_at(payload: dict[str, Any]) -> str:
+def history_checked_at(payload: dict[str, Any]) -> str:
     value = (
         payload.get("inventory_checked_at")
         or payload.get("scraped_at")
@@ -349,7 +380,7 @@ def snapshot_checked_at(payload: dict[str, Any]) -> str:
     return str(value)
 
 
-def snapshot_payload(
+def history_payload(
     spec: StoreSpec,
     existing_row: dict[str, Any],
     dynamic: dict[str, Any],
@@ -357,26 +388,19 @@ def snapshot_payload(
     checked_at: str,
     refresh_status: str,
 ) -> dict[str, Any]:
-    source_item_id = existing_row.get("source_color_id") or existing_row.get("source_product_id")
-    if source_item_id is None or str(source_item_id) == "":
-        raise ValueError(
-            f"{spec.key} database id={existing_row.get('id')} has no stable source item id."
-        )
     checked_datetime = datetime.fromisoformat(checked_at.replace("Z", "+00:00"))
     checked_bucket = checked_datetime.astimezone(timezone.utc).date().isoformat()
     return {
         "store": spec.key,
         "product_id": existing_row["id"],
-        "source_parent_id": existing_row.get("source_parent_id"),
-        "source_item_id": str(source_item_id),
-        "canonical_url": existing_row.get("canonical_url"),
-        "source_url": existing_row.get("source_url"),
-        "checked_at": checked_at,
-        "checked_bucket": checked_bucket,
+        "state_hash": "pending",
+        "observed_from": checked_at,
+        "observed_through": checked_at,
+        "last_observed_bucket": checked_bucket,
+        "observation_count": 1,
         "refresh_status": refresh_status,
         "current_price": dynamic.get("current_price"),
         "list_price": dynamic.get("list_price"),
-        "webshop_sizes": dynamic.get("webshop_sizes") or [],
         "local_inventory": dynamic.get("local_inventory") or copy.deepcopy(EMPTY_LOCAL_INVENTORY),
         "local_total_stock": dynamic.get("local_total_stock"),
         "local_available": dynamic.get("local_available"),
@@ -450,17 +474,17 @@ def apply_full_row(
         )
     else:
         database.patch_row(spec, int(existing_row["id"]), payload)
-        if not args.no_snapshots:
-            database.queue_snapshot(
-                snapshot_payload(
+        if not args.no_history:
+            database.queue_history_observation(
+                history_payload(
                     spec,
                     existing_row,
                     payload,
-                    checked_at=snapshot_checked_at(payload),
+                    checked_at=history_checked_at(payload),
                     refresh_status="ok",
                 )
             )
-            stats.snapshots += 1
+            stats.history_observations += 1
     stats.updated += 1
 
 
@@ -487,9 +511,9 @@ def apply_unavailable(
         LOG.info("Dry run unavailable %s id=%s", spec.key, existing_row["id"])
     else:
         database.patch_row(spec, int(existing_row["id"]), payload)
-        if not args.no_snapshots:
-            database.queue_snapshot(
-                snapshot_payload(
+        if not args.no_history:
+            database.queue_history_observation(
+                history_payload(
                     spec,
                     existing_row,
                     payload,
@@ -497,7 +521,7 @@ def apply_unavailable(
                     refresh_status=refresh_status,
                 )
             )
-            stats.snapshots += 1
+            stats.history_observations += 1
     stats.unavailable += 1
 
 
@@ -858,66 +882,130 @@ def refresh_stores(args: argparse.Namespace) -> int:
     database = SupabaseInventoryClient(
         supabase_url,
         supabase_key,
-        snapshots_table=args.snapshots_table,
-        snapshot_batch_size=args.snapshot_batch_size,
+        history_table=args.history_table,
+        runs_table=args.runs_table,
+        history_batch_size=args.history_batch_size,
         timeout_seconds=args.supabase_timeout,
         max_retries=args.max_retries,
     )
     totals = RefreshStats()
     store_failures = 0
+    stores_completed = 0
+    write_failed = False
+    run_id = str(uuid.uuid4())
+    started_at = datetime.now(timezone.utc).isoformat()
+    run_created = False
     try:
+        if not args.dry_run:
+            try:
+                database.create_refresh_run(
+                    {
+                        "id": run_id,
+                        "mode": "all" if args.all or not args.store else "selected",
+                        "selected_stores": selected,
+                        "status": "running",
+                        "started_at": started_at,
+                        "row_limit": args.limit,
+                        "row_offset": args.offset,
+                        "history_enabled": not args.no_history,
+                        "stores_planned": len(selected),
+                        "updated_at": started_at,
+                    }
+                )
+                run_created = True
+            except SupabasePatchError as exc:
+                write_failed = True
+                LOG.error("Could not create store refresh run: %s", exc)
+
         for store_key in selected:
+            if write_failed:
+                break
             LOG.info("Starting sequential %s inventory refresh.", store_key)
             try:
                 stats = STORE_REFRESHERS[store_key](database, args)
-                if not args.dry_run and not args.no_snapshots:
-                    database.flush_snapshots()
+                if not args.dry_run and not args.no_history:
+                    database.flush_history()
             except SupabasePatchError as exc:
                 LOG.error("Stopping all store refreshes after database write failure: %s", exc)
-                return 1
+                write_failed = True
+                break
             except Exception:
-                if not args.dry_run and not args.no_snapshots:
+                if not args.dry_run and not args.no_history:
                     try:
-                        database.flush_snapshots()
+                        database.flush_history()
                     except SupabasePatchError as exc:
                         LOG.error(
-                            "Stopping all store refreshes after snapshot write failure: %s",
+                            "Stopping all store refreshes after history write failure: %s",
                             exc,
                         )
-                        return 1
+                        write_failed = True
+                        break
                 store_failures += 1
                 LOG.exception("Store-level refresh failure for %s", store_key)
                 continue
+            stores_completed += 1
             totals.pages += stats.pages
             totals.updated += stats.updated
             totals.unavailable += stats.unavailable
-            totals.snapshots += stats.snapshots
+            totals.history_observations += stats.history_observations
             totals.failed += stats.failed
             totals.skipped += stats.skipped
             LOG.info(
-                "%s refresh complete. pages=%s updated=%s unavailable=%s snapshots=%s failed=%s",
+                "%s refresh complete. pages=%s updated=%s unavailable=%s history_observations=%s failed=%s",
                 store_key,
                 stats.pages,
                 stats.updated,
                 stats.unavailable,
-                stats.snapshots,
+                stats.history_observations,
                 stats.failed,
             )
     finally:
+        if run_created:
+            finished_at = datetime.now(timezone.utc).isoformat()
+            status = (
+                "failed"
+                if write_failed
+                else "partial"
+                if totals.failed or store_failures
+                else "succeeded"
+            )
+            try:
+                database.update_refresh_run(
+                    run_id,
+                    {
+                        "status": status,
+                        "finished_at": finished_at,
+                        "stores_completed": stores_completed,
+                        "failed_stores": store_failures,
+                        "pages_processed": totals.pages,
+                        "updated_products": totals.updated,
+                        "unavailable_products": totals.unavailable,
+                        "history_observations": totals.history_observations,
+                        "failed_products": totals.failed,
+                        "skipped_products": totals.skipped,
+                        "write_failed": write_failed,
+                        "updated_at": finished_at,
+                    },
+                )
+            except SupabasePatchError as exc:
+                write_failed = True
+                LOG.error("Could not finalize store refresh run %s: %s", run_id, exc)
         database.close()
 
     LOG.info(
         "Sequential store refresh complete. stores=%s pages=%s updated=%s "
-        "unavailable=%s snapshots=%s failed_rows=%s failed_stores=%s",
+        "unavailable=%s history_observations=%s failed_rows=%s failed_stores=%s "
+        "write_failed=%s",
         len(selected),
         totals.pages,
         totals.updated,
         totals.unavailable,
-        totals.snapshots,
+        totals.history_observations,
         totals.failed,
         store_failures,
+        write_failed,
     )
-    return 1 if totals.failed or store_failures else 0
+    return 1 if totals.failed or store_failures or write_failed else 0
 
 
 def parse_args() -> argparse.Namespace:
@@ -939,20 +1027,43 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--offset", type=int, default=0, help="Skip existing rows per store.")
     parser.add_argument("--dry-run", action="store_true", help="Fetch and parse without writing.")
     parser.add_argument(
+        "--no-history",
         "--no-snapshots",
+        dest="no_history",
         action="store_true",
-        help="Patch live product rows without writing daily history snapshots.",
+        help=(
+            "Patch live product rows without writing inventory history. "
+            "--no-snapshots remains as a deprecated alias."
+        ),
     )
     parser.add_argument(
+        "--history-table",
         "--snapshots-table",
-        default=env("STORE_INVENTORY_SNAPSHOTS_TABLE", "store_inventory_snapshots"),
-        help="Supabase table used for non-Kaufmann daily inventory snapshots.",
+        dest="history_table",
+        default=env("STORE_INVENTORY_HISTORY_TABLE", "store_inventory_history"),
+        help=(
+            "Change-based non-Kaufmann inventory history table. "
+            "--snapshots-table remains as a deprecated alias."
+        ),
     )
     parser.add_argument(
+        "--history-batch-size",
         "--snapshot-batch-size",
+        dest="history_batch_size",
         type=int,
-        default=int(env("STORE_REFRESH_SNAPSHOT_BATCH_SIZE", "50")),
-        help="Number of daily observations per idempotent Supabase snapshot upsert.",
+        default=int(env("STORE_REFRESH_HISTORY_BATCH_SIZE", "50")),
+        help=(
+            "Number of observations per Supabase history insert. "
+            "--snapshot-batch-size remains as a deprecated alias."
+        ),
+    )
+    parser.add_argument(
+        "--runs-table",
+        default=env(
+            "STORE_INVENTORY_REFRESH_RUNS_TABLE",
+            "store_inventory_refresh_runs",
+        ),
+        help="Operational run table for sequential non-Kaufmann refreshes.",
     )
     parser.add_argument("--no-delay", action="store_true", help="Disable polite inter-product delays.")
     parser.add_argument("--min-delay", type=float, default=float(env("STORE_REFRESH_MIN_DELAY", "0.5")))
@@ -982,8 +1093,8 @@ def parse_args() -> argparse.Namespace:
         parser.error("--supabase-timeout must be greater than 0")
     if arguments.max_retries < 0:
         parser.error("--max-retries cannot be negative")
-    if arguments.snapshot_batch_size < 1:
-        parser.error("--snapshot-batch-size must be at least 1")
+    if arguments.history_batch_size < 1:
+        parser.error("--history-batch-size must be at least 1")
     if arguments.suitclub_inventory_batch_size < 1:
         parser.error("--suitclub-inventory-batch-size must be at least 1")
     if arguments.suitclub_inventory_batch_delay < 0:

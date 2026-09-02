@@ -27,7 +27,7 @@ if str(ROOT) not in sys.path:
 from scripts.refresh_store_inventory import (  # noqa: E402
     STORE_SPECS,
     SupabasePatchError,
-    snapshot_payload,
+    history_payload,
     unavailable_payload,
 )
 from scripts.catalog_sync_tracking import CatalogSyncRunRecorder, utc_now  # noqa: E402
@@ -118,12 +118,12 @@ class CatalogLifecycleClient:
         supabase_url: str,
         supabase_key: str,
         *,
-        snapshots_table: str,
+        history_table: str,
         timeout_seconds: float = 60,
         max_retries: int = 2,
     ) -> None:
         self.supabase_url = supabase_url.rstrip("/")
-        self.snapshots_table = snapshots_table
+        self.history_table = history_table
         self.timeout_seconds = timeout_seconds
         self.session = requests.Session()
         headers = {"apikey": supabase_key, "Content-Type": "application/json"}
@@ -223,18 +223,17 @@ class CatalogLifecycleClient:
     def patch_row(self, table: str, row_id: int, payload: dict[str, Any]) -> None:
         self.patch_ids(table, [row_id], payload, chunk_size=1)
 
-    def upsert_snapshots(self, rows: list[dict[str, Any]]) -> None:
+    def insert_history(self, rows: list[dict[str, Any]]) -> None:
         if not rows:
             return
         response = self.session.post(
-            self._table_url(self.snapshots_table),
-            params={"on_conflict": "store,product_id,checked_bucket"},
-            headers={"Prefer": "resolution=merge-duplicates,return=minimal"},
+            self._table_url(self.history_table),
+            headers={"Prefer": "return=minimal"},
             data=json.dumps(rows, ensure_ascii=False),
             timeout=self.timeout_seconds,
         )
         if not response.ok:
-            raise self._response_error(response, f"UPSERT {self.snapshots_table}")
+            raise self._response_error(response, f"INSERT {self.history_table}")
 
     def close(self) -> None:
         self.session.close()
@@ -330,7 +329,7 @@ def reconcile_catalog(
         )
         return stats
 
-    missing_snapshots: list[dict[str, Any]] = []
+    missing_history: list[dict[str, Any]] = []
     for row in rows_after:
         row_id = int(row["id"])
         if row_id in seen_ids or row.get("publication_status") == "missing":
@@ -361,8 +360,8 @@ def reconcile_catalog(
                 "consecutive_catalog_misses": misses,
             },
         )
-        missing_snapshots.append(
-            snapshot_payload(
+        missing_history.append(
+            history_payload(
                 spec,
                 row,
                 dynamic,
@@ -372,8 +371,8 @@ def reconcile_catalog(
         )
         stats.confirmed_missing += 1
 
-    for offset in range(0, len(missing_snapshots), 50):
-        client.upsert_snapshots(missing_snapshots[offset : offset + 50])
+    for offset in range(0, len(missing_history), 50):
+        client.insert_history(missing_history[offset : offset + 50])
     return stats
 
 
@@ -393,7 +392,7 @@ def sync_catalogs(args: argparse.Namespace) -> int:
         CatalogLifecycleClient(
             str(supabase_url),
             str(supabase_key),
-            snapshots_table=args.snapshots_table,
+            history_table=args.history_table,
             timeout_seconds=args.supabase_timeout,
             max_retries=args.max_retries,
         )
@@ -569,8 +568,14 @@ def parse_args() -> argparse.Namespace:
         help="Per-store full-import timeout in seconds.",
     )
     parser.add_argument(
+        "--history-table",
         "--snapshots-table",
-        default=env("STORE_INVENTORY_SNAPSHOTS_TABLE", "store_inventory_snapshots"),
+        dest="history_table",
+        default=env("STORE_INVENTORY_HISTORY_TABLE", "store_inventory_history"),
+        help=(
+            "Change-based inventory history table used for confirmed catalog "
+            "tombstones. --snapshots-table remains as a deprecated alias."
+        ),
     )
     parser.add_argument(
         "--sync-runs-table",

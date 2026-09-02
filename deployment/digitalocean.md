@@ -66,6 +66,8 @@ SUPABASE_SECRET_KEY=your-supabase-secret-key
 KAUFMANN_PRODUCTS_TABLE=kaufmann_products
 KAUFMANN_INVENTORY_HISTORY_TABLE=kaufmann_inventory_history
 KAUFMANN_INVENTORY_REFRESH_RUNS_TABLE=kaufmann_inventory_refresh_runs
+STORE_INVENTORY_HISTORY_TABLE=store_inventory_history
+STORE_INVENTORY_REFRESH_RUNS_TABLE=store_inventory_refresh_runs
 ```
 
 Use the server-side Supabase secret key. Do not use a frontend publishable key for this job.
@@ -81,7 +83,9 @@ The production database must also have
 `supabase/migrations/20260902090029_compact_kaufmann_inventory_history.sql`
 and
 `supabase/migrations/20260902090721_retire_legacy_kaufmann_snapshots.sql`
-before deploying the compact Kaufmann refresh code.
+before deploying the compact Kaufmann refresh code. Apply the compact store
+inventory-history migration before deploying the updated non-Kaufmann refresh
+and catalog-sync code.
 
 ```bash
 mkdir -p logs
@@ -196,11 +200,11 @@ If you prefer cron:
 
 - Catalog reconciliation is skipped and the service exits unsuccessfully if fewer than 50% of the previously publishable rows were refreshed. This protects against a broken or temporarily truncated collection feed.
 
-- Every successful non-Kaufmann product update also writes a lean row to `store_inventory_snapshots`. The unique key is `store + product_id + checked_bucket`, so retries replace that product's observation for the same UTC day instead of adding duplicates. Snapshot writes are batched in groups of 50.
+- Every successful non-Kaufmann product update submits one observation to `store_inventory_history`. The database extends the latest interval when prices and local inventory are unchanged, or inserts a new interval when that state changes. A same-day retry does not increase `observation_count`. Writes are batched in groups of 50.
 
-- The snapshot table stores only dynamic analysis fields: prices, webshop sizes, clean local inventory, total-stock summaries, availability summaries, the source identity, and refresh status. It does not duplicate descriptions, images, materials, or other catalog metadata.
+- Store history contains prices, clean local inventory, total-stock summaries, availability summaries, and refresh status. It deliberately excludes webshop sizes, URLs, source identity, descriptions, images, materials, and other catalog metadata.
 
-- With the current 2,266 non-Kaufmann rows, a complete daily run produces at most 2,266 snapshot rows, or about 827,090 rows per year. Add a retention or archival policy later if multi-year JSON history becomes larger than the analysis requires.
+- `store_inventory_refresh_runs` records one compact audit row per sequential daily invocation, including selected stores, test limits/offsets, whether history was enabled, counts, status, and write failures.
 
 - Active products refresh Monday through Saturday. Sunday's sweep also rechecks soft-tombstoned products so a product can become active again.
 - The two Kaufmann timers start at `02:15`; the other-store inventory timer starts at `08:15`; and the weekly catalog timer starts Sunday at `12:15`. Randomized delays and the shared lock prevent simultaneous scraper workloads.
@@ -215,20 +219,21 @@ If you prefer cron:
 - Every successful full catalogue job writes a summary to `catalog_sync_runs`, including seen, new, reactivated, absent, confirmed-missing, and failed counts. Rows from one eight-store invocation share a `batch_id`.
 - Every product table already has an immutable `first_seen_at` timestamp. New-product filters should use this field; ordinary catalogue and inventory upserts do not rewrite it.
 
-Useful snapshot query:
+Useful history query:
 
 ```sql
 select
-  checked_bucket,
-  checked_at,
+  observed_from,
+  observed_through,
+  observation_count,
   refresh_status,
   current_price,
   list_price,
   local_total_stock,
   aarhus_total_stock,
   aarhus_available
-from public.store_inventory_snapshots
+from public.store_inventory_history
 where store = 'stoy'
   and product_id = 1
-order by checked_at desc;
+order by observed_through desc;
 ```

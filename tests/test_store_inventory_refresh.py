@@ -10,7 +10,7 @@ from scripts.refresh_store_inventory import (
     apply_unavailable,
     dynamic_payload,
     ensure_identity,
-    snapshot_payload,
+    history_payload,
     unavailable_payload,
     zero_inventory,
 )
@@ -88,8 +88,8 @@ class StoreInventoryRefreshTests(unittest.TestCase):
                 {"source_product_id": "456"},
             )
 
-    def test_snapshot_payload_uses_utc_day_and_unified_source_item_id(self) -> None:
-        payload = snapshot_payload(
+    def test_history_payload_uses_utc_day_and_omits_webshop_sizes(self) -> None:
+        payload = history_payload(
             STORE_SPECS["cejf"],
             {
                 "id": 17,
@@ -113,12 +113,16 @@ class StoreInventoryRefreshTests(unittest.TestCase):
 
         self.assertEqual("cejf", payload["store"])
         self.assertEqual(17, payload["product_id"])
-        self.assertEqual("987654", payload["source_item_id"])
-        self.assertEqual("2026-08-25", payload["checked_bucket"])
+        self.assertEqual("pending", payload["state_hash"])
+        self.assertEqual("2026-08-25", payload["last_observed_bucket"])
+        self.assertEqual(payload["observed_from"], payload["observed_through"])
+        self.assertNotIn("webshop_sizes", payload)
+        self.assertNotIn("source_item_id", payload)
+        self.assertNotIn("canonical_url", payload)
         self.assertEqual(699, payload["current_price"])
         self.assertTrue(payload["aarhus_available"])
 
-    def test_live_patch_is_followed_by_snapshot_queue(self) -> None:
+    def test_live_patch_is_followed_by_history_queue(self) -> None:
         class FakeDatabase:
             def __init__(self) -> None:
                 self.events: list[tuple[str, object]] = []
@@ -126,8 +130,8 @@ class StoreInventoryRefreshTests(unittest.TestCase):
             def patch_row(self, spec, row_id, payload) -> None:
                 self.events.append(("patch", row_id))
 
-            def queue_snapshot(self, payload) -> None:
-                self.events.append(("snapshot", payload))
+            def queue_history_observation(self, payload) -> None:
+                self.events.append(("history", payload))
 
         spec = STORE_SPECS["cejf"]
         checked_at = "2026-08-26T10:00:00+00:00"
@@ -158,25 +162,25 @@ class StoreInventoryRefreshTests(unittest.TestCase):
                 "source_url": "https://cejf.dk/products/example",
             },
             full_row,
-            Namespace(dry_run=False, no_snapshots=False),
+            Namespace(dry_run=False, no_history=False),
             stats,
         )
 
-        self.assertEqual(["patch", "snapshot"], [event[0] for event in database.events])
-        self.assertEqual("2026-08-26", database.events[1][1]["checked_bucket"])
+        self.assertEqual(["patch", "history"], [event[0] for event in database.events])
+        self.assertEqual("2026-08-26", database.events[1][1]["last_observed_bucket"])
         self.assertEqual(1, stats.updated)
-        self.assertEqual(1, stats.snapshots)
+        self.assertEqual(1, stats.history_observations)
 
-    def test_explicitly_unavailable_row_records_status_snapshot(self) -> None:
+    def test_explicitly_unavailable_row_records_status_history(self) -> None:
         class FakeDatabase:
             def __init__(self) -> None:
-                self.snapshots: list[dict[str, object]] = []
+                self.history: list[dict[str, object]] = []
 
             def patch_row(self, spec, row_id, payload) -> None:
                 self.payload = payload
 
-            def queue_snapshot(self, payload) -> None:
-                self.snapshots.append(payload)
+            def queue_history_observation(self, payload) -> None:
+                self.history.append(payload)
 
         database = FakeDatabase()
         stats = RefreshStats()
@@ -193,16 +197,16 @@ class StoreInventoryRefreshTests(unittest.TestCase):
                 "list_price": None,
                 "local_inventory": {"stores": {}},
             },
-            Namespace(dry_run=False, no_snapshots=False),
+            Namespace(dry_run=False, no_history=False),
             stats,
             refresh_status="source_item_missing",
         )
 
-        self.assertEqual(1, len(database.snapshots))
-        self.assertEqual("source_item_missing", database.snapshots[0]["refresh_status"])
-        self.assertFalse(database.snapshots[0]["aarhus_available"])
+        self.assertEqual(1, len(database.history))
+        self.assertEqual("source_item_missing", database.history[0]["refresh_status"])
+        self.assertFalse(database.history[0]["aarhus_available"])
         self.assertEqual(1, stats.unavailable)
-        self.assertEqual(1, stats.snapshots)
+        self.assertEqual(1, stats.history_observations)
 
 
 if __name__ == "__main__":

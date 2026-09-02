@@ -726,14 +726,16 @@ CEJF, Skagen Clothing, Shoe Chapter, STOY, and LAKOR in a fixed sequence and
 patches existing product rows by database `id` only. It must not create catalog
 rows or rewrite stable metadata.
 
-Non-Kaufmann daily history is stored in the shared
-`store_inventory_snapshots` table created by
-`migrations/018_store_inventory_snapshots.sql`. Store one lean observation per
-`store + product_id + UTC day`; a retry on the same day upserts the existing
-observation. Keep source identity, prices, webshop sizes, clean local inventory,
-summary totals, availability, and refresh status. Do not copy catalog metadata
-or `raw` into snapshots. A failed fetch that does not update the product row
-must not create a misleading inventory snapshot.
+Non-Kaufmann history is stored in the shared `store_inventory_history` table.
+It stores one interval per consecutive dynamic state. The database trigger
+fingerprints each incoming observation: an unchanged state extends the current
+interval and increments `observation_count` at most once per UTC day; a changed
+state inserts a new interval. Keep prices, clean local inventory, summary totals,
+availability, and refresh status. Webshop sizes, URLs, and source identifiers
+remain on live product rows and are intentionally not duplicated in history.
+`store_inventory_refresh_runs` records one operational row per sequential
+refresh invocation. A failed fetch that does not update the product row must not
+create a misleading inventory-history observation.
 
 Weekly non-Kaufmann catalog reconciliation is handled by
 `scripts/sync_store_catalogs.py` and

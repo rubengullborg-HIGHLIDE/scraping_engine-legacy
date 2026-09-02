@@ -63,7 +63,7 @@ class FakeLifecycleClient:
     def patch_row(self, table: str, row_id: int, payload: dict) -> None:
         self.row_patches.append((table, row_id, payload))
 
-    def upsert_snapshots(self, rows: list[dict]) -> None:
+    def insert_history(self, rows: list[dict]) -> None:
         self.snapshots.extend(rows)
 
 
