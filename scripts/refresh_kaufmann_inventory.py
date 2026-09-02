@@ -7,6 +7,7 @@ import os
 import random
 import sys
 import time
+import uuid
 from collections import OrderedDict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -49,16 +50,14 @@ DYNAMIC_PRODUCT_COLUMNS = (
 
 SNAPSHOT_COLUMNS = (
     "kaufmann_product_id",
-    "source_parent_id",
-    "source_color_id",
-    "canonical_url",
-    "source_url",
-    "checked_at",
-    "checked_bucket",
+    "state_hash",
+    "observed_from",
+    "observed_through",
+    "last_observed_bucket",
+    "observation_count",
     "refresh_status",
     "current_price",
     "list_price",
-    "webshop_sizes",
     "aarhus_inventory",
     "aarhus_total_stock",
     "aarhus_available",
@@ -198,14 +197,41 @@ class SupabaseKaufmannRefreshClient:
         )
         self._raise_write_error(response, table)
 
-    def upsert_snapshots(self, table: str, rows: list[dict[str, Any]]) -> None:
+    def insert_history_observations(
+        self,
+        table: str,
+        rows: list[dict[str, Any]],
+    ) -> None:
         if not rows:
             return
         response = self.session.post(
             self._table_url(table),
-            params={"on_conflict": "kaufmann_product_id,checked_bucket"},
-            headers={"Prefer": "resolution=merge-duplicates,return=minimal"},
+            headers={"Prefer": "return=minimal"},
             data=json.dumps(rows, ensure_ascii=False),
+            timeout=self.timeout_seconds,
+        )
+        self._raise_write_error(response, table)
+
+    def create_refresh_run(self, table: str, row: dict[str, Any]) -> None:
+        response = self.session.post(
+            self._table_url(table),
+            headers={"Prefer": "return=minimal"},
+            data=json.dumps(row, ensure_ascii=False),
+            timeout=self.timeout_seconds,
+        )
+        self._raise_write_error(response, table)
+
+    def update_refresh_run(
+        self,
+        table: str,
+        run_id: str,
+        payload: dict[str, Any],
+    ) -> None:
+        response = self.session.patch(
+            self._table_url(table),
+            params={"id": f"eq.{run_id}"},
+            headers={"Prefer": "return=minimal"},
+            data=json.dumps(payload, ensure_ascii=False),
             timeout=self.timeout_seconds,
         )
         self._raise_write_error(response, table)
@@ -277,17 +303,17 @@ def snapshot_payload(
 ) -> dict[str, Any]:
     payload = {
         "kaufmann_product_id": product_row["id"],
-        "source_parent_id": product_row["source_parent_id"],
-        "source_color_id": product_row["source_color_id"],
-        "canonical_url": product_row.get("canonical_url"),
-        "source_url": product_row.get("source_url"),
-        "checked_at": checked_at,
-        "checked_bucket": checked_at[:10],
+        # The database trigger replaces this placeholder with a fingerprint of
+        # the stored state before deciding whether to insert or extend an interval.
+        "state_hash": "pending",
+        "observed_from": checked_at,
+        "observed_through": checked_at,
+        "last_observed_bucket": checked_at[:10],
+        "observation_count": 1,
         "refresh_status": refresh_status,
         "updated_at": checked_at,
         "current_price": scraped_row.get("current_price"),
         "list_price": scraped_row.get("list_price"),
-        "webshop_sizes": scraped_row.get("webshop_sizes") or [],
         "aarhus_inventory": scraped_row.get("aarhus_inventory")
         or EMPTY_AARHUS_INVENTORY,
         "aarhus_total_stock": scraped_row.get("aarhus_total_stock") or 0,
@@ -423,9 +449,13 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
     products_table = args.products_table or env(
         "KAUFMANN_PRODUCTS_TABLE", "kaufmann_products"
     )
-    snapshots_table = args.snapshots_table or env(
-        "KAUFMANN_INVENTORY_SNAPSHOTS_TABLE",
-        "kaufmann_inventory_snapshots",
+    history_table = args.history_table or env(
+        "KAUFMANN_INVENTORY_HISTORY_TABLE",
+        "kaufmann_inventory_history",
+    )
+    runs_table = args.runs_table or env(
+        "KAUFMANN_INVENTORY_REFRESH_RUNS_TABLE",
+        "kaufmann_inventory_refresh_runs",
     )
     supabase_url = env("SUPABASE_URL")
     supabase_key = env("SUPABASE_SECRET_KEY") or env("SUPABASE_SERVICE_ROLE_KEY")
@@ -450,7 +480,11 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
     failed_pages = 0
     stopped_early = False
     write_failed = False
+    pages_processed = 0
     started_monotonic = time.monotonic()
+    started_at = datetime.now(timezone.utc).isoformat()
+    run_id = str(uuid.uuid4())
+    run_created = False
     pending_product_updates: list[dict[str, Any]] = []
     pending_snapshots: list[dict[str, Any]] = []
     new_variant_candidate_urls: set[str] = set()
@@ -467,7 +501,7 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                 if tuple(sorted(row)) != signature
             ]
         for batch in uniform_key_batches(pending_snapshots):
-            client.upsert_snapshots(snapshots_table, batch)
+            client.insert_history_observations(history_table, batch)
             signature = tuple(sorted(batch[0]))
             pending_snapshots[:] = [
                 row for row in pending_snapshots if tuple(sorted(row)) != signature
@@ -515,6 +549,26 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
         if args.limit:
             pages = pages[: args.limit]
 
+        if not args.dry_run and client is not None:
+            mode = (
+                "urls"
+                if args.url
+                else ("all" if args.include_unavailable else "active")
+            )
+            client.create_refresh_run(
+                runs_table,
+                {
+                    "id": run_id,
+                    "mode": mode,
+                    "status": "running",
+                    "include_unavailable": bool(args.include_unavailable),
+                    "started_at": started_at,
+                    "pages_planned": len(pages),
+                    "updated_at": started_at,
+                },
+            )
+            run_created = True
+
         parent_rows = rows_by_source_parent_id(existing_rows)
         LOG.info(
             "Loaded %s Kaufmann product pages for HTTP variation refresh%s.",
@@ -532,6 +586,8 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                     args.max_runtime_minutes,
                 )
                 break
+
+            pages_processed += 1
 
             canonical_url = page["canonical_url"]
             source_parent_id = page.get("source_parent_id") or ""
@@ -726,6 +782,40 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                 )
 
     finally:
+        if client is not None and run_created:
+            finished_at = datetime.now(timezone.utc).isoformat()
+            if write_failed:
+                run_status = "failed"
+            elif failed_pages or stopped_early:
+                run_status = "partial"
+            else:
+                run_status = "succeeded"
+            try:
+                client.update_refresh_run(
+                    runs_table,
+                    run_id,
+                    {
+                        "status": run_status,
+                        "finished_at": finished_at,
+                        "pages_processed": pages_processed,
+                        "refreshed_variants": refreshed_variants,
+                        "unavailable_variants": unavailable_variants,
+                        "missing_variants": missing_variants,
+                        "skipped_new_variants": skipped_new_variants,
+                        "failed_pages": failed_pages,
+                        "stopped_early": stopped_early,
+                        "write_failed": write_failed,
+                        "updated_at": finished_at,
+                    },
+                )
+            except SupabaseWriteError as exc:
+                failed_pages += 1
+                write_failed = True
+                LOG.error(
+                    "Failed to finalize Kaufmann refresh run %s: %s",
+                    run_id,
+                    exc,
+                )
         variation_client.close()
         if client is not None:
             client.close()
@@ -769,10 +859,23 @@ def parse_args() -> argparse.Namespace:
         default=env("KAUFMANN_PRODUCTS_TABLE", "kaufmann_products"),
     )
     parser.add_argument(
+        "--history-table",
         "--snapshots-table",
+        dest="history_table",
         default=env(
-            "KAUFMANN_INVENTORY_SNAPSHOTS_TABLE",
-            "kaufmann_inventory_snapshots",
+            "KAUFMANN_INVENTORY_HISTORY_TABLE",
+            "kaufmann_inventory_history",
+        ),
+        help=(
+            "Change-based Kaufmann history table. --snapshots-table remains as "
+            "a deprecated alias for deployment compatibility."
+        ),
+    )
+    parser.add_argument(
+        "--runs-table",
+        default=env(
+            "KAUFMANN_INVENTORY_REFRESH_RUNS_TABLE",
+            "kaufmann_inventory_refresh_runs",
         ),
     )
     parser.add_argument("--url", action="append", help="Refresh a specific Kaufmann product URL.")

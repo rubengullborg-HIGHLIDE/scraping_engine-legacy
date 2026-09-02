@@ -301,6 +301,13 @@ class KaufmannRefreshLifecycleTests(unittest.TestCase):
         self.assertFalse(snapshot["source_available"])
         self.assertEqual("unavailable", snapshot["publication_status"])
         self.assertEqual("source_unavailable", snapshot["refresh_status"])
+        self.assertEqual(CHECKED_AT, snapshot["observed_from"])
+        self.assertEqual(CHECKED_AT, snapshot["observed_through"])
+        self.assertEqual("2026-08-26", snapshot["last_observed_bucket"])
+        self.assertEqual(1, snapshot["observation_count"])
+        self.assertNotIn("webshop_sizes", snapshot)
+        self.assertNotIn("canonical_url", snapshot)
+        self.assertNotIn("source_parent_id", snapshot)
 
     def test_repeat_unavailable_refresh_preserves_first_discontinued_time(self) -> None:
         scraped = variation_rows_from_payload(

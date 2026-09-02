@@ -20,6 +20,7 @@ env/
 
 # Logs and runtime output
 logs/
+backups/
 *.log
 
 # OS/editor files

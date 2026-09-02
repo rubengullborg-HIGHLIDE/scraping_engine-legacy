@@ -64,7 +64,8 @@ Required:
 SUPABASE_URL=https://your-project-ref.supabase.co
 SUPABASE_SECRET_KEY=your-supabase-secret-key
 KAUFMANN_PRODUCTS_TABLE=kaufmann_products
-KAUFMANN_INVENTORY_SNAPSHOTS_TABLE=kaufmann_inventory_snapshots
+KAUFMANN_INVENTORY_HISTORY_TABLE=kaufmann_inventory_history
+KAUFMANN_INVENTORY_REFRESH_RUNS_TABLE=kaufmann_inventory_refresh_runs
 ```
 
 Use the server-side Supabase secret key. Do not use a frontend publishable key for this job.
@@ -76,6 +77,11 @@ Before deploying the non-Kaufmann jobs to a new Supabase environment, apply
 `migrations/019_store_product_lifecycle.sql`. Apply
 `migrations/020_product_discovery_tracking.sql` before deploying catalogue-run
 tracking and Kaufmann discovery.
+The production database must also have
+`supabase/migrations/20260902090029_compact_kaufmann_inventory_history.sql`
+and
+`supabase/migrations/20260902090721_retire_legacy_kaufmann_snapshots.sql`
+before deploying the compact Kaufmann refresh code.
 
 ```bash
 mkdir -p logs
@@ -200,7 +206,9 @@ If you prefer cron:
 - The two Kaufmann timers start at `02:15`; the other-store inventory timer starts at `08:15`; and the weekly catalog timer starts Sunday at `12:15`. Randomized delays and the shared lock prevent simultaneous scraper workloads.
 - Set the droplet timezone with `sudo timedatectl set-timezone Europe/Copenhagen` if you want the timer interpreted as Copenhagen time.
 - `kaufmann_products` remains the current/live table.
-- `kaufmann_inventory_snapshots` receives one row per Kaufmann variant per UTC day.
+- `kaufmann_inventory_history` stores one interval per consecutive Kaufmann
+  dynamic state and extends unchanged intervals.
+- `kaufmann_inventory_refresh_runs` records one row per refresh invocation.
 - The refresh does not rewrite stable catalog fields or `raw`.
 - `publication_status = 'active'` is the publishable state. `unavailable` rows are retained as soft tombstones rather than deleted.
 - Kaufmann's Sunday job runs the lightweight all-row variation sweep first. In addition to lifecycle updates, that sweep records known pages whose response contains an unknown colour ID. The catalogue step then full-imports only those affected pages plus URLs newly found in the sitemap. This detects new colours on old URLs without a second all-page pass or a weekly Playwright import of every known page.

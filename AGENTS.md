@@ -684,27 +684,41 @@ Kaufmann refresh is handled by `scripts/refresh_kaufmann_inventory.py`. It inten
 - Write logs to `logs/kaufmann_refresh.log` when run as cron.
 - Use UTC timestamps in the database.
 
-Kaufmann refresh snapshots are stored in `kaufmann_inventory_snapshots`. This table is intentionally lean because it will grow daily:
+Kaufmann refresh history is stored in `kaufmann_inventory_history`. It stores
+one row per consecutive dynamic state rather than copying identical JSON every
+day:
 
 ```text
-kaufmann_inventory_snapshots
+kaufmann_inventory_history
 ├── kaufmann_product_id
-├── source_parent_id
-├── source_color_id
-├── canonical_url
-├── source_url
-├── checked_at
-├── checked_bucket
+├── state_hash
+├── observed_from
+├── observed_through
+├── last_observed_bucket
+├── observation_count
 ├── refresh_status
 ├── current_price
 ├── list_price
-├── webshop_sizes
 ├── aarhus_inventory
 ├── aarhus_total_stock
-└── aarhus_available
+├── aarhus_available
+├── source_available
+├── publication_status
+└── status_reason
 ```
 
-It stores one snapshot per Kaufmann variant per UTC day via `unique (kaufmann_product_id, checked_bucket)`. It does not store full `raw`, images, descriptions, brand metadata, or other stable catalog fields.
+The database trigger fingerprints each incoming observation. An unchanged
+state extends `observed_through` and increments `observation_count` at most
+once per UTC day; a changed state inserts a new interval. Webshop sizes are
+intentionally not retained in history. Product URLs and source identifiers are
+joined from `kaufmann_products` through `kaufmann_product_id` instead of being
+repeated. `kaufmann_inventory_refresh_runs` records one small operational row
+per invocation so daily execution can be audited without daily inventory JSON
+copies.
+
+`kaufmann_inventory_snapshots` is the archived legacy daily table. Its rows
+were compacted into the history table and it was truncated on September 2,
+2026. Current refresh code must not write to it.
 
 The sequential non-Kaufmann refresh is handled by
 `scripts/refresh_store_inventory.py`. It refreshes Rains, Rømerhus, SuitClub,
