@@ -37,7 +37,7 @@ PRODUCTS = [
 # EDIT HERE if your products use size formats that are not listed here.
 SIZE_PATTERN = re.compile(
     r"^(XXS|XS|S|M|L|XL|XXL|XXXL|ONE SIZE|OS|"
-    r"\d{2,3}(?:[.,]\d)?(?:\s+\d/\d)?|W\d{2}(?:/L\d{2})?)$",
+    r"\d{2,3}(?:[.,]\d)?(?:\s+\d/\d)?|W\d{2}(?:/L?\d{2})?)$",
     re.IGNORECASE,
 )
 
