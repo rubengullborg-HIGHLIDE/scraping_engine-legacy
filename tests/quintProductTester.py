@@ -32,12 +32,16 @@ PRODUCTS = [
         "name": "Sko",
         "url": "https://www.quint.dk/produkt/sorel-202833?color=0195041723507216a962d758300c2d51#color=0195041723507216a962d758300c2d51&from_cat=019623f9eb6d73ba97d1313eb7134b5a",
     },
+    {
+        "name": "sale shirt",
+        "url": "https://www.quint.dk/produkt/non-sens-203257?color=0195041723507216a962d758300c2d51#color=0195041723507216a962d758300c2d51&from_cat=01967ca17da976a7bab5538330b278d6",
+    },
 ]
 
 # EDIT HERE if your products use size formats that are not listed here.
 SIZE_PATTERN = re.compile(
     r"^(XXS|XS|S|M|L|XL|XXL|XXXL|ONE SIZE|OS|"
-    r"\d{2,3}(?:[.,]\d)?(?:\s+\d/\d)?|W\d{2}(?:/L?\d{2})?)$",
+    r"\d{2,3}(?:[.,]\d)?(?:\s+\d/\d)?|W\d{2}(?:/L\d{2})?)$",
     re.IGNORECASE,
 )
 
@@ -336,6 +340,27 @@ async def read_text(locator):
 
 async def get_product_info(page):
                                """Read information shared by this product's color and size variants."""
+                               # Quint puts discount and Outlet labels in this badge container.
+                               badge_elements = page.locator(
+                                   'main [x-show="$store.productStore.badges"] '
+                                   '[x-text="badge.content"]'
+                               )
+                               badge_texts = []
+                               for index in range(await badge_elements.count()):
+                                   text = " ".join(
+                                       (await badge_elements.nth(index).inner_text()).split()
+                                   )
+                                   if text:
+                                       badge_texts.append(text)
+
+                               percentage_match = re.search(
+                                   r"(\d{1,3})\s*%", " ".join(badge_texts)
+                               )
+                               sale_percentage = (
+                                   int(percentage_match.group(1))
+                                   if percentage_match
+                                   else None
+                               )
                                heading = await read_text(page.locator("main h1"))
                                # The category link immediately before the product-name <li>.
                                product_type = await read_text(
@@ -358,6 +383,8 @@ async def get_product_info(page):
                                    "price": await read_text(
                                        page.locator('main [x-text="$store.productStore.price"]')
                                    ),
+                                   "on_sale": sale_percentage is not None,
+                                   "sale_percentage": sale_percentage,
                                    "brand": await read_text(
                                        page.locator('main a[href*="/brands/"]')
                                    ),

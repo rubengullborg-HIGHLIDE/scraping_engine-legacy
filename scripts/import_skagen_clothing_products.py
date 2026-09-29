@@ -91,12 +91,49 @@ def import_skagen_clothing_products(args: argparse.Namespace) -> int:
                 pending_rows.clear()
 
         if args.dry_run:
-            LOG.info("Dry run rows:\n%s", json.dumps(dry_run_rows, ensure_ascii=False, indent=2))
-        elif pending_rows:
-            assert client is not None
-            client.upsert_products(table, pending_rows)
-            LOG.info("Upserted final %s Skagen Clothing rows to %s.", len(pending_rows), table)
-        LOG.info("Skagen Clothing import complete. rows=%s", len(dry_run_rows) if args.dry_run else "written")
+            if args.output:
+                output_path = Path(args.output)
+
+                if not output_path.is_absolute():
+                    output_path = ROOT / output_path
+
+                output_path.write_text(
+                    json.dumps(
+                        dry_run_rows,
+                        ensure_ascii=False,
+                        indent=2,
+                    ),
+                    encoding="utf-8",
+                )
+
+                LOG.info(
+                    "Wrote %s returned rows to %s.",
+                    len(dry_run_rows),
+                    output_path,
+                )
+
+            rows_to_display = dry_run_rows
+
+            if args.only_available:
+                rows_to_display = [
+                    row
+                    for row in dry_run_rows
+                    if (
+                        row.get("local_available") is True
+                        or row.get("aarhus_available") is True
+                    )
+                ]
+
+            LOG.info(
+                "Displaying %s of %s returned rows:\n%s",
+                len(rows_to_display),
+                len(dry_run_rows),
+                json.dumps(
+                    rows_to_display,
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+            )
         return 0
     except Exception:
         LOG.exception("Skagen Clothing import failed")
@@ -121,6 +158,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-delay", type=float, default=float(env("FULL_IMPORT_MAX_DELAY", "3.0")))
     parser.add_argument("--write-batch-size", type=int, default=int(env("SKAGEN_CLOTHING_WRITE_BATCH_SIZE", "50")))
     parser.add_argument("--log-level", default=env("LOG_LEVEL", "INFO"), choices=["DEBUG", "INFO", "WARNING", "ERROR"])
+    parser.add_argument("--output", help="Write all dry-run rows to this JSON file.")
+    parser.add_argument("--only-available", action="store_true", help="Display only rows available online or locally.")
+
     arguments = parser.parse_args()
     if arguments.write_batch_size < 1:
         parser.error("--write-batch-size must be at least 1")

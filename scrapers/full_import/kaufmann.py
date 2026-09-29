@@ -113,13 +113,52 @@ class KaufmanScraper(BaseScraper):
 
     def _fetch_sitemap_xml(self, url: str) -> Optional[str]:
         try:
-            response = requests.get(url, headers=self.headers, timeout=20)
+            response = requests.get(
+                url,
+                headers=self.headers,
+                timeout=30,
+            )
             response.raise_for_status()
-            if url.endswith(".gz"):
-                return gzip.decompress(response.content).decode("utf-8", errors="replace")
-            return response.text
-        except Exception as e:
-            print(f"  [!] Fejl ved sitemap {url}: {e}")
+
+            data = response.content
+
+            # The server returned plain XML.
+            if data.lstrip().startswith(b"<"):
+                return data.decode(
+                    response.encoding or "utf-8",
+                    errors="replace",
+                )
+
+            # Genuine gzip data starts with 1f 8b.
+            if data[:2] == b"\x1f\x8b":
+                return gzip.decompress(data).decode(
+                    "utf-8",
+                    errors="replace",
+                )
+
+            return data.decode(
+                response.encoding or "utf-8",
+                errors="replace",
+            )
+
+        except requests.RequestException as exc:
+            LOG.error(
+                "Kaufmann sitemap request failed for %s: %s",
+                url,
+                exc,
+            )
+            return None
+
+        except (
+            OSError,
+            gzip.BadGzipFile,
+            UnicodeDecodeError,
+        ) as exc:
+            LOG.error(
+                "Kaufmann sitemap decoding failed for %s: %s",
+                url,
+                exc,
+            )
             return None
 
     def parse_product_variants_with_js(

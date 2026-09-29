@@ -14,10 +14,7 @@ STORE_NAME = "AXEL Aarhus C"
 
 # EDIT HERE: Add products here. Each needs a name and an Axel product URL.
 PRODUCT_URL = (
-    "https://www.axel.dk/produkt/nanamica-202950-axel"
-    "?color=0195041720fe72b093f4b66c303cab8f"
-    "#color=0195041720fe72b093f4b66c303cab8f"
-    "&from_cat=019624d60a2471c1ac9f9cb5b88a426c"
+    "https://www.axel.dk/produkt/xacus-194591-axel?color=0195fc2a919b706e8e11804bf4e19607#color=0195fc2a919b706e8e11804bf4e19607&from_cat=01962468095a73a98fcb3920a210541c"
 )
 PRODUCTS = [
     {
@@ -330,6 +327,23 @@ async def read_text(locator):
 
 async def get_product_info(page):
                                """Read information shared by this product's color and size variants."""
+                               # A populated list price indicates that the current price is discounted.
+                               list_price = await read_text(
+                                   page.locator('main [x-show="$store.productStore.listPrice"]')
+                               )
+                               sale_badge_text = await read_text(
+                                   page.locator(
+                                       "main div.tw-absolute.tw-top-0.tw-left-0.tw-flex.tw-cursor-default"
+                                   )
+                               )
+                               percentage_match = re.search(
+                                   r"(\d{1,3})\s*%", sale_badge_text or ""
+                               )
+                               sale_percentage = (
+                                   int(percentage_match.group(1))
+                                   if percentage_match
+                                   else None
+                               )
                                heading = await read_text(page.locator("main h1"))
                                # The category link immediately before the product-name <li>.
                                product_type = await read_text(
@@ -352,6 +366,8 @@ async def get_product_info(page):
                                    "price": await read_text(
                                        page.locator('main [x-text="$store.productStore.price"]')
                                    ),
+                                   "on_sale": bool(list_price),
+                                   "sale_percentage": sale_percentage,
                                    "brand": await read_text(
                                        page.locator('main a[href*="/brands/"], main a[href*="/designers/"]')
                                    ),
