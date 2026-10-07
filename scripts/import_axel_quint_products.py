@@ -1,4 +1,4 @@
-"""Bounded AXEL/qUINT catalogue imports. Dry runs never create a DB client."""
+"""Bounded colour-row catalogue imports. Dry runs never create a DB client."""
 from __future__ import annotations
 
 import argparse
@@ -19,8 +19,9 @@ from scripts.import_rains_products import SupabaseCatalogClient, env, load_doten
 LOG = logging.getLogger(__name__)
 
 
-def import_products(store, args):
-    scraper = AxelQuintScraper(store, max_retries=args.max_retries)
+def import_products(store, args, scraper_factory=None):
+    scraper_factory = scraper_factory or AxelQuintScraper
+    scraper = scraper_factory(store, max_retries=args.max_retries)
     client = None
     rows, pending, keys = [], [], set()
     failed = 0
@@ -43,12 +44,17 @@ def import_products(store, args):
                 raise ValueError('Supabase credentials required for writes')
             client = SupabaseCatalogClient(url, key)
         for index, url in enumerate(urls, 1):
+            covered = getattr(scraper, 'covered_urls', set())
+            if isinstance(covered, set) and url in covered:
+                continue
             if index > 1 and not args.no_delay:
                 time.sleep(random.uniform(args.min_delay, args.max_delay))
             LOG.info('%s [%s/%s] Hydrating %s', store, index, len(urls), url)
             try:
+                started = time.monotonic()
                 snapshot = scraper.fetch_snapshot(url)
                 batch = scraper.rows_from_snapshot(snapshot)
+                LOG.info('%s hydrated %s colour rows in %.2fs (%s unavailable).', store, len(batch), time.monotonic() - started, sum(r.get("publication_status") == "unavailable" for r in batch))
                 if args.fixtures_dir:
                     directory = Path(args.fixtures_dir)
                     directory.mkdir(parents=True, exist_ok=True)
@@ -68,9 +74,11 @@ def import_products(store, args):
                     pending.append(row)
                     if len(pending) >= args.write_batch_size:
                         client.upsert_products(f'{store}_products', pending)
+                        LOG.info('Upserted %s %s colour rows.', len(pending), store)
                         pending.clear()
         if pending:
             client.upsert_products(f'{store}_products', pending)
+            LOG.info('Upserted final %s %s colour rows.', len(pending), store)
         if args.dry_run:
             rendered = json.dumps(rows, ensure_ascii=False, indent=2)
             if args.output:
@@ -89,7 +97,7 @@ def import_products(store, args):
 
 
 def parse_args(store, argv=None):
-    parser = argparse.ArgumentParser(description=f'Import {store} clothing/footwear and exact shop inventory.')
+    parser = argparse.ArgumentParser(description=f'Import {store} clothing/footwear and published shop inventory.')
     parser.add_argument('--url', action='append', default=[])
     parser.add_argument('--limit', type=int)
     parser.add_argument('--offset', type=int, default=0)

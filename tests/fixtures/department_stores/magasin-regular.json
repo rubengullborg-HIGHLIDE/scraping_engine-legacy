@@ -1,0 +1,1135 @@
+{
+  "colors": [
+    {
+      "product": {
+        "id": "BRYA69-00H5",
+        "masterProductID": "BRYA69",
+        "colorVariantId": "BRYA69-00H5",
+        "productName": "Check Flannel Shirt",
+        "brand": "Les Deux",
+        "productType": "variationGroup",
+        "longDescription": null,
+        "shortDescription": "Dark Navy Blue",
+        "topLevelCategoryID": "mens",
+        "price": {
+          "type": "singlePrice",
+          "sales": null,
+          "list": {
+            "value": 899,
+            "currency": "DKK",
+            "formatted": "899 kr.",
+            "decimalPrice": "899.00"
+          },
+          "lowest": null,
+          "available": true
+        },
+        "variationAttributes": [
+          {
+            "attributeId": "color",
+            "displayName": "Farve",
+            "id": "color",
+            "values": [
+              {
+                "id": "00H5",
+                "displayValue": "Dark navy blue",
+                "selected": true,
+                "inStock": true,
+                "productId": "BRYA69-00H5"
+              },
+              {
+                "id": "02LO",
+                "displayValue": "Light grey",
+                "selected": false,
+                "inStock": true,
+                "productId": "BRYA69-02LO"
+              },
+              {
+                "id": "09H9",
+                "displayValue": "Rosin green",
+                "selected": false,
+                "inStock": true,
+                "productId": "BRYA69-09H9"
+              }
+            ]
+          },
+          {
+            "attributeId": "clothingSize",
+            "displayName": "Størrelse",
+            "id": "size",
+            "values": [
+              {
+                "id": "S",
+                "displayValue": "S",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650303"
+              },
+              {
+                "id": "M",
+                "displayValue": "M",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650304"
+              },
+              {
+                "id": "L",
+                "displayValue": "L",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650305"
+              },
+              {
+                "id": "XL",
+                "displayValue": "XL",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650306"
+              },
+              {
+                "id": "XXL",
+                "displayValue": "XXL",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650307"
+              }
+            ]
+          }
+        ],
+        "images": {
+          "zoom": [
+            {
+              "urls": {
+                "xl": "https://www.magasin.dk/dw/image/v2/BFCS_PRD/on/demandware.static/-/Sites-mdn-master-catalog/default/dw7a565ff9/large2/DB/5715747283986.jpg?sw=1280&sh=1536&sm=fit&sfrm=jpg"
+              }
+            },
+            {
+              "urls": {
+                "xl": "https://www.magasin.dk/dw/image/v2/BFCS_PRD/on/demandware.static/-/Sites-mdn-master-catalog/default/dwabaf3eb0/large2/8B/5715747283986%20-1.jpg?sw=1280&sh=1536&sm=fit&sfrm=jpg"
+              }
+            }
+          ]
+        },
+        "attributes": [
+          {
+            "ID": "Order",
+            "name": "Order Attributes",
+            "attributes": [
+              {
+                "label": "EAN",
+                "id": "EAN",
+                "value": [
+                  "5715747283948"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "StorefrontAttributes",
+            "name": "Storefront Attributes",
+            "attributes": [
+              {
+                "label": "Køn",
+                "id": "gender",
+                "value": [
+                  "Herre"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "VariationAttributes",
+            "name": "Variation Attributes",
+            "attributes": [
+              {
+                "label": "Farve",
+                "id": "color",
+                "value": [
+                  "Dark navy blue"
+                ]
+              },
+              {
+                "label": "Filter color",
+                "id": "filterColor",
+                "value": [
+                  "Blå"
+                ]
+              },
+              {
+                "label": "Størrelse",
+                "id": "clothingSize",
+                "value": [
+                  "S"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "Other",
+            "name": "Other",
+            "attributes": [
+              {
+                "label": "Ax numbers",
+                "id": "axNumbers",
+                "value": [
+                  "07183039",
+                  "07183038",
+                  "07183040"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "Specification",
+            "name": "Specification",
+            "attributes": [
+              {
+                "label": "Halsudskæring",
+                "id": "neckline",
+                "value": [
+                  "Krave"
+                ]
+              },
+              {
+                "label": "Ærmelængde",
+                "id": "sleeveLength",
+                "value": [
+                  "Langærmet"
+                ]
+              },
+              {
+                "label": "Pasform",
+                "id": "fit",
+                "value": [
+                  "Regular fit"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "facts",
+            "name": "Facts",
+            "attributes": [
+              {
+                "label": "Brand",
+                "id": "brand",
+                "value": [
+                  "Les Deux"
+                ]
+              },
+              {
+                "label": "EAN",
+                "id": "EAN",
+                "value": [
+                  "5715747283948"
+                ]
+              },
+              {
+                "label": "Størrelse",
+                "id": "clothingSize",
+                "value": [
+                  "S"
+                ]
+              },
+              {
+                "label": "Farve",
+                "id": "color",
+                "value": [
+                  "Dark navy blue"
+                ]
+              },
+              {
+                "label": "Ax numbers",
+                "id": "axNumbers",
+                "value": [
+                  "07183039",
+                  "07183038",
+                  "07183040"
+                ]
+              }
+            ]
+          }
+        ],
+        "specifications": [
+          {
+            "label": "Mønster",
+            "id": "itemPattern",
+            "value": [
+              "Ternet"
+            ]
+          },
+          {
+            "label": "Pasform",
+            "id": "fit",
+            "value": [
+              "Regular fit"
+            ]
+          },
+          {
+            "label": "Halsudskæring",
+            "id": "neckline",
+            "value": [
+              "Krave"
+            ]
+          },
+          {
+            "label": "Ærmelængde",
+            "id": "sleeveLength",
+            "value": [
+              "Langærmet"
+            ]
+          }
+        ],
+        "careInstructions": [],
+        "schemaMarkup": {
+          "EAN": "5715747283948",
+          "url": "https://www.magasin.dk/check-flannel-shirt/BRYA69-00H5.html",
+          "manufacturerSKU": "BRYA69"
+        },
+        "koralCategoryPath": "{\"category\":\"Herre > Tøj > Skjorter > Langærmede skjorter\"}",
+        "colorName": "Dark navy blue",
+        "sizeName": "",
+        "EAN": "5715747283948",
+        "availability": {
+          "available": true,
+          "messages": []
+        },
+        "available": true,
+        "isGiftCertificate": false,
+        "showStockAvailabilityOption": true
+      },
+      "stock": {
+        "S15650303": {
+          "available": false,
+          "stock": null
+        },
+        "S15650304": {
+          "available": true,
+          "stock": null
+        },
+        "S15650305": {
+          "available": true,
+          "stock": null
+        },
+        "S15650306": {
+          "available": false,
+          "stock": null
+        },
+        "S15650307": {
+          "available": false,
+          "stock": null
+        }
+      },
+      "size_guide": {
+        "tables": [
+          [
+            [
+              "Size",
+              "Small",
+              "Medium",
+              "Large",
+              "XLarge",
+              "XXLarge"
+            ],
+            [
+              "Height (cm)",
+              "183",
+              "184",
+              "185",
+              "186",
+              "187"
+            ],
+            [
+              "Chest (cm)",
+              "93-97",
+              "97-101",
+              "101-105",
+              "105-111",
+              "111-117"
+            ],
+            [
+              "Waist (cm)",
+              "80-84",
+              "84-88",
+              "88-94",
+              "94-100",
+              "100-106"
+            ],
+            [
+              "Hip (cm)",
+              "95-99",
+              "98-102",
+              "103-109",
+              "109-115",
+              "115-121"
+            ],
+            [
+              "Inseam (cm)",
+              "77,5",
+              "78",
+              "78,5",
+              "79",
+              "79,5"
+            ],
+            [
+              ""
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "product": {
+        "id": "BRYA69-02LO",
+        "masterProductID": "BRYA69",
+        "colorVariantId": "BRYA69-02LO",
+        "productName": "Check Flannel Shirt",
+        "brand": "Les Deux",
+        "productType": "variationGroup",
+        "longDescription": null,
+        "shortDescription": "Light Grey",
+        "topLevelCategoryID": "mens",
+        "price": {
+          "type": "singlePrice",
+          "sales": null,
+          "list": {
+            "value": 899,
+            "currency": "DKK",
+            "formatted": "899 kr.",
+            "decimalPrice": "899.00"
+          },
+          "lowest": null,
+          "available": true
+        },
+        "variationAttributes": [
+          {
+            "attributeId": "color",
+            "displayName": "Farve",
+            "id": "color",
+            "values": [
+              {
+                "id": "02LO",
+                "displayValue": "Light grey",
+                "selected": true,
+                "inStock": true,
+                "productId": "BRYA69-02LO"
+              },
+              {
+                "id": "00H5",
+                "displayValue": "Dark navy blue",
+                "selected": false,
+                "inStock": true,
+                "productId": "BRYA69-00H5"
+              },
+              {
+                "id": "09H9",
+                "displayValue": "Rosin green",
+                "selected": false,
+                "inStock": true,
+                "productId": "BRYA69-09H9"
+              }
+            ]
+          },
+          {
+            "attributeId": "clothingSize",
+            "displayName": "Størrelse",
+            "id": "size",
+            "values": [
+              {
+                "id": "S",
+                "displayValue": "S",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650298"
+              },
+              {
+                "id": "M",
+                "displayValue": "M",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650299"
+              },
+              {
+                "id": "L",
+                "displayValue": "L",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650300"
+              },
+              {
+                "id": "XL",
+                "displayValue": "XL",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650301"
+              },
+              {
+                "id": "XXL",
+                "displayValue": "XXL",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650302"
+              }
+            ]
+          }
+        ],
+        "images": {
+          "zoom": [
+            {
+              "urls": {
+                "xl": "https://www.magasin.dk/dw/image/v2/BFCS_PRD/on/demandware.static/-/Sites-mdn-master-catalog/default/dw697d9e01/large2/3D/5715747283917.jpg?sw=1280&sh=1536&sm=fit&sfrm=jpg"
+              }
+            },
+            {
+              "urls": {
+                "xl": "https://www.magasin.dk/dw/image/v2/BFCS_PRD/on/demandware.static/-/Sites-mdn-master-catalog/default/dwda2ad787/large2/E9/5715747283917%20-1.jpg?sw=1280&sh=1536&sm=fit&sfrm=jpg"
+              }
+            }
+          ]
+        },
+        "attributes": [
+          {
+            "ID": "Order",
+            "name": "Order Attributes",
+            "attributes": [
+              {
+                "label": "EAN",
+                "id": "EAN",
+                "value": [
+                  "5715747283870"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "StorefrontAttributes",
+            "name": "Storefront Attributes",
+            "attributes": [
+              {
+                "label": "Køn",
+                "id": "gender",
+                "value": [
+                  "Herre"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "VariationAttributes",
+            "name": "Variation Attributes",
+            "attributes": [
+              {
+                "label": "Farve",
+                "id": "color",
+                "value": [
+                  "Light grey"
+                ]
+              },
+              {
+                "label": "Filter color",
+                "id": "filterColor",
+                "value": [
+                  "Grå"
+                ]
+              },
+              {
+                "label": "Størrelse",
+                "id": "clothingSize",
+                "value": [
+                  "S"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "Other",
+            "name": "Other",
+            "attributes": [
+              {
+                "label": "Ax numbers",
+                "id": "axNumbers",
+                "value": [
+                  "07183039",
+                  "07183038",
+                  "07183040"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "Specification",
+            "name": "Specification",
+            "attributes": [
+              {
+                "label": "Halsudskæring",
+                "id": "neckline",
+                "value": [
+                  "Krave"
+                ]
+              },
+              {
+                "label": "Ærmelængde",
+                "id": "sleeveLength",
+                "value": [
+                  "Langærmet"
+                ]
+              },
+              {
+                "label": "Pasform",
+                "id": "fit",
+                "value": [
+                  "Regular fit"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "facts",
+            "name": "Facts",
+            "attributes": [
+              {
+                "label": "Brand",
+                "id": "brand",
+                "value": [
+                  "Les Deux"
+                ]
+              },
+              {
+                "label": "EAN",
+                "id": "EAN",
+                "value": [
+                  "5715747283870"
+                ]
+              },
+              {
+                "label": "Størrelse",
+                "id": "clothingSize",
+                "value": [
+                  "S"
+                ]
+              },
+              {
+                "label": "Farve",
+                "id": "color",
+                "value": [
+                  "Light grey"
+                ]
+              },
+              {
+                "label": "Ax numbers",
+                "id": "axNumbers",
+                "value": [
+                  "07183039",
+                  "07183038",
+                  "07183040"
+                ]
+              }
+            ]
+          }
+        ],
+        "specifications": [
+          {
+            "label": "Mønster",
+            "id": "itemPattern",
+            "value": [
+              "Ternet"
+            ]
+          },
+          {
+            "label": "Pasform",
+            "id": "fit",
+            "value": [
+              "Regular fit"
+            ]
+          },
+          {
+            "label": "Halsudskæring",
+            "id": "neckline",
+            "value": [
+              "Krave"
+            ]
+          },
+          {
+            "label": "Ærmelængde",
+            "id": "sleeveLength",
+            "value": [
+              "Langærmet"
+            ]
+          }
+        ],
+        "careInstructions": [],
+        "schemaMarkup": {
+          "EAN": "5715747283870",
+          "url": "https://www.magasin.dk/check-flannel-shirt/BRYA69-02LO.html",
+          "manufacturerSKU": "BRYA69"
+        },
+        "koralCategoryPath": "{\"category\":\"Herre > Tøj > Skjorter > Langærmede skjorter\"}",
+        "colorName": "Light grey",
+        "sizeName": "",
+        "EAN": "5715747283870",
+        "availability": {
+          "available": true,
+          "messages": []
+        },
+        "available": true,
+        "isGiftCertificate": false,
+        "showStockAvailabilityOption": true
+      },
+      "stock": {
+        "S15650298": {
+          "available": false,
+          "stock": null
+        },
+        "S15650299": {
+          "available": true,
+          "stock": null
+        },
+        "S15650300": {
+          "available": true,
+          "stock": null
+        },
+        "S15650301": {
+          "available": true,
+          "stock": null
+        },
+        "S15650302": {
+          "available": false,
+          "stock": null
+        }
+      },
+      "size_guide": {
+        "tables": [
+          [
+            [
+              "Size",
+              "Small",
+              "Medium",
+              "Large",
+              "XLarge",
+              "XXLarge"
+            ],
+            [
+              "Height (cm)",
+              "183",
+              "184",
+              "185",
+              "186",
+              "187"
+            ],
+            [
+              "Chest (cm)",
+              "93-97",
+              "97-101",
+              "101-105",
+              "105-111",
+              "111-117"
+            ],
+            [
+              "Waist (cm)",
+              "80-84",
+              "84-88",
+              "88-94",
+              "94-100",
+              "100-106"
+            ],
+            [
+              "Hip (cm)",
+              "95-99",
+              "98-102",
+              "103-109",
+              "109-115",
+              "115-121"
+            ],
+            [
+              "Inseam (cm)",
+              "77,5",
+              "78",
+              "78,5",
+              "79",
+              "79,5"
+            ],
+            [
+              ""
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "product": {
+        "id": "BRYA69-09H9",
+        "masterProductID": "BRYA69",
+        "colorVariantId": "BRYA69-09H9",
+        "productName": "Check Flannel Shirt",
+        "brand": "Les Deux",
+        "productType": "variationGroup",
+        "longDescription": null,
+        "shortDescription": "Rosin Green",
+        "topLevelCategoryID": "mens",
+        "price": {
+          "type": "singlePrice",
+          "sales": null,
+          "list": {
+            "value": 899,
+            "currency": "DKK",
+            "formatted": "899 kr.",
+            "decimalPrice": "899.00"
+          },
+          "lowest": null,
+          "available": true
+        },
+        "variationAttributes": [
+          {
+            "attributeId": "color",
+            "displayName": "Farve",
+            "id": "color",
+            "values": [
+              {
+                "id": "09H9",
+                "displayValue": "Rosin green",
+                "selected": true,
+                "inStock": true,
+                "productId": "BRYA69-09H9"
+              },
+              {
+                "id": "02LO",
+                "displayValue": "Light grey",
+                "selected": false,
+                "inStock": true,
+                "productId": "BRYA69-02LO"
+              },
+              {
+                "id": "00H5",
+                "displayValue": "Dark navy blue",
+                "selected": false,
+                "inStock": true,
+                "productId": "BRYA69-00H5"
+              }
+            ]
+          },
+          {
+            "attributeId": "clothingSize",
+            "displayName": "Størrelse",
+            "id": "size",
+            "values": [
+              {
+                "id": "S",
+                "displayValue": "S",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650308"
+              },
+              {
+                "id": "M",
+                "displayValue": "M",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650309"
+              },
+              {
+                "id": "L",
+                "displayValue": "L",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650310"
+              },
+              {
+                "id": "XL",
+                "displayValue": "XL",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650311"
+              },
+              {
+                "id": "XXL",
+                "displayValue": "XXL",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15650312"
+              }
+            ]
+          }
+        ],
+        "images": {
+          "zoom": [
+            {
+              "urls": {
+                "xl": "https://www.magasin.dk/dw/image/v2/BFCS_PRD/on/demandware.static/-/Sites-mdn-master-catalog/default/dwc6f4d147/large2/41/5715747284051.jpg?sw=1280&sh=1536&sm=fit&sfrm=jpg"
+              }
+            },
+            {
+              "urls": {
+                "xl": "https://www.magasin.dk/dw/image/v2/BFCS_PRD/on/demandware.static/-/Sites-mdn-master-catalog/default/dwdd21a332/large2/1D/5715747284051%20-1.jpg?sw=1280&sh=1536&sm=fit&sfrm=jpg"
+              }
+            }
+          ]
+        },
+        "attributes": [
+          {
+            "ID": "Order",
+            "name": "Order Attributes",
+            "attributes": [
+              {
+                "label": "EAN",
+                "id": "EAN",
+                "value": [
+                  "5715747284013"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "StorefrontAttributes",
+            "name": "Storefront Attributes",
+            "attributes": [
+              {
+                "label": "Køn",
+                "id": "gender",
+                "value": [
+                  "Herre"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "VariationAttributes",
+            "name": "Variation Attributes",
+            "attributes": [
+              {
+                "label": "Farve",
+                "id": "color",
+                "value": [
+                  "Rosin green"
+                ]
+              },
+              {
+                "label": "Filter color",
+                "id": "filterColor",
+                "value": [
+                  "Grøn"
+                ]
+              },
+              {
+                "label": "Størrelse",
+                "id": "clothingSize",
+                "value": [
+                  "S"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "Other",
+            "name": "Other",
+            "attributes": [
+              {
+                "label": "Ax numbers",
+                "id": "axNumbers",
+                "value": [
+                  "07183039",
+                  "07183038",
+                  "07183040"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "Specification",
+            "name": "Specification",
+            "attributes": [
+              {
+                "label": "Halsudskæring",
+                "id": "neckline",
+                "value": [
+                  "Krave"
+                ]
+              },
+              {
+                "label": "Ærmelængde",
+                "id": "sleeveLength",
+                "value": [
+                  "Langærmet"
+                ]
+              },
+              {
+                "label": "Pasform",
+                "id": "fit",
+                "value": [
+                  "Regular fit"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "facts",
+            "name": "Facts",
+            "attributes": [
+              {
+                "label": "Brand",
+                "id": "brand",
+                "value": [
+                  "Les Deux"
+                ]
+              },
+              {
+                "label": "EAN",
+                "id": "EAN",
+                "value": [
+                  "5715747284013"
+                ]
+              },
+              {
+                "label": "Størrelse",
+                "id": "clothingSize",
+                "value": [
+                  "S"
+                ]
+              },
+              {
+                "label": "Farve",
+                "id": "color",
+                "value": [
+                  "Rosin green"
+                ]
+              },
+              {
+                "label": "Ax numbers",
+                "id": "axNumbers",
+                "value": [
+                  "07183039",
+                  "07183038",
+                  "07183040"
+                ]
+              }
+            ]
+          }
+        ],
+        "specifications": [
+          {
+            "label": "Mønster",
+            "id": "itemPattern",
+            "value": [
+              "Ternet"
+            ]
+          },
+          {
+            "label": "Pasform",
+            "id": "fit",
+            "value": [
+              "Regular fit"
+            ]
+          },
+          {
+            "label": "Halsudskæring",
+            "id": "neckline",
+            "value": [
+              "Krave"
+            ]
+          },
+          {
+            "label": "Ærmelængde",
+            "id": "sleeveLength",
+            "value": [
+              "Langærmet"
+            ]
+          }
+        ],
+        "careInstructions": [],
+        "schemaMarkup": {
+          "EAN": "5715747284013",
+          "url": "https://www.magasin.dk/check-flannel-shirt/BRYA69-09H9.html",
+          "manufacturerSKU": "BRYA69"
+        },
+        "koralCategoryPath": "{\"category\":\"Herre > Tøj > Skjorter > Langærmede skjorter\"}",
+        "colorName": "Rosin green",
+        "sizeName": "",
+        "EAN": "5715747284013",
+        "availability": {
+          "available": true,
+          "messages": []
+        },
+        "available": true,
+        "isGiftCertificate": false,
+        "showStockAvailabilityOption": true
+      },
+      "stock": {
+        "S15650308": {
+          "available": false,
+          "stock": null
+        },
+        "S15650309": {
+          "available": true,
+          "stock": null
+        },
+        "S15650310": {
+          "available": true,
+          "stock": null
+        },
+        "S15650311": {
+          "available": true,
+          "stock": null
+        },
+        "S15650312": {
+          "available": false,
+          "stock": null
+        }
+      },
+      "size_guide": {
+        "tables": [
+          [
+            [
+              "Size",
+              "Small",
+              "Medium",
+              "Large",
+              "XLarge",
+              "XXLarge"
+            ],
+            [
+              "Height (cm)",
+              "183",
+              "184",
+              "185",
+              "186",
+              "187"
+            ],
+            [
+              "Chest (cm)",
+              "93-97",
+              "97-101",
+              "101-105",
+              "105-111",
+              "111-117"
+            ],
+            [
+              "Waist (cm)",
+              "80-84",
+              "84-88",
+              "88-94",
+              "94-100",
+              "100-106"
+            ],
+            [
+              "Hip (cm)",
+              "95-99",
+              "98-102",
+              "103-109",
+              "109-115",
+              "115-121"
+            ],
+            [
+              "Inseam (cm)",
+              "77,5",
+              "78",
+              "78,5",
+              "79",
+              "79,5"
+            ],
+            [
+              ""
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

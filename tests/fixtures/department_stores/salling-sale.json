@@ -1,0 +1,4672 @@
+{
+  "products": [
+    {
+      "parentId": 121270,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>T-shirt fra Carhartt WIP</li>\n<li>Kortærmet</li>\n<li>Ensfarvet</li>\n<li>Rund hals</li>\n<li>Carhartt WIP 'C' logo på det ene ærme</li>\n<li>Regular fit</li>\n<li>Materiale i bomuld</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black/White",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XS",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Carhartt WIP",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "Ærmelængde",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "SleeveLength.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "Pasform",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "FitFashion.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XS",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "XS",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "100 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "Halsudskæring",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "NeckType.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort#000000107248",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xs/p-1039940/",
+            "productId": 1039940,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "White/Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-xs/p-1039934/",
+            "productId": 1039934,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 6
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xs/p-1039940/",
+            "productId": 1039940,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+            "productId": 1039942,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+            "productId": 1039937,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+            "productId": 1039944,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+            "productId": 1039945,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": "4064958102748",
+      "url": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xs/p-1039940/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "T-shirts & Poloer"
+        },
+        {
+          "name": "T-shirts"
+        }
+      ],
+      "indexableStockInfo": [
+        {
+          "name": "Salling Aarhus",
+          "availableStock": 9,
+          "erpStock": 0,
+          "location": "Søndergade 27, 8000 Aarhus C",
+          "storeId": null
+        },
+        {
+          "name": "Salling Kultorvet",
+          "availableStock": 0,
+          "erpStock": 0,
+          "location": "Kultorvet 2, 1175 København K",
+          "storeId": null
+        },
+        {
+          "name": "Salling Aalborg",
+          "availableStock": 4,
+          "erpStock": 0,
+          "location": "Nytorv 8, 9000 Aalborg",
+          "storeId": null
+        }
+      ],
+      "availableQuantity": 3,
+      "id": 1039940,
+      "title": "Base T-shirt, Black/White, XS",
+      "currentPriceTag": {
+        "total": {
+          "value": 156,
+          "displayValue": "156 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 260,
+          "displayValue": "260 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/1jtlqnte/s_s-base-t_shirt_i0262640d2xx0d2xx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/1jtlqnte/s_s-base-t_shirt_i0262640d2xx0d2xx.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/0tpjmckg/s_s-base-t_shirt_i0262640d2xx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/0tpjmckg/s_s-base-t_shirt_i0262640d2xx.png",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "T-shirts",
+      "manufacturerName": "Carhartt WIP",
+      "isBuyable": true
+    },
+    {
+      "parentId": 121270,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>T-shirt fra Carhartt WIP</li>\n<li>Kortærmet</li>\n<li>Ensfarvet</li>\n<li>Rund hals</li>\n<li>Carhartt WIP 'C' logo på det ene ærme</li>\n<li>Regular fit</li>\n<li>Materiale i bomuld</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black/White",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Carhartt WIP",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "Ærmelængde",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "SleeveLength.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "Pasform",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "FitFashion.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "100 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "Halsudskæring",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "NeckType.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort#000000107248",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "White/Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xs/p-1039940/",
+            "productId": 1039940,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+            "productId": 1039942,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+            "productId": 1039937,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+            "productId": 1039944,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+            "productId": 1039945,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": "4064958102755",
+      "url": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "T-shirts & Poloer"
+        },
+        {
+          "name": "T-shirts"
+        }
+      ],
+      "indexableStockInfo": [
+        {
+          "name": "Salling Aarhus",
+          "availableStock": 17,
+          "erpStock": 0,
+          "location": "Søndergade 27, 8000 Aarhus C",
+          "storeId": null
+        },
+        {
+          "name": "Salling Kultorvet",
+          "availableStock": 0,
+          "erpStock": 0,
+          "location": "Kultorvet 2, 1175 København K",
+          "storeId": null
+        },
+        {
+          "name": "Salling Aalborg",
+          "availableStock": 6,
+          "erpStock": 0,
+          "location": "Nytorv 8, 9000 Aalborg",
+          "storeId": null
+        }
+      ],
+      "availableQuantity": 16,
+      "id": 1039941,
+      "title": "Base T-shirt, Black/White, S",
+      "currentPriceTag": {
+        "total": {
+          "value": 156,
+          "displayValue": "156 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 260,
+          "displayValue": "260 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/1jtlqnte/s_s-base-t_shirt_i0262640d2xx0d2xx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/1jtlqnte/s_s-base-t_shirt_i0262640d2xx0d2xx.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/0tpjmckg/s_s-base-t_shirt_i0262640d2xx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/0tpjmckg/s_s-base-t_shirt_i0262640d2xx.png",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "T-shirts",
+      "manufacturerName": "Carhartt WIP",
+      "isBuyable": true
+    },
+    {
+      "parentId": 121270,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>T-shirt fra Carhartt WIP</li>\n<li>Kortærmet</li>\n<li>Ensfarvet</li>\n<li>Rund hals</li>\n<li>Carhartt WIP 'C' logo på det ene ærme</li>\n<li>Regular fit</li>\n<li>Materiale i bomuld</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black/White",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Carhartt WIP",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "Ærmelængde",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "SleeveLength.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "Pasform",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "FitFashion.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "100 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "Halsudskæring",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "NeckType.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort#000000107248",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "M",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "White/Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xs/p-1039940/",
+            "productId": 1039940,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+            "productId": 1039942,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+            "productId": 1039937,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+            "productId": 1039944,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+            "productId": 1039945,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "T-shirts & Poloer"
+        },
+        {
+          "name": "T-shirts"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 0,
+      "id": 1039942,
+      "title": "Base T-shirt, Black/White, S",
+      "currentPriceTag": {
+        "total": {
+          "value": 156,
+          "displayValue": "156 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 260,
+          "displayValue": "260 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/1jtlqnte/s_s-base-t_shirt_i0262640d2xx0d2xx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/1jtlqnte/s_s-base-t_shirt_i0262640d2xx0d2xx.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/0tpjmckg/s_s-base-t_shirt_i0262640d2xx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/0tpjmckg/s_s-base-t_shirt_i0262640d2xx.png",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "T-shirts",
+      "manufacturerName": "Carhartt WIP",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    },
+    {
+      "parentId": 121270,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>T-shirt fra Carhartt WIP</li>\n<li>Kortærmet</li>\n<li>Ensfarvet</li>\n<li>Rund hals</li>\n<li>Carhartt WIP 'C' logo på det ene ærme</li>\n<li>Regular fit</li>\n<li>Materiale i bomuld</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black/White",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Carhartt WIP",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "Ærmelængde",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "SleeveLength.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "Pasform",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "FitFashion.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "100 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "Halsudskæring",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "NeckType.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort#000000107248",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "White/Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xs/p-1039940/",
+            "productId": 1039940,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+            "productId": 1039942,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+            "productId": 1039937,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+            "productId": 1039944,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+            "productId": 1039945,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "T-shirts & Poloer"
+        },
+        {
+          "name": "T-shirts"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 0,
+      "id": 1039937,
+      "title": "Base T-shirt, Black/White, S",
+      "currentPriceTag": {
+        "total": {
+          "value": 156,
+          "displayValue": "156 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 260,
+          "displayValue": "260 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/1jtlqnte/s_s-base-t_shirt_i0262640d2xx0d2xx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/1jtlqnte/s_s-base-t_shirt_i0262640d2xx0d2xx.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/0tpjmckg/s_s-base-t_shirt_i0262640d2xx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/0tpjmckg/s_s-base-t_shirt_i0262640d2xx.png",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "T-shirts",
+      "manufacturerName": "Carhartt WIP",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    },
+    {
+      "parentId": 121270,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>T-shirt fra Carhartt WIP</li>\n<li>Kortærmet</li>\n<li>Ensfarvet</li>\n<li>Rund hals</li>\n<li>Carhartt WIP 'C' logo på det ene ærme</li>\n<li>Regular fit</li>\n<li>Materiale i bomuld</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black/White",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Carhartt WIP",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "Ærmelængde",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "SleeveLength.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "Pasform",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "FitFashion.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "100 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "Halsudskæring",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "NeckType.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort#000000107248",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XL",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "White/Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xs/p-1039940/",
+            "productId": 1039940,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+            "productId": 1039942,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+            "productId": 1039937,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+            "productId": 1039944,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+            "productId": 1039945,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "T-shirts & Poloer"
+        },
+        {
+          "name": "T-shirts"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 0,
+      "id": 1039944,
+      "title": "Base T-shirt, Black/White, S",
+      "currentPriceTag": {
+        "total": {
+          "value": 156,
+          "displayValue": "156 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 260,
+          "displayValue": "260 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/1jtlqnte/s_s-base-t_shirt_i0262640d2xx0d2xx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/1jtlqnte/s_s-base-t_shirt_i0262640d2xx0d2xx.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/0tpjmckg/s_s-base-t_shirt_i0262640d2xx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/0tpjmckg/s_s-base-t_shirt_i0262640d2xx.png",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "T-shirts",
+      "manufacturerName": "Carhartt WIP",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    },
+    {
+      "parentId": 121270,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>T-shirt fra Carhartt WIP</li>\n<li>Kortærmet</li>\n<li>Ensfarvet</li>\n<li>Rund hals</li>\n<li>Carhartt WIP 'C' logo på det ene ærme</li>\n<li>Regular fit</li>\n<li>Materiale i bomuld</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black/White",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Carhartt WIP",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "Ærmelængde",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "SleeveLength.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "Pasform",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "FitFashion.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "100 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "Halsudskæring",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "NeckType.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort#000000107248",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XXL",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "White/Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xs/p-1039940/",
+            "productId": 1039940,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+            "productId": 1039942,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+            "productId": 1039937,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+            "productId": 1039944,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+            "productId": 1039945,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "T-shirts & Poloer"
+        },
+        {
+          "name": "T-shirts"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 0,
+      "id": 1039945,
+      "title": "Base T-shirt, Black/White, S",
+      "currentPriceTag": {
+        "total": {
+          "value": 156,
+          "displayValue": "156 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 260,
+          "displayValue": "260 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/1jtlqnte/s_s-base-t_shirt_i0262640d2xx0d2xx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/1jtlqnte/s_s-base-t_shirt_i0262640d2xx0d2xx.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/0tpjmckg/s_s-base-t_shirt_i0262640d2xx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/0tpjmckg/s_s-base-t_shirt_i0262640d2xx.png",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "T-shirts",
+      "manufacturerName": "Carhartt WIP",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    },
+    {
+      "parentId": 121270,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>T-shirt fra Carhartt WIP</li>\n<li>Kortærmet</li>\n<li>Ensfarvet</li>\n<li>Rund hals</li>\n<li>Carhartt WIP 'C' logo på det ene ærme</li>\n<li>Regular fit</li>\n<li>Materiale i bomuld</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "White/Black",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XS",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Carhartt WIP",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "Ærmelængde",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "SleeveLength.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "Pasform",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "FitFashion.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XS",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "XS",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Hvid",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "100 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "Halsudskæring",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "NeckType.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Hvid#FFFFFF107239",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xs/p-1039940/",
+            "productId": 1039940,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "White/Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-xs/p-1039934/",
+            "productId": 1039934,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 6
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-xs/p-1039934/",
+            "productId": 1039934,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 6
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+            "productId": 1039942,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+            "productId": 1039937,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+            "productId": 1039944,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+            "productId": 1039945,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": "4064958102687",
+      "url": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-xs/p-1039934/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "T-shirts & Poloer"
+        },
+        {
+          "name": "T-shirts"
+        }
+      ],
+      "indexableStockInfo": [
+        {
+          "name": "Salling Aarhus",
+          "availableStock": 9,
+          "erpStock": 0,
+          "location": "Søndergade 27, 8000 Aarhus C",
+          "storeId": null
+        },
+        {
+          "name": "Salling Kultorvet",
+          "availableStock": 0,
+          "erpStock": 0,
+          "location": "Kultorvet 2, 1175 København K",
+          "storeId": null
+        },
+        {
+          "name": "Salling Aalborg",
+          "availableStock": 5,
+          "erpStock": 0,
+          "location": "Nytorv 8, 9000 Aalborg",
+          "storeId": null
+        }
+      ],
+      "availableQuantity": 6,
+      "id": 1039934,
+      "title": "Base T-shirt, White/Black, XS",
+      "currentPriceTag": {
+        "total": {
+          "value": 156,
+          "displayValue": "156 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 260,
+          "displayValue": "260 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/lxungl1h/s_s-base-t_shirt_i02626400axx00axx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/lxungl1h/s_s-base-t_shirt_i02626400axx00axx.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/uqajsokt/s_s-base-t_shirt_i02626400axx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/uqajsokt/s_s-base-t_shirt_i02626400axx.png",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "T-shirts",
+      "manufacturerName": "Carhartt WIP",
+      "isBuyable": true
+    },
+    {
+      "parentId": 121270,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>T-shirt fra Carhartt WIP</li>\n<li>Kortærmet</li>\n<li>Ensfarvet</li>\n<li>Rund hals</li>\n<li>Carhartt WIP 'C' logo på det ene ærme</li>\n<li>Regular fit</li>\n<li>Materiale i bomuld</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "White/Black",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Carhartt WIP",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "Ærmelængde",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "SleeveLength.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "Pasform",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "FitFashion.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Hvid",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "100 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "Halsudskæring",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "NeckType.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Hvid#FFFFFF107239",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "White/Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-xs/p-1039934/",
+            "productId": 1039934,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 6
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+            "productId": 1039942,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+            "productId": 1039937,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+            "productId": 1039944,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+            "productId": 1039945,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": "4064958102694",
+      "url": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "T-shirts & Poloer"
+        },
+        {
+          "name": "T-shirts"
+        }
+      ],
+      "indexableStockInfo": [
+        {
+          "name": "Salling Aarhus",
+          "availableStock": 12,
+          "erpStock": 0,
+          "location": "Søndergade 27, 8000 Aarhus C",
+          "storeId": null
+        },
+        {
+          "name": "Salling Kultorvet",
+          "availableStock": 0,
+          "erpStock": 0,
+          "location": "Kultorvet 2, 1175 København K",
+          "storeId": null
+        },
+        {
+          "name": "Salling Aalborg",
+          "availableStock": 6,
+          "erpStock": 0,
+          "location": "Nytorv 8, 9000 Aalborg",
+          "storeId": null
+        }
+      ],
+      "availableQuantity": 28,
+      "id": 1039935,
+      "title": "Base T-shirt, White/Black, S",
+      "currentPriceTag": {
+        "total": {
+          "value": 156,
+          "displayValue": "156 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 260,
+          "displayValue": "260 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/lxungl1h/s_s-base-t_shirt_i02626400axx00axx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/lxungl1h/s_s-base-t_shirt_i02626400axx00axx.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/uqajsokt/s_s-base-t_shirt_i02626400axx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/uqajsokt/s_s-base-t_shirt_i02626400axx.png",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "T-shirts",
+      "manufacturerName": "Carhartt WIP",
+      "isBuyable": true
+    },
+    {
+      "parentId": 121270,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>T-shirt fra Carhartt WIP</li>\n<li>Kortærmet</li>\n<li>Ensfarvet</li>\n<li>Rund hals</li>\n<li>Carhartt WIP 'C' logo på det ene ærme</li>\n<li>Regular fit</li>\n<li>Materiale i bomuld</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "White/Black",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Carhartt WIP",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "Ærmelængde",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "SleeveLength.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "Pasform",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "FitFashion.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Hvid",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "100 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "Halsudskæring",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "NeckType.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Hvid#FFFFFF107239",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "M",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "White/Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-xs/p-1039934/",
+            "productId": 1039934,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 6
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+            "productId": 1039942,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+            "productId": 1039937,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+            "productId": 1039944,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+            "productId": 1039945,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "T-shirts & Poloer"
+        },
+        {
+          "name": "T-shirts"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 0,
+      "id": 1039942,
+      "title": "Base T-shirt, White/Black, S",
+      "currentPriceTag": {
+        "total": {
+          "value": 156,
+          "displayValue": "156 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 260,
+          "displayValue": "260 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/lxungl1h/s_s-base-t_shirt_i02626400axx00axx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/lxungl1h/s_s-base-t_shirt_i02626400axx00axx.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/uqajsokt/s_s-base-t_shirt_i02626400axx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/uqajsokt/s_s-base-t_shirt_i02626400axx.png",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "T-shirts",
+      "manufacturerName": "Carhartt WIP",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    },
+    {
+      "parentId": 121270,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>T-shirt fra Carhartt WIP</li>\n<li>Kortærmet</li>\n<li>Ensfarvet</li>\n<li>Rund hals</li>\n<li>Carhartt WIP 'C' logo på det ene ærme</li>\n<li>Regular fit</li>\n<li>Materiale i bomuld</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "White/Black",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Carhartt WIP",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "Ærmelængde",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "SleeveLength.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "Pasform",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "FitFashion.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Hvid",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "100 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "Halsudskæring",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "NeckType.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Hvid#FFFFFF107239",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "White/Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-xs/p-1039934/",
+            "productId": 1039934,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 6
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+            "productId": 1039942,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+            "productId": 1039937,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+            "productId": 1039944,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+            "productId": 1039945,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "T-shirts & Poloer"
+        },
+        {
+          "name": "T-shirts"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 0,
+      "id": 1039937,
+      "title": "Base T-shirt, White/Black, S",
+      "currentPriceTag": {
+        "total": {
+          "value": 156,
+          "displayValue": "156 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 260,
+          "displayValue": "260 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/lxungl1h/s_s-base-t_shirt_i02626400axx00axx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/lxungl1h/s_s-base-t_shirt_i02626400axx00axx.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/uqajsokt/s_s-base-t_shirt_i02626400axx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/uqajsokt/s_s-base-t_shirt_i02626400axx.png",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "T-shirts",
+      "manufacturerName": "Carhartt WIP",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    },
+    {
+      "parentId": 121270,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>T-shirt fra Carhartt WIP</li>\n<li>Kortærmet</li>\n<li>Ensfarvet</li>\n<li>Rund hals</li>\n<li>Carhartt WIP 'C' logo på det ene ærme</li>\n<li>Regular fit</li>\n<li>Materiale i bomuld</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "White/Black",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Carhartt WIP",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "Ærmelængde",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "SleeveLength.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "Pasform",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "FitFashion.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Hvid",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "100 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "Halsudskæring",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "NeckType.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Hvid#FFFFFF107239",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XL",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "White/Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-xs/p-1039934/",
+            "productId": 1039934,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 6
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+            "productId": 1039942,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+            "productId": 1039937,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+            "productId": 1039944,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+            "productId": 1039945,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "T-shirts & Poloer"
+        },
+        {
+          "name": "T-shirts"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 0,
+      "id": 1039944,
+      "title": "Base T-shirt, White/Black, S",
+      "currentPriceTag": {
+        "total": {
+          "value": 156,
+          "displayValue": "156 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 260,
+          "displayValue": "260 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/lxungl1h/s_s-base-t_shirt_i02626400axx00axx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/lxungl1h/s_s-base-t_shirt_i02626400axx00axx.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/uqajsokt/s_s-base-t_shirt_i02626400axx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/uqajsokt/s_s-base-t_shirt_i02626400axx.png",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "T-shirts",
+      "manufacturerName": "Carhartt WIP",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    },
+    {
+      "parentId": 121270,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>T-shirt fra Carhartt WIP</li>\n<li>Kortærmet</li>\n<li>Ensfarvet</li>\n<li>Rund hals</li>\n<li>Carhartt WIP 'C' logo på det ene ærme</li>\n<li>Regular fit</li>\n<li>Materiale i bomuld</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "White/Black",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Carhartt WIP",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "Ærmelængde",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Kortærmet",
+          "attributeType": {
+            "name": "SleeveLength.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "Pasform",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Regular fit",
+          "attributeType": {
+            "name": "FitFashion.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Hvid",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "100 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "Halsudskæring",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Rund hals",
+          "attributeType": {
+            "name": "NeckType.Text",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Hvid#FFFFFF107239",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XXL",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-s/p-1039941/",
+            "productId": 1039941,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 16
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "White/Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-xs/p-1039934/",
+            "productId": 1039934,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 6
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-s/p-1039935/",
+            "productId": 1039935,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 28
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-m/p-1039942/",
+            "productId": 1039942,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-whiteblack-l/p-1039937/",
+            "productId": 1039937,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xl/p-1039944/",
+            "productId": 1039944,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+            "productId": 1039945,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 156,
+                "displayValue": "156 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 260,
+                "displayValue": "260 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/t-shirts-poloer/t-shirts/base-t-shirt-blackwhite-xxl/p-1039945/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "T-shirts & Poloer"
+        },
+        {
+          "name": "T-shirts"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 0,
+      "id": 1039945,
+      "title": "Base T-shirt, White/Black, S",
+      "currentPriceTag": {
+        "total": {
+          "value": 156,
+          "displayValue": "156 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 260,
+          "displayValue": "260 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/lxungl1h/s_s-base-t_shirt_i02626400axx00axx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/lxungl1h/s_s-base-t_shirt_i02626400axx00axx.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/uqajsokt/s_s-base-t_shirt_i02626400axx.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/uqajsokt/s_s-base-t_shirt_i02626400axx.png",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "T-shirts",
+      "manufacturerName": "Carhartt WIP",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    }
+  ]
+}

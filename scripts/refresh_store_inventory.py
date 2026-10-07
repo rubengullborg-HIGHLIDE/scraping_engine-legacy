@@ -160,12 +160,13 @@ STORE_SPECS: "OrderedDict[str, StoreSpec]" = OrderedDict(
 )
 
 
-for _store in ("axel", "quint"):
+for _store in ("axel", "quint", "salling", "magasin"):
     STORE_SPECS[_store] = StoreSpec(
         key=_store, table=f"{_store}_products",
         identity_columns=("source_parent_id", "source_color_id"),
         match_column="source_color_id",
         dynamic_columns=COMMON_DYNAMIC_COLUMNS + TOTAL_COLUMNS + TIMESTAMP_COLUMNS,
+        unavailable_totals_unknown=_store == "magasin",
     )
 
 
@@ -259,6 +260,8 @@ class SupabaseInventoryClient:
             "discontinued_at",
             "updated_at",
         )
+        if spec.key == "salling":
+            columns += ("webshop_sizes",)
         rows: list[dict[str, Any]] = []
         start = 0
         while True:
@@ -488,6 +491,13 @@ def apply_full_row(
 ) -> None:
     ensure_identity(spec, existing_row, full_row)
     payload = dynamic_payload(spec, full_row)
+    source_unavailable = False
+    if spec.key in {"axel", "quint"}:
+        payload.update({key: full_row[key] for key in (
+            "publication_status", "status_reason", "status_checked_at", "discontinued_at")})
+        source_unavailable = payload["publication_status"] == "unavailable"
+        if source_unavailable:
+            payload["discontinued_at"] = existing_row.get("discontinued_at") or payload["discontinued_at"]
     if args.dry_run:
         LOG.info(
             "Dry run %s id=%s price=%s aarhus_available=%s",
@@ -505,11 +515,14 @@ def apply_full_row(
                     existing_row,
                     payload,
                     checked_at=history_checked_at(payload),
-                    refresh_status="ok",
+                    refresh_status="source_unavailable" if source_unavailable else "ok",
                 )
             )
             stats.history_observations += 1
-    stats.updated += 1
+    if source_unavailable:
+        stats.unavailable += 1
+    else:
+        stats.updated += 1
 
 
 def apply_unavailable(
@@ -897,6 +910,8 @@ STORE_REFRESHERS: dict[
 
 from scripts.refresh_axel_quint_inventory import refresh_store as refresh_axel_quint
 STORE_REFRESHERS.update({key: partial(refresh_axel_quint, key) for key in ("axel", "quint")})
+from scripts.refresh_department_inventory import refresh_store as refresh_department
+STORE_REFRESHERS.update({key: partial(refresh_department, key) for key in ("salling", "magasin")})
 
 
 def refresh_stores(args: argparse.Namespace) -> int:
@@ -1106,10 +1121,10 @@ def parse_args(argv=None) -> argparse.Namespace:
         default=env("LOG_LEVEL", "INFO"),
         choices=("DEBUG", "INFO", "WARNING", "ERROR"),
     )
-    parser.add_argument("--input", help="Local existing-row JSON for AXEL/qUINT dry runs; no database access.")
+    parser.add_argument("--input", help="Local existing-row JSON for AXEL/qUINT/Salling/Magasin dry runs; no database access.")
     arguments = parser.parse_args(argv)
-    if arguments.input and (not arguments.dry_run or arguments.all or arguments.store not in (["axel"], ["quint"])):
-        parser.error("--input requires --dry-run and exactly one --store axel or quint")
+    if arguments.input and (not arguments.dry_run or arguments.all or arguments.store not in (["axel"], ["quint"], ["salling"], ["magasin"])):
+        parser.error("--input requires --dry-run and exactly one --store axel, quint, salling or magasin")
     if arguments.all and arguments.store:
         parser.error("use either --all or one or more --store values")
     if arguments.limit is not None and arguments.limit < 1:

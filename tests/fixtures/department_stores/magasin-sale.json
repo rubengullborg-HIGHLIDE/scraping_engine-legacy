@@ -1,0 +1,276 @@
+{
+  "colors": [
+    {
+      "product": {
+        "id": "BPIZ91-02T2",
+        "masterProductID": "BPIZ91",
+        "colorVariantId": "BPIZ91-02T2",
+        "productName": "ACTIVE SHORTS",
+        "brand": "Bareen",
+        "productType": "variationGroup",
+        "longDescription": null,
+        "shortDescription": "Clay",
+        "topLevelCategoryID": "mens",
+        "price": {
+          "type": "singlePrice",
+          "sales": {
+            "value": 279.3,
+            "currency": "DKK",
+            "formatted": "279,30 kr.",
+            "decimalPrice": "279.30"
+          },
+          "list": {
+            "value": 399,
+            "currency": "DKK",
+            "formatted": "399 kr.",
+            "decimalPrice": "399.00"
+          },
+          "lowest": null,
+          "available": true
+        },
+        "variationAttributes": [
+          {
+            "attributeId": "color",
+            "displayName": "Farve",
+            "id": "color",
+            "values": [
+              {
+                "id": "02T2",
+                "displayValue": "Clay",
+                "selected": true,
+                "inStock": true,
+                "productId": "BPIZ91-02T2"
+              }
+            ]
+          },
+          {
+            "attributeId": "clothingSize",
+            "displayName": "Størrelse",
+            "id": "size",
+            "values": [
+              {
+                "id": "S",
+                "displayValue": "S",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15134684"
+              },
+              {
+                "id": "M",
+                "displayValue": "M",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15134686"
+              },
+              {
+                "id": "L",
+                "displayValue": "L",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15134688"
+              },
+              {
+                "id": "XL",
+                "displayValue": "XL",
+                "selected": false,
+                "inStock": true,
+                "productId": "S15134690"
+              }
+            ]
+          }
+        ],
+        "images": {
+          "zoom": [
+            {
+              "urls": {
+                "xl": "https://www.magasin.dk/dw/image/v2/BFCS_PRD/on/demandware.static/-/Sites-mdn-master-catalog/default/dw3ebb7bfa/large2/22/07034966_CLAY_1.jpg?sw=1280&sh=1536&sm=fit&sfrm=jpg"
+              }
+            },
+            {
+              "urls": {
+                "xl": "https://www.magasin.dk/dw/image/v2/BFCS_PRD/on/demandware.static/-/Sites-mdn-master-catalog/default/dw9eb08ffa/large2/6B/07034966_CLAY_2.jpg?sw=1280&sh=1536&sm=fit&sfrm=jpg"
+              }
+            },
+            {
+              "urls": {
+                "xl": "https://www.magasin.dk/dw/image/v2/BFCS_PRD/on/demandware.static/-/Sites-mdn-master-catalog/default/dweb6015b9/large2/2E/07034966_CLAY_3.jpg?sw=1280&sh=1536&sm=fit&sfrm=jpg"
+              }
+            },
+            {
+              "urls": {
+                "xl": "https://www.magasin.dk/dw/image/v2/BFCS_PRD/on/demandware.static/-/Sites-mdn-master-catalog/default/dw22c69f3c/large2/3C/07034966_CLAY_4.jpg?sw=1280&sh=1536&sm=fit&sfrm=jpg"
+              }
+            },
+            {
+              "urls": {
+                "xl": "https://www.magasin.dk/dw/image/v2/BFCS_PRD/on/demandware.static/-/Sites-mdn-master-catalog/default/dwc12fdbef/large2/70/07034966_CLAY_5.jpg?sw=1280&sh=1536&sm=fit&sfrm=jpg"
+              }
+            }
+          ]
+        },
+        "attributes": [
+          {
+            "ID": "Order",
+            "name": "Order Attributes",
+            "attributes": [
+              {
+                "label": "EAN",
+                "id": "EAN",
+                "value": [
+                  "5740027818381"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "VariationAttributes",
+            "name": "Variation Attributes",
+            "attributes": [
+              {
+                "label": "Farve",
+                "id": "color",
+                "value": [
+                  "Clay"
+                ]
+              },
+              {
+                "label": "Filter color",
+                "id": "filterColor",
+                "value": [
+                  "Beige"
+                ]
+              },
+              {
+                "label": "Størrelse",
+                "id": "clothingSize",
+                "value": [
+                  "L"
+                ]
+              },
+              {
+                "label": "Materiale filter",
+                "id": "materialFilter",
+                "value": [
+                  "Elastane",
+                  "Polyamid"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "Other",
+            "name": "Other",
+            "attributes": [
+              {
+                "label": "Ax numbers",
+                "id": "axNumbers",
+                "value": [
+                  "07034966"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "Specification",
+            "name": "Specification",
+            "attributes": [
+              {
+                "label": "Materiale",
+                "id": "materialDescription",
+                "value": [
+                  "90% Polyamide, 10% Elastane"
+                ]
+              }
+            ]
+          },
+          {
+            "ID": "facts",
+            "name": "Facts",
+            "attributes": [
+              {
+                "label": "Brand",
+                "id": "brand",
+                "value": [
+                  "Bareen"
+                ]
+              },
+              {
+                "label": "EAN",
+                "id": "EAN",
+                "value": [
+                  "5740027818381"
+                ]
+              },
+              {
+                "label": "Størrelse",
+                "id": "clothingSize",
+                "value": [
+                  "L"
+                ]
+              },
+              {
+                "label": "Farve",
+                "id": "color",
+                "value": [
+                  "Clay"
+                ]
+              },
+              {
+                "label": "Ax numbers",
+                "id": "axNumbers",
+                "value": [
+                  "07034966"
+                ]
+              }
+            ]
+          }
+        ],
+        "specifications": [
+          {
+            "label": "Materiale",
+            "id": "materialDescription",
+            "value": [
+              "90% Polyamide, 10% Elastane"
+            ]
+          }
+        ],
+        "careInstructions": [],
+        "schemaMarkup": {
+          "EAN": "5740027818381",
+          "url": "https://www.magasin.dk/active-shorts/BPIZ91-02T2.html",
+          "manufacturerSKU": "BPIZ91"
+        },
+        "koralCategoryPath": "{\"category\":\"Herre > Tøj > Shorts > Casual shorts\"}",
+        "colorName": "Clay",
+        "sizeName": "",
+        "EAN": "5740027818381",
+        "availability": {
+          "available": true,
+          "messages": []
+        },
+        "available": true,
+        "isGiftCertificate": false,
+        "showStockAvailabilityOption": true
+      },
+      "stock": {
+        "S15134684": {
+          "available": false,
+          "stock": null
+        },
+        "S15134686": {
+          "available": true,
+          "stock": null
+        },
+        "S15134688": {
+          "available": true,
+          "stock": null
+        },
+        "S15134690": {
+          "available": false,
+          "stock": null
+        }
+      },
+      "size_guide": {}
+    }
+  ]
+}

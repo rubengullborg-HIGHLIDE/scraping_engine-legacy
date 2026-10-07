@@ -72,6 +72,8 @@ CATALOG_SPECS: "OrderedDict[str, CatalogSpec]" = OrderedDict(
         ("lakor", CatalogSpec("lakor", "scripts/import_lakor_products.py")),
         ("axel", CatalogSpec("axel", "scripts/import_axel_products.py")),
         ("quint", CatalogSpec("quint", "scripts/import_quint_products.py")),
+        ("salling", CatalogSpec("salling", "scripts/import_salling_products.py")),
+        ("magasin", CatalogSpec("magasin", "scripts/import_magasin_products.py")),
     )
 )
 
@@ -302,10 +304,29 @@ def reconcile_catalog(
         if row.get("publication_status") in {"missing", "unavailable"}
     )
 
-    if seen_ids:
+    # AXEL/qUINT publish explicit colour availability, including discontinued
+    # colours still listed in the sitemap. Being seen must not reactivate these.
+    active_seen_ids = seen_ids
+    if store_key in {"axel", "quint"}:
+        unavailable_ids = {
+            int(row["id"]) for row in seen_rows
+            if row.get("publication_status") == "unavailable"
+            and row.get("status_reason") == "source_available_false"
+        }
+        active_seen_ids = seen_ids - unavailable_ids
+        stats.reactivated = sum(
+            before_by_id.get(row_id, {}).get("publication_status") in {"missing", "unavailable"}
+            for row_id in active_seen_ids
+        )
+        if unavailable_ids:
+            client.patch_ids(spec.table, sorted(unavailable_ids), {
+                "last_seen_in_catalog_at": checked_at, "consecutive_catalog_misses": 0,
+            })
+
+    if active_seen_ids:
         client.patch_ids(
             spec.table,
-            sorted(seen_ids),
+            sorted(active_seen_ids),
             {
                 "publication_status": "active",
                 "status_reason": None,

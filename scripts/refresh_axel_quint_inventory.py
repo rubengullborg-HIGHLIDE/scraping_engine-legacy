@@ -42,7 +42,8 @@ def refresh_store(store, database, args):
                     else:
                         # Validate all dynamic fields before any write; omit metadata/raw.
                         staged.append((row, {**dynamic_payload(spec, match),
-                                             'source_color_id': match['source_color_id']}))
+                                             'source_color_id': match['source_color_id'],
+                                             **{key: match[key] for key in ('publication_status', 'status_reason', 'status_checked_at', 'discontinued_at')}}))
             except SourceUnavailable:
                 missing.extend((row, 'page_unavailable') for row in existing)
             except Exception:

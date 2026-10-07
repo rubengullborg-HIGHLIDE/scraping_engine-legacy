@@ -1,0 +1,507 @@
+{
+  "tracking": {
+    "trackingUrl": "https://www.axel.dk//relewise/track/product-view",
+    "productNumber": "2035990127-AXEL",
+    "parentId": "01a0d2899c81730ca65cdb23adc61c1a"
+  },
+  "url": "https://www.axel.dk/produkt/dondup-203599-axel?color=0195041724b17322ae2b44340fc52117#color=0195041724b17322ae2b44340fc52117",
+  "canonical": "https://www.axel.dk/produkt/dondup-203599-axel",
+  "size_guide_html": " <table class=\"sw-text-editor-table\"><thead class=\"sw-text-editor-table__head\"><tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">Størrelse </td> <td class=\"sw-text-editor-table__col\">Livvidde i tommer</td> <td class=\"sw-text-editor-table__col\">Livvidde</td> </tr></thead><tbody class=\"sw-text-editor-table__body\"> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">S</td> <td class=\"sw-text-editor-table__col\">W29</td> <td class=\"sw-text-editor-table__col\">75 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">M</td> <td class=\"sw-text-editor-table__col\">W30</td> <td class=\"sw-text-editor-table__col\">77,5 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">M</td> <td class=\"sw-text-editor-table__col\">W31</td> <td class=\"sw-text-editor-table__col\">80 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">L</td> <td class=\"sw-text-editor-table__col\">W32</td> <td class=\"sw-text-editor-table__col\">82,5 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">L</td> <td class=\"sw-text-editor-table__col\">W33</td> <td class=\"sw-text-editor-table__col\">85 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">XL</td> <td class=\"sw-text-editor-table__col\">W34</td> <td class=\"sw-text-editor-table__col\">87,5 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">XL</td> <td class=\"sw-text-editor-table__col\">W36</td> <td class=\"sw-text-editor-table__col\">92,5 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">XXL</td> <td class=\"sw-text-editor-table__col\">W38</td> <td class=\"sw-text-editor-table__col\">97,5 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">XXL-XXXL</td> <td class=\"sw-text-editor-table__col\">W40</td> <td class=\"sw-text-editor-table__col\">102,5 cm</td> </tr></tbody> </table> <p><i>Bemærk, at alle mål er vejledende og kan variere en smule, afhængigt af pasform og materiale.</i></p> ",
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Forside",
+          "item": "https://www.axel.dk"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tøj",
+          "item": "https://www.axel.dk/toej"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Jeans",
+          "item": "https://www.axel.dk/toej/jeans"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "UP563 DF0277U MC9 DU900 JEANS"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "@id": "https://www.axel.dk/produkt/dondup-2035990127-axel#product",
+      "image": [
+        "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png"
+      ],
+      "name": "UP563 DF0277U MC9 DU900 JEANS",
+      "description": "",
+      "sku": "2035990127-AXEL",
+      "offers": {
+        "priceCurrency": "DKK",
+        "price": 1950,
+        "availability": "https://schema.org/InStock"
+      },
+      "brand": {
+        "@type": "Brand",
+        "name": "Dondup"
+      },
+      "releaseDate": "2026-09-24"
+    }
+  ],
+  "colors": {
+    "0195041724b17322ae2b44340fc52117": {
+      "option": {
+        "name": "GRÅ",
+        "badges": [
+          {
+            "content": "New",
+            "style": "color: #ffffff; background-color: #000000;"
+          }
+        ],
+        "discountBanner": "",
+        "discountBadge": "",
+        "manufacturer": "Dondup",
+        "price": "DKK 1.950",
+        "priceRaw": 1950,
+        "listPrice": "",
+        "listPriceRaw": null,
+        "colorGroup": "Grå",
+        "oneSize": "",
+        "available": true,
+        "sizes": {
+          "01a0d2899f0871c9b2a614331a0bdc1f": {
+            "sizeName": "W30",
+            "availability": 1,
+            "maxPurchase": null,
+            "productId": "01a0d2899f0871c9b2a614331a0bdc1f",
+            "productNumber": "2035990097-AXEL",
+            "productName": "UP563 DF0277U MC9 DU900 JEANS",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "01a0d289a32a7190b259133fc9029aed": {
+            "sizeName": "W31",
+            "availability": 1,
+            "maxPurchase": null,
+            "productId": "01a0d289a32a7190b259133fc9029aed",
+            "productNumber": "2035990103-AXEL",
+            "productName": "UP563 DF0277U MC9 DU900 JEANS",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "01a0d289a351736a8d29aab57ba24263": {
+            "sizeName": "W32",
+            "availability": 3,
+            "maxPurchase": null,
+            "productId": "01a0d289a351736a8d29aab57ba24263",
+            "productNumber": "2035990110-AXEL",
+            "productName": "UP563 DF0277U MC9 DU900 JEANS",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 3,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": true,
+                "stock": 2,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "01a0d289a35f71b687b6ba257d9617e4": {
+            "sizeName": "W33",
+            "availability": 4,
+            "maxPurchase": null,
+            "productId": "01a0d289a35f71b687b6ba257d9617e4",
+            "productNumber": "2035990127-AXEL",
+            "productName": "UP563 DF0277U MC9 DU900 JEANS",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 3,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": true,
+                "stock": 3,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "01a0d289a345721ea80a7485697c6829": {
+            "sizeName": "W34",
+            "availability": 2,
+            "maxPurchase": null,
+            "productId": "01a0d289a345721ea80a7485697c6829",
+            "productNumber": "2035990134-AXEL",
+            "productName": "UP563 DF0277U MC9 DU900 JEANS",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 2,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": true,
+                "stock": 2,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "01a0d289a36c7128842c4540dfe9b044": {
+            "sizeName": "W35",
+            "availability": 1,
+            "maxPurchase": null,
+            "productId": "01a0d289a36c7128842c4540dfe9b044",
+            "productNumber": "2035990141-AXEL",
+            "productName": "UP563 DF0277U MC9 DU900 JEANS",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "01a0d289a3377282bb3288f4fd94c113": {
+            "sizeName": "W36",
+            "availability": 1,
+            "maxPurchase": null,
+            "productId": "01a0d289a3377282bb3288f4fd94c113",
+            "productNumber": "2035990158-AXEL",
+            "productName": "UP563 DF0277U MC9 DU900 JEANS",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          }
+        }
+      },
+      "images": [
+        {
+          "id": "01a0d2899e6c7206b897b487352ec410",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 360w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 486w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 663w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 864w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 285w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 360w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 486w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 180w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 285w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 360w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 486w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 663w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/16/6d/41/1790238629/203599_GRAA-01.png 864w",
+          "alt": null,
+          "path": "media/16/6d/41/1790238629/203599_GRAA-01.png"
+        },
+        {
+          "id": "01a0d289a069704c93081919420e208a",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 360w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 486w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 662w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 864w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 285w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 360w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 486w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 180w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 285w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 360w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 486w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 662w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/b3/c8/46/1790238630/203599_GRAA-02.png 864w",
+          "alt": null,
+          "path": "media/b3/c8/46/1790238630/203599_GRAA-02.png"
+        },
+        {
+          "id": "01a0d289a1bc7050b2d53f3bf376894b",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/9f/a0/19/1790238630/203599_GRAA-03.png 1920w",
+          "alt": null,
+          "path": "media/9f/a0/19/1790238630/203599_GRAA-03.png"
+        },
+        {
+          "id": "01a0d289a24c712aae389f79e26eaf60",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/c5/38/f7/1790238630/203599_GRAA-04.png 1920w",
+          "alt": null,
+          "path": "media/c5/38/f7/1790238630/203599_GRAA-04.png"
+        }
+      ],
+      "description_html": " ",
+      "specifications": [
+        "Farve: GRÅ",
+        "Modelnavn: UP563 DF0277U MC9 DU900 JEANS",
+        "Varenummer: 203599-AXEL"
+      ]
+    }
+  }
+}

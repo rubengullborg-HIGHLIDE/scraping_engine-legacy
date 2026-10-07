@@ -1,0 +1,1798 @@
+{
+  "tracking": {
+    "trackingUrl": "https://www.axel.dk//relewise/track/product-view",
+    "productNumber": "1945910362-AXEL",
+    "parentId": "0197c33a2c7d7267914ac7c198136fff"
+  },
+  "url": "https://www.axel.dk/produkt/xacus-194591-axel?color=0195fc2a919b706e8e11804bf4e19607#color=0195fc2a919b706e8e11804bf4e19607",
+  "canonical": "https://www.axel.dk/produkt/xacus-194591-axel",
+  "size_guide_html": " <table class=\"sw-text-editor-table\"><thead class=\"sw-text-editor-table__head\"><tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">Størrelse</td> <td class=\"sw-text-editor-table__col\">Halsmål</td> <td class=\"sw-text-editor-table__col\">Brystmål</td> </tr></thead><tbody class=\"sw-text-editor-table__body\"><tr class=\"sw-text-editor-table__row\"><td class=\"sw-text-editor-table__col\">S</td> <td class=\"sw-text-editor-table__col\">37</td> <td class=\"sw-text-editor-table__col\">91 - 96 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">S</td> <td class=\"sw-text-editor-table__col\">38</td> <td class=\"sw-text-editor-table__col\">91 - 96 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">M</td> <td class=\"sw-text-editor-table__col\">39</td> <td class=\"sw-text-editor-table__col\">96 - 101 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">M</td> <td class=\"sw-text-editor-table__col\">40</td> <td class=\"sw-text-editor-table__col\">96 - 101 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">L</td> <td class=\"sw-text-editor-table__col\">41</td> <td class=\"sw-text-editor-table__col\">101 - 106 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"><td class=\"sw-text-editor-table__col\">L</td> <td class=\"sw-text-editor-table__col\">42</td> <td class=\"sw-text-editor-table__col\">101 - 106 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">XL</td> <td class=\"sw-text-editor-table__col\">43</td> <td class=\"sw-text-editor-table__col\">106 - 111 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">XL</td> <td class=\"sw-text-editor-table__col\">44</td> <td class=\"sw-text-editor-table__col\">106 - 111 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">XXL</td> <td class=\"sw-text-editor-table__col\">45</td> <td class=\"sw-text-editor-table__col\">111 - 116 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">XXL</td> <td class=\"sw-text-editor-table__col\">46</td> <td class=\"sw-text-editor-table__col\">111 - 116 cm</td> </tr> <tr class=\"sw-text-editor-table__row\"> <td class=\"sw-text-editor-table__col\">XXXL</td> <td class=\"sw-text-editor-table__col\">48</td> <td class=\"sw-text-editor-table__col\">118 - 122 cm</td></tr></tbody></table><p><br></p><p><br></p> ",
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Forside",
+          "item": "https://www.axel.dk"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tøj",
+          "item": "https://www.axel.dk/toej"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "81190 428 LEGAZY"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "@id": "https://www.axel.dk/produkt/xacus-1945910362-axel#product",
+      "image": [
+        "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png"
+      ],
+      "name": "81190 428 LEGAZY",
+      "description": "Skjorte fremstillet i 100% bomuld med klassisk flip. Knaplukning ved manchet, samt udført i en let og blød metervare.",
+      "sku": "1945910362-AXEL",
+      "offers": {
+        "priceCurrency": "DKK",
+        "price": 1300,
+        "availability": "https://schema.org/InStock"
+      },
+      "brand": {
+        "@type": "Brand",
+        "name": "Xacus"
+      },
+      "releaseDate": "2025-06-30"
+    }
+  ],
+  "colors": {
+    "01950417230471e6803bb3c9c4414bf8": {
+      "option": {
+        "name": "NAVY",
+        "badges": [
+          {
+            "content": "-50%",
+            "style": ""
+          },
+          {
+            "content": "ARCHIVE SALE",
+            "style": "color: #ffffff; background-color: #fe701a;"
+          }
+        ],
+        "discountBanner": "",
+        "discountBadge": "",
+        "manufacturer": "Xacus",
+        "price": "DKK 650",
+        "priceRaw": 650,
+        "listPrice": "DKK 1.300",
+        "listPriceRaw": null,
+        "colorGroup": "Blå",
+        "oneSize": "",
+        "available": true,
+        "sizes": {
+          "0197cb31eb3272ad97d2e150d2436d23": {
+            "sizeName": "39",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0197cb31eb3272ad97d2e150d2436d23",
+            "productNumber": "1945910522-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb319f1d71d98d190184e94af96e": {
+            "sizeName": "40",
+            "availability": 1,
+            "maxPurchase": null,
+            "productId": "0197cb319f1d71d98d190184e94af96e",
+            "productNumber": "1945910539-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb3133c0719983ace0fb4cacaa9d": {
+            "sizeName": "41",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0197cb3133c0719983ace0fb4cacaa9d",
+            "productNumber": "1945910546-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb31740573dbb2de7e5a489c43a4": {
+            "sizeName": "42",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0197cb31740573dbb2de7e5a489c43a4",
+            "productNumber": "1945910553-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb31aa007264b28edf88e020352e": {
+            "sizeName": "43",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0197cb31aa007264b28edf88e020352e",
+            "productNumber": "1945910560-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          }
+        }
+      },
+      "images": [
+        {
+          "id": "0197a1f15b7c7392b3991969d9f85e5c",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 696w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 939w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 1280w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 1670w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 551w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 696w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 939w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 348w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 551w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 696w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 939w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 1280w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/b0/ae/91/1750768639/194591_NAVY-01.png 1670w",
+          "alt": null,
+          "path": "media/b0/ae/91/1750768639/194591_NAVY-01.png"
+        },
+        {
+          "id": "019c7693169b7372a12995d5a60921f0",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png 1920w",
+          "alt": null,
+          "path": "media/63/3f/82/1771515878/194591_NAVY-MODEL-01.png"
+        },
+        {
+          "id": "019c76931cb072e8bd17422a7263c541",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png 1920w",
+          "alt": null,
+          "path": "media/f7/c2/64/1771515879/194591_NAVY-MODEL-02.png"
+        },
+        {
+          "id": "019c769320007123b9af4361f543c41d",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png 1920w",
+          "alt": null,
+          "path": "media/33/3b/bd/1771515880/194591_NAVY-MODEL-03.png"
+        },
+        {
+          "id": "0197a1f16788725880abdc2330c1721a",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 695w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 939w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 1279w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 1669w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 551w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 695w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 939w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 347w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 551w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 695w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 939w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 1279w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/d6/2a/57/1750768642/194591_NAVY-02.png 1669w",
+          "alt": null,
+          "path": "media/d6/2a/57/1750768642/194591_NAVY-02.png"
+        },
+        {
+          "id": "0197a1f16fd771f784ec1aa6772d7043",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/c5/bb/08/1750768644/194591_NAVY-03.png 1920w",
+          "alt": null,
+          "path": "media/c5/bb/08/1750768644/194591_NAVY-03.png"
+        },
+        {
+          "id": "0197a1f1782c70b495bd6221cb7037e5",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/e0/63/ef/1750768646/194591_NAVY-04.png 1920w",
+          "alt": null,
+          "path": "media/e0/63/ef/1750768646/194591_NAVY-04.png"
+        },
+        {
+          "id": "0197a1f180af70ddbb3e156f01a98679",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/30/0f/23/1750768648/194591_NAVY-05.png 1920w",
+          "alt": null,
+          "path": "media/30/0f/23/1750768648/194591_NAVY-05.png"
+        }
+      ],
+      "description_html": " Skjorte fremstillet i 100% bomuld med klassisk flip. Knaplukning ved manchet, samt udført i en let og blød metervare. ",
+      "specifications": [
+        "Farve: NAVY",
+        "Fit: Regular fit",
+        "Krave: Klassisk , Klassisk flip",
+        "Lukning: Knaplukning",
+        "Manchet: Justérbar - Knaplukning",
+        "Materiale: 100% Bomuld",
+        "Metervare: Let og blød metervare",
+        "Modelnavn: 81190 428 LEGAZY SKJORTE",
+        "Varenummer: 194591-AXEL"
+      ]
+    },
+    "019504172e637290bb348cbda38d4388": {
+      "option": {
+        "name": "HVID",
+        "badges": [
+          {
+            "content": "-50%",
+            "style": ""
+          },
+          {
+            "content": "ARCHIVE SALE",
+            "style": "color: #ffffff; background-color: #fe701a;"
+          }
+        ],
+        "discountBanner": "",
+        "discountBadge": "",
+        "manufacturer": "Xacus",
+        "price": "DKK 650",
+        "priceRaw": 650,
+        "listPrice": "DKK 1.300",
+        "listPriceRaw": null,
+        "colorGroup": "Hvid",
+        "oneSize": "",
+        "available": true,
+        "sizes": {
+          "0197cb314924714199746a8010ddf208": {
+            "sizeName": "39",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0197cb314924714199746a8010ddf208",
+            "productNumber": "1945910041-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": true,
+                "stock": 2,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb3169577161a48212363fa81848": {
+            "sizeName": "40",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0197cb3169577161a48212363fa81848",
+            "productNumber": "1945910058-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb31896273f48693b2099bde2117": {
+            "sizeName": "41",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0197cb31896273f48693b2099bde2117",
+            "productNumber": "1945910065-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb3200607299a5ed05e3fcb0e777": {
+            "sizeName": "42",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0197cb3200607299a5ed05e3fcb0e777",
+            "productNumber": "1945910072-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb313e6a72579e4d132d9774714d": {
+            "sizeName": "43",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0197cb313e6a72579e4d132d9774714d",
+            "productNumber": "1945910089-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb31c391739b95f31424300caf66": {
+            "sizeName": "44",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0197cb31c391739b95f31424300caf66",
+            "productNumber": "1945910096-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb31f5bd701da3e09390b0f124ce": {
+            "sizeName": "45",
+            "availability": 1,
+            "maxPurchase": null,
+            "productId": "0197cb31f5bd701da3e09390b0f124ce",
+            "productNumber": "1945910102-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          }
+        }
+      },
+      "images": [
+        {
+          "id": "0197a1f188a171cd9c6a00039c7fcf6b",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 703w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 949w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 1293w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 1687w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 557w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 703w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 949w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 351w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 557w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 703w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 949w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 1293w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/25/10/13/1750768650/194591_HVID-01.png 1687w",
+          "alt": null,
+          "path": "media/25/10/13/1750768650/194591_HVID-01.png"
+        },
+        {
+          "id": "0197a1f1906872829f240f9621fe7163",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 709w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 957w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 1304w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 1702w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 562w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 709w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 957w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 354w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 562w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 709w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 957w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 1304w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/5e/d1/f4/1750768652/194591_HVID-02.png 1702w",
+          "alt": null,
+          "path": "media/5e/d1/f4/1750768652/194591_HVID-02.png"
+        },
+        {
+          "id": "0197a1f198bc7087b6f31eda6ed2536c",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/c9/8b/26/1750768655/194591_HVID-03.png 1920w",
+          "alt": null,
+          "path": "media/c9/8b/26/1750768655/194591_HVID-03.png"
+        },
+        {
+          "id": "0197a1f1a0a2713aa57f7397ebe57b99",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/09/4c/88/1750768657/194591_HVID-04.png 1920w",
+          "alt": null,
+          "path": "media/09/4c/88/1750768657/194591_HVID-04.png"
+        },
+        {
+          "id": "0197a1f1a8c57002b419281835407dc4",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/32/5d/89/1750768659/194591_HVID-05.png 1920w",
+          "alt": null,
+          "path": "media/32/5d/89/1750768659/194591_HVID-05.png"
+        }
+      ],
+      "description_html": " Skjorte fremstillet i 100% bomuld med klassisk flip. Knaplukning ved manchet, samt udført i en let og blød metervare. ",
+      "specifications": [
+        "Farve: HVID",
+        "Fit: Regular fit",
+        "Krave: Klassisk , Klassisk flip",
+        "Lukning: Knaplukning",
+        "Manchet: Justérbar - Knaplukning",
+        "Materiale: 100% Bomuld",
+        "Metervare: Let og blød metervare",
+        "Modelnavn: 81190 428 LEGAZY SKJORTE",
+        "Varenummer: 194591-AXEL"
+      ]
+    },
+    "0195fc2a919b706e8e11804bf4e19607": {
+      "option": {
+        "name": "MINT",
+        "badges": [
+          {
+            "content": "-50%",
+            "style": ""
+          },
+          {
+            "content": "ARCHIVE SALE",
+            "style": "color: #ffffff; background-color: #fe701a;"
+          }
+        ],
+        "discountBanner": "",
+        "discountBadge": "",
+        "manufacturer": "Xacus",
+        "price": "DKK 650",
+        "priceRaw": 650,
+        "listPrice": "DKK 1.300",
+        "listPriceRaw": null,
+        "colorGroup": "Turkis",
+        "oneSize": "",
+        "available": true,
+        "sizes": {
+          "0197cb3153d27178b398de6d7cff1a72": {
+            "sizeName": "39",
+            "availability": 1,
+            "maxPurchase": null,
+            "productId": "0197cb3153d27178b398de6d7cff1a72",
+            "productNumber": "1945910362-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb31b58473dfb3e359718cffcf31": {
+            "sizeName": "40",
+            "availability": 1,
+            "maxPurchase": null,
+            "productId": "0197cb31b58473dfb3e359718cffcf31",
+            "productNumber": "1945910379-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb317ebd7385bbca1898efb31c49": {
+            "sizeName": "41",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0197cb317ebd7385bbca1898efb31c49",
+            "productNumber": "1945910386-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0199aacc2bce7249a6a5038d9cce2200": {
+            "sizeName": "42",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0199aacc2bce7249a6a5038d9cce2200",
+            "productNumber": "1945910393-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb31e03773b5b29cee7f3c38ea48": {
+            "sizeName": "43",
+            "availability": 1,
+            "maxPurchase": null,
+            "productId": "0197cb31e03773b5b29cee7f3c38ea48",
+            "productNumber": "1945910409-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0197cb3193d771f8b8a99827992ad30e": {
+            "sizeName": "44",
+            "availability": 1,
+            "maxPurchase": null,
+            "productId": "0197cb3193d771f8b8a99827992ad30e",
+            "productNumber": "1945910416-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          }
+        }
+      },
+      "images": [
+        {
+          "id": "0197a1f1bc2a722c9b383eb3c87796f5",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 706w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 954w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 1300w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 1696w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 560w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 706w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 954w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 353w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 560w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 706w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 954w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 1300w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/e4/d0/08/1750768664/194591_MINT-01.png 1696w",
+          "alt": null,
+          "path": "media/e4/d0/08/1750768664/194591_MINT-01.png"
+        },
+        {
+          "id": "0197a1f1c3cd71e78e6b8089a7a9f424",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 708w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 956w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 1304w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 1701w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 561w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 708w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 956w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 354w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 561w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 708w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 956w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 1304w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/ab/ff/1a/1750768666/194591_MINT-02.png 1701w",
+          "alt": null,
+          "path": "media/ab/ff/1a/1750768666/194591_MINT-02.png"
+        },
+        {
+          "id": "0197a1f1cc4d722fbb2ffc07c68530b3",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/42/27/14/1750768668/194591_MINT-03.png 1920w",
+          "alt": null,
+          "path": "media/42/27/14/1750768668/194591_MINT-03.png"
+        },
+        {
+          "id": "0197a1f1d45770749a0deae6d0c70dcb",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/aa/71/d0/1750768670/194591_MINT-04.png 1920w",
+          "alt": null,
+          "path": "media/aa/71/d0/1750768670/194591_MINT-04.png"
+        },
+        {
+          "id": "0197a1f1dc8772d1abc308b11d8d78ce",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/e3/89/e0/1750768672/194591_MINT-05.png 1920w",
+          "alt": null,
+          "path": "media/e3/89/e0/1750768672/194591_MINT-05.png"
+        }
+      ],
+      "description_html": " Skjorte fremstillet i 100% bomuld med klassisk flip. Knaplukning ved manchet, samt udført i en let og blød metervare. ",
+      "specifications": [
+        "Farve: MINT",
+        "Fit: Regular fit",
+        "Krave: Klassisk , Klassisk flip",
+        "Lukning: Knaplukning",
+        "Manchet: Justérbar - Knaplukning",
+        "Materiale: 100% Bomuld",
+        "Metervare: Let og blød metervare",
+        "Modelnavn: 81190 428 LEGAZY SKJORTE",
+        "Varenummer: 194591-AXEL"
+      ]
+    },
+    "0195041dac6a7182bc001bc32253a571": {
+      "option": {
+        "name": "LYS BLÅ",
+        "badges": [
+          {
+            "content": "-50%",
+            "style": ""
+          },
+          {
+            "content": "ARCHIVE SALE",
+            "style": "color: #ffffff; background-color: #fe701a;"
+          }
+        ],
+        "discountBanner": "",
+        "discountBadge": "",
+        "manufacturer": "Xacus",
+        "price": "DKK 650",
+        "priceRaw": 650,
+        "listPrice": "DKK 1.300",
+        "listPriceRaw": null,
+        "colorGroup": "Blå",
+        "oneSize": "",
+        "available": true,
+        "sizes": {
+          "019832573da0734ea4cf6de845cd6f9a": {
+            "sizeName": "39",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "019832573da0734ea4cf6de845cd6f9a",
+            "productNumber": "1945910201-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "019832578388727a9926884741e85d41": {
+            "sizeName": "40",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "019832578388727a9926884741e85d41",
+            "productNumber": "1945910218-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0198325771457019be9c77a077994b0d": {
+            "sizeName": "41",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0198325771457019be9c77a077994b0d",
+            "productNumber": "1945910225-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "019832571a9670869fb32cd1a9108b79": {
+            "sizeName": "42",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "019832571a9670869fb32cd1a9108b79",
+            "productNumber": "1945910232-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "01983256e69372e1ad19e1a992a0d9ed": {
+            "sizeName": "43",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "01983256e69372e1ad19e1a992a0d9ed",
+            "productNumber": "1945910249-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "01983257575c70eba70a32bfe9068078": {
+            "sizeName": "44",
+            "availability": 1,
+            "maxPurchase": null,
+            "productId": "01983257575c70eba70a32bfe9068078",
+            "productNumber": "1945910256-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": true,
+                "stock": 1,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          },
+          "0198325748ba734990d2f396a7f9b023": {
+            "sizeName": "45",
+            "availability": 0,
+            "maxPurchase": null,
+            "productId": "0198325748ba734990d2f396a7f9b023",
+            "productNumber": "1945910263-AXEL",
+            "productName": "81190 428 LEGAZY",
+            "stock": {
+              "019661be60cc730288f7164a00777b9f": {
+                "id": "019661be60cc730288f7164a00777b9f",
+                "label": "AXEL Online Shop",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "online-shop",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 24,
+                "warehouseId": "01966bc9a1737ae9b9cfcfc522807b82"
+              },
+              "0196618ae17b7267a4a04640df1ddd42": {
+                "id": "0196618ae17b7267a4a04640df1ddd42",
+                "label": "AXEL Aarhus C",
+                "city": "Aarhus C",
+                "zipCode": "8000",
+                "street": "Skt. Clemens Stræde",
+                "streetNumber": "5",
+                "active": true,
+                "seoUrl": "aarhus",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bd3eb3578d58837f4da66342cde"
+              },
+              "01966188696b730bb968fb99dc241bfe": {
+                "id": "01966188696b730bb968fb99dc241bfe",
+                "label": "AXEL København K, Strøget",
+                "city": "København K",
+                "zipCode": "1164",
+                "street": "Nygade",
+                "streetNumber": "2",
+                "active": true,
+                "seoUrl": "koebenhavn",
+                "available": false,
+                "stock": 0,
+                "deliveryTime": 48,
+                "warehouseId": "01966bca087771c59ee49c1115dd7d32"
+              }
+            }
+          }
+        }
+      },
+      "images": [
+        {
+          "id": "01983256e87c73d4ae5c8cad47b163d5",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 704w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 950w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 1296w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 1690w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 558w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 704w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 950w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 352w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 558w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 704w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 950w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 1296w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png 1690w",
+          "alt": null,
+          "path": "media/0c/0f/9d/1753191213/194591_LYS_BLAA-01.png"
+        },
+        {
+          "id": "01983256f0a673c7a5309d530de57f38",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 704w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 950w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 1295w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 1689w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 557w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 704w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 950w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 352w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 557w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 704w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 950w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 1295w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/26/9d/55/1753191215/194591_LYS_BLAA-02.png 1689w",
+          "alt": null,
+          "path": "media/26/9d/55/1753191215/194591_LYS_BLAA-02.png"
+        },
+        {
+          "id": "01983256f85273c48170e8fefa46ee87",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png 1920w",
+          "alt": null,
+          "path": "media/d2/cb/59/1753191217/194591_LYS_BLAA-03.png"
+        },
+        {
+          "id": "01983257006171b89686e2a2d25b4ca6",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/96/a1/02/1753191219/194591_LYS_BLAA-04.png 1920w",
+          "alt": null,
+          "path": "media/96/a1/02/1753191219/194591_LYS_BLAA-04.png"
+        },
+        {
+          "id": "01983257085e7250b30570e6646fad97",
+          "src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png",
+          "srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 1920w",
+          "srcset_mobile": "https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 1080w",
+          "thumb_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D96%2Cheight%3D96%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png",
+          "thumb_big_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png",
+          "full_src": "https://www.kaufmann.dk/cdn-cgi/image/width%3D3360%2Cheight%3D3360%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png",
+          "full_srcset": "https://www.kaufmann.dk/cdn-cgi/image/width%3D400%2Cheight%3D400%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 400w, https://www.kaufmann.dk/cdn-cgi/image/width%3D634%2Cheight%3D634%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 634w, https://www.kaufmann.dk/cdn-cgi/image/width%3D800%2Cheight%3D800%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 800w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1080%2Cheight%3D1080%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 1080w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1472%2Cheight%3D1472%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 1472w, https://www.kaufmann.dk/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cformat%3Dauto/media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png 1920w",
+          "alt": null,
+          "path": "media/2c/4c/76/1753191221/194591_LYS_BLAA-05.png"
+        }
+      ],
+      "description_html": " Skjorte fremstillet i 100% bomuld med klassisk flip. Knaplukning ved manchet, samt udført i en let og blød metervare. ",
+      "specifications": [
+        "Farve: LYS BLÅ",
+        "Fit: Regular fit",
+        "Krave: Klassisk , Klassisk flip",
+        "Lukning: Knaplukning",
+        "Manchet: Justérbar - Knaplukning",
+        "Materiale: 100% Bomuld",
+        "Metervare: Let og blød metervare",
+        "Modelnavn: 81190 428 LEGAZY SKJORTE",
+        "Varenummer: 194591-AXEL"
+      ]
+    }
+  }
+}

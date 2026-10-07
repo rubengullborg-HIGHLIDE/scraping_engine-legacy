@@ -1,0 +1,4453 @@
+{
+  "products": [
+    {
+      "parentId": 126531,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>Underbukser fra Calvin Klein</li>\n<li>5-pak</li>\n<li><span>Calvin Kleins signatur elastiske linning</span></li>\n<li>Medium taljehøjde</li>\n<li>Bomulds-elastanblanding</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XS",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Calvin Klein",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "XS",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "XS",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "95 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "5 % Elastan",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Sort#000000107248",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White/Black/White/Grey Heather",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061716/",
+            "productId": 1061716,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 7
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+            "productId": 1061850,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198477/",
+            "productId": 1198477,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 57
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198479/",
+            "productId": 1198479,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 18
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198480/",
+            "productId": 1198480,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 11
+          }
+        ]
+      },
+      "ean": "8721439088514",
+      "url": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "Undertøj"
+        }
+      ],
+      "indexableStockInfo": [
+        {
+          "name": "Salling Aarhus",
+          "availableStock": 6,
+          "erpStock": 0,
+          "location": "Søndergade 27, 8000 Aarhus C",
+          "storeId": null
+        },
+        {
+          "name": "Salling Kultorvet",
+          "availableStock": 0,
+          "erpStock": 0,
+          "location": "Kultorvet 2, 1175 København K",
+          "storeId": null
+        },
+        {
+          "name": "Salling Aalborg",
+          "availableStock": 5,
+          "erpStock": 0,
+          "location": "Nytorv 8, 9000 Aalborg",
+          "storeId": null
+        }
+      ],
+      "availableQuantity": 3,
+      "id": 1198475,
+      "title": "Icon Cotton Stretch 5-pak Boxer Briefs, Black, XS",
+      "currentPriceTag": {
+        "total": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/cagfkc54/lv00nb4395ub1_f-lowres.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/cagfkc54/lv00nb4395ub1_f-lowres.jpg",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "Undertøj",
+      "manufacturerName": "Calvin Klein",
+      "isBuyable": true
+    },
+    {
+      "parentId": 126531,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>Underbukser fra Calvin Klein</li>\n<li>5-pak</li>\n<li><span>Calvin Kleins signatur elastiske linning</span></li>\n<li>Medium taljehøjde</li>\n<li>Bomulds-elastanblanding</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Calvin Klein",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "95 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "5 % Elastan",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Sort#000000107248",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White/Black/White/Grey Heather",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+            "productId": 1061850,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198477/",
+            "productId": 1198477,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 57
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198479/",
+            "productId": 1198479,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 18
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198480/",
+            "productId": 1198480,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 11
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "Undertøj"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 0,
+      "id": 1061850,
+      "title": "Icon Cotton Stretch 5-pak Boxer Briefs, Black, L",
+      "currentPriceTag": {
+        "total": {
+          "value": 419.3,
+          "displayValue": "419,30 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/cagfkc54/lv00nb4395ub1_f-lowres.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/cagfkc54/lv00nb4395ub1_f-lowres.jpg",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "Undertøj",
+      "manufacturerName": "Calvin Klein",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    },
+    {
+      "parentId": 126531,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>Underbukser fra Calvin Klein</li>\n<li>5-pak</li>\n<li><span>Calvin Kleins signatur elastiske linning</span></li>\n<li>Medium taljehøjde</li>\n<li>Bomulds-elastanblanding</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "M",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Calvin Klein",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "M",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "M",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "95 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "5 % Elastan",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Sort#000000107248",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198477/",
+            "productId": 1198477,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 57
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White/Black/White/Grey Heather",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061716/",
+            "productId": 1061716,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 7
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+            "productId": 1061850,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198477/",
+            "productId": 1198477,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 57
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198479/",
+            "productId": 1198479,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 18
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198480/",
+            "productId": 1198480,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 11
+          }
+        ]
+      },
+      "ean": "8721439088538",
+      "url": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198477/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "Undertøj"
+        }
+      ],
+      "indexableStockInfo": [
+        {
+          "name": "Salling Aarhus",
+          "availableStock": 49,
+          "erpStock": 0,
+          "location": "Søndergade 27, 8000 Aarhus C",
+          "storeId": null
+        },
+        {
+          "name": "Salling Kultorvet",
+          "availableStock": 0,
+          "erpStock": 0,
+          "location": "Kultorvet 2, 1175 København K",
+          "storeId": null
+        },
+        {
+          "name": "Salling Aalborg",
+          "availableStock": 66,
+          "erpStock": 0,
+          "location": "Nytorv 8, 9000 Aalborg",
+          "storeId": null
+        }
+      ],
+      "availableQuantity": 57,
+      "id": 1198477,
+      "title": "Icon Cotton Stretch 5-pak Boxer Briefs, Black, M",
+      "currentPriceTag": {
+        "total": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/cagfkc54/lv00nb4395ub1_f-lowres.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/cagfkc54/lv00nb4395ub1_f-lowres.jpg",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "Undertøj",
+      "manufacturerName": "Calvin Klein",
+      "isBuyable": true
+    },
+    {
+      "parentId": 126531,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>Underbukser fra Calvin Klein</li>\n<li>5-pak</li>\n<li><span>Calvin Kleins signatur elastiske linning</span></li>\n<li>Medium taljehøjde</li>\n<li>Bomulds-elastanblanding</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Calvin Klein",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "95 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "5 % Elastan",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Sort#000000107248",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White/Black/White/Grey Heather",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+            "productId": 1061850,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198477/",
+            "productId": 1198477,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 57
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198479/",
+            "productId": 1198479,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 18
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198480/",
+            "productId": 1198480,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 11
+          }
+        ]
+      },
+      "ean": "8721439088545",
+      "url": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "Undertøj"
+        }
+      ],
+      "indexableStockInfo": [
+        {
+          "name": "Salling Aarhus",
+          "availableStock": 47,
+          "erpStock": 0,
+          "location": "Søndergade 27, 8000 Aarhus C",
+          "storeId": null
+        },
+        {
+          "name": "Salling Kultorvet",
+          "availableStock": 1,
+          "erpStock": 0,
+          "location": "Kultorvet 2, 1175 København K",
+          "storeId": null
+        },
+        {
+          "name": "Salling Aalborg",
+          "availableStock": 65,
+          "erpStock": 0,
+          "location": "Nytorv 8, 9000 Aalborg",
+          "storeId": null
+        }
+      ],
+      "availableQuantity": 51,
+      "id": 1198478,
+      "title": "Icon Cotton Stretch 5-pak Boxer Briefs, Black, L",
+      "currentPriceTag": {
+        "total": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/cagfkc54/lv00nb4395ub1_f-lowres.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/cagfkc54/lv00nb4395ub1_f-lowres.jpg",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "Undertøj",
+      "manufacturerName": "Calvin Klein",
+      "isBuyable": true
+    },
+    {
+      "parentId": 126531,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>Underbukser fra Calvin Klein</li>\n<li>5-pak</li>\n<li><span>Calvin Kleins signatur elastiske linning</span></li>\n<li>Medium taljehøjde</li>\n<li>Bomulds-elastanblanding</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XL",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Calvin Klein",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "XL",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "XL",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "95 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "5 % Elastan",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Sort#000000107248",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198479/",
+            "productId": 1198479,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 18
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White/Black/White/Grey Heather",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061716/",
+            "productId": 1061716,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 7
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+            "productId": 1061850,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198477/",
+            "productId": 1198477,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 57
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198479/",
+            "productId": 1198479,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 18
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198480/",
+            "productId": 1198480,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 11
+          }
+        ]
+      },
+      "ean": "8721439088552",
+      "url": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198479/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "Undertøj"
+        }
+      ],
+      "indexableStockInfo": [
+        {
+          "name": "Salling Aarhus",
+          "availableStock": 28,
+          "erpStock": 0,
+          "location": "Søndergade 27, 8000 Aarhus C",
+          "storeId": null
+        },
+        {
+          "name": "Salling Kultorvet",
+          "availableStock": 0,
+          "erpStock": 0,
+          "location": "Kultorvet 2, 1175 København K",
+          "storeId": null
+        },
+        {
+          "name": "Salling Aalborg",
+          "availableStock": 35,
+          "erpStock": 0,
+          "location": "Nytorv 8, 9000 Aalborg",
+          "storeId": null
+        }
+      ],
+      "availableQuantity": 18,
+      "id": 1198479,
+      "title": "Icon Cotton Stretch 5-pak Boxer Briefs, Black, XL",
+      "currentPriceTag": {
+        "total": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/cagfkc54/lv00nb4395ub1_f-lowres.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/cagfkc54/lv00nb4395ub1_f-lowres.jpg",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "Undertøj",
+      "manufacturerName": "Calvin Klein",
+      "isBuyable": true
+    },
+    {
+      "parentId": 126531,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>Underbukser fra Calvin Klein</li>\n<li>5-pak</li>\n<li><span>Calvin Kleins signatur elastiske linning</span></li>\n<li>Medium taljehøjde</li>\n<li>Bomulds-elastanblanding</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XXL",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Calvin Klein",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "XXL",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "XXL ",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "95 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "5 % Elastan",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Sort#000000107248",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198480/",
+            "productId": 1198480,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 11
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White/Black/White/Grey Heather",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061716/",
+            "productId": 1061716,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 7
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+            "productId": 1061850,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198477/",
+            "productId": 1198477,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 57
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198479/",
+            "productId": 1198479,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 18
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198480/",
+            "productId": 1198480,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 11
+          }
+        ]
+      },
+      "ean": "8721439088569",
+      "url": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198480/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "Undertøj"
+        }
+      ],
+      "indexableStockInfo": [
+        {
+          "name": "Salling Aarhus",
+          "availableStock": 7,
+          "erpStock": 0,
+          "location": "Søndergade 27, 8000 Aarhus C",
+          "storeId": null
+        },
+        {
+          "name": "Salling Kultorvet",
+          "availableStock": 0,
+          "erpStock": 0,
+          "location": "Kultorvet 2, 1175 København K",
+          "storeId": null
+        },
+        {
+          "name": "Salling Aalborg",
+          "availableStock": 10,
+          "erpStock": 0,
+          "location": "Nytorv 8, 9000 Aalborg",
+          "storeId": null
+        }
+      ],
+      "availableQuantity": 11,
+      "id": 1198480,
+      "title": "Icon Cotton Stretch 5-pak Boxer Briefs, Black, XXL",
+      "currentPriceTag": {
+        "total": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/cagfkc54/lv00nb4395ub1_f-lowres.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/cagfkc54/lv00nb4395ub1_f-lowres.jpg",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "Undertøj",
+      "manufacturerName": "Calvin Klein",
+      "isBuyable": true
+    },
+    {
+      "parentId": 126531,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>Underbukser fra Calvin Klein</li>\n<li>5-pak</li>\n<li><span>Calvin Kleins signatur elastiske linning</span></li>\n<li>Medium taljehøjde</li>\n<li>Bomulds-elastanblanding</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black/White/Black/White/Grey Heather",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Calvin Klein",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Grå",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Hvid",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "95 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "5 % Elastan",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Hvid#FFFFFF107239",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XS",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White/Black/White/Grey Heather",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+            "productId": 1061850,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061851/",
+            "productId": 1061851,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061716/",
+            "productId": 1061716,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 7
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061854/",
+            "productId": 1061854,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "Undertøj"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 3,
+      "id": 1198475,
+      "title": "Icon Cotton Stretch 5-pak Boxer Briefs, Black/White/Black/White/Grey Heather, L",
+      "currentPriceTag": {
+        "total": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/55fly1wh/calvin-klein_009999_6h3_lv00nb43956h3.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/55fly1wh/calvin-klein_009999_6h3_lv00nb43956h3.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/m3yaij1u/calvin-klein_009999_6h3_lv00nb43956h3_2.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/m3yaij1u/calvin-klein_009999_6h3_lv00nb43956h3_2.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/kqoh2knq/calvin-klein_009999_6h3_lv00nb43956h3_5.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/kqoh2knq/calvin-klein_009999_6h3_lv00nb43956h3_5.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/cnoo12zg/calvin-klein_009999_6h3_lv00nb43956h3_3.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/cnoo12zg/calvin-klein_009999_6h3_lv00nb43956h3_3.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/c2ib3bze/calvin-klein_009999_6h3_lv00nb43956h3_4.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/c2ib3bze/calvin-klein_009999_6h3_lv00nb43956h3_4.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/a20guluf/calvin-klein_009999_6h3_lv00nb43956h3_6.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/a20guluf/calvin-klein_009999_6h3_lv00nb43956h3_6.jpg",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "Undertøj",
+      "manufacturerName": "Calvin Klein",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    },
+    {
+      "parentId": 126531,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>Underbukser fra Calvin Klein</li>\n<li>5-pak</li>\n<li><span>Calvin Kleins signatur elastiske linning</span></li>\n<li>Medium taljehøjde</li>\n<li>Bomulds-elastanblanding</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black/White/Black/White/Grey Heather",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Calvin Klein",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Grå",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Hvid",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "95 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "5 % Elastan",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Hvid#FFFFFF107239",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "S",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White/Black/White/Grey Heather",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+            "productId": 1061850,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061851/",
+            "productId": 1061851,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061716/",
+            "productId": 1061716,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 7
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061854/",
+            "productId": 1061854,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "Undertøj"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 0,
+      "id": 1061850,
+      "title": "Icon Cotton Stretch 5-pak Boxer Briefs, Black/White/Black/White/Grey Heather, L",
+      "currentPriceTag": {
+        "total": {
+          "value": 419.3,
+          "displayValue": "419,30 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/55fly1wh/calvin-klein_009999_6h3_lv00nb43956h3.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/55fly1wh/calvin-klein_009999_6h3_lv00nb43956h3.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/m3yaij1u/calvin-klein_009999_6h3_lv00nb43956h3_2.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/m3yaij1u/calvin-klein_009999_6h3_lv00nb43956h3_2.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/kqoh2knq/calvin-klein_009999_6h3_lv00nb43956h3_5.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/kqoh2knq/calvin-klein_009999_6h3_lv00nb43956h3_5.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/cnoo12zg/calvin-klein_009999_6h3_lv00nb43956h3_3.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/cnoo12zg/calvin-klein_009999_6h3_lv00nb43956h3_3.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/c2ib3bze/calvin-klein_009999_6h3_lv00nb43956h3_4.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/c2ib3bze/calvin-klein_009999_6h3_lv00nb43956h3_4.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/a20guluf/calvin-klein_009999_6h3_lv00nb43956h3_6.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/a20guluf/calvin-klein_009999_6h3_lv00nb43956h3_6.jpg",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "Undertøj",
+      "manufacturerName": "Calvin Klein",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    },
+    {
+      "parentId": 126531,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>Underbukser fra Calvin Klein</li>\n<li>5-pak</li>\n<li><span>Calvin Kleins signatur elastiske linning</span></li>\n<li>Medium taljehøjde</li>\n<li>Bomulds-elastanblanding</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black/White/Black/White/Grey Heather",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Calvin Klein",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Grå",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Hvid",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "95 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "5 % Elastan",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Hvid#FFFFFF107239",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "M",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White/Black/White/Grey Heather",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+            "productId": 1061850,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061851/",
+            "productId": 1061851,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061716/",
+            "productId": 1061716,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 7
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061854/",
+            "productId": 1061854,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061851/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "Undertøj"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 0,
+      "id": 1061851,
+      "title": "Icon Cotton Stretch 5-pak Boxer Briefs, Black/White/Black/White/Grey Heather, L",
+      "currentPriceTag": {
+        "total": {
+          "value": 419.3,
+          "displayValue": "419,30 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/55fly1wh/calvin-klein_009999_6h3_lv00nb43956h3.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/55fly1wh/calvin-klein_009999_6h3_lv00nb43956h3.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/m3yaij1u/calvin-klein_009999_6h3_lv00nb43956h3_2.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/m3yaij1u/calvin-klein_009999_6h3_lv00nb43956h3_2.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/kqoh2knq/calvin-klein_009999_6h3_lv00nb43956h3_5.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/kqoh2knq/calvin-klein_009999_6h3_lv00nb43956h3_5.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/cnoo12zg/calvin-klein_009999_6h3_lv00nb43956h3_3.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/cnoo12zg/calvin-klein_009999_6h3_lv00nb43956h3_3.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/c2ib3bze/calvin-klein_009999_6h3_lv00nb43956h3_4.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/c2ib3bze/calvin-klein_009999_6h3_lv00nb43956h3_4.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/a20guluf/calvin-klein_009999_6h3_lv00nb43956h3_6.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/a20guluf/calvin-klein_009999_6h3_lv00nb43956h3_6.jpg",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "Undertøj",
+      "manufacturerName": "Calvin Klein",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    },
+    {
+      "parentId": 126531,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>Underbukser fra Calvin Klein</li>\n<li>5-pak</li>\n<li><span>Calvin Kleins signatur elastiske linning</span></li>\n<li>Medium taljehøjde</li>\n<li>Bomulds-elastanblanding</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black/White/Black/White/Grey Heather",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Calvin Klein",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Grå",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Hvid",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "95 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "5 % Elastan",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Hvid#FFFFFF107239",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White/Black/White/Grey Heather",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+            "productId": 1061850,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061851/",
+            "productId": 1061851,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061716/",
+            "productId": 1061716,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 7
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061854/",
+            "productId": 1061854,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": "8719849251437",
+      "url": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "Undertøj"
+        }
+      ],
+      "indexableStockInfo": [
+        {
+          "name": "Salling Aarhus",
+          "availableStock": 9,
+          "erpStock": 0,
+          "location": "Søndergade 27, 8000 Aarhus C",
+          "storeId": null
+        },
+        {
+          "name": "Salling Kultorvet",
+          "availableStock": 0,
+          "erpStock": 0,
+          "location": "Kultorvet 2, 1175 København K",
+          "storeId": null
+        },
+        {
+          "name": "Salling Aalborg",
+          "availableStock": 60,
+          "erpStock": 0,
+          "location": "Nytorv 8, 9000 Aalborg",
+          "storeId": null
+        }
+      ],
+      "availableQuantity": 1,
+      "id": 1061715,
+      "title": "Icon Cotton Stretch 5-pak Boxer Briefs, Black/White/Black/White/Grey Heather, L",
+      "currentPriceTag": {
+        "total": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/55fly1wh/calvin-klein_009999_6h3_lv00nb43956h3.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/55fly1wh/calvin-klein_009999_6h3_lv00nb43956h3.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/m3yaij1u/calvin-klein_009999_6h3_lv00nb43956h3_2.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/m3yaij1u/calvin-klein_009999_6h3_lv00nb43956h3_2.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/kqoh2knq/calvin-klein_009999_6h3_lv00nb43956h3_5.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/kqoh2knq/calvin-klein_009999_6h3_lv00nb43956h3_5.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/cnoo12zg/calvin-klein_009999_6h3_lv00nb43956h3_3.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/cnoo12zg/calvin-klein_009999_6h3_lv00nb43956h3_3.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/c2ib3bze/calvin-klein_009999_6h3_lv00nb43956h3_4.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/c2ib3bze/calvin-klein_009999_6h3_lv00nb43956h3_4.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/a20guluf/calvin-klein_009999_6h3_lv00nb43956h3_6.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/a20guluf/calvin-klein_009999_6h3_lv00nb43956h3_6.jpg",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "Undertøj",
+      "manufacturerName": "Calvin Klein",
+      "isBuyable": true
+    },
+    {
+      "parentId": 126531,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>Underbukser fra Calvin Klein</li>\n<li>5-pak</li>\n<li><span>Calvin Kleins signatur elastiske linning</span></li>\n<li>Medium taljehøjde</li>\n<li>Bomulds-elastanblanding</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black/White/Black/White/Grey Heather",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XL",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Calvin Klein",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "XL",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "XL",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Grå",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Hvid",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "95 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "5 % Elastan",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Hvid#FFFFFF107239",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198479/",
+            "productId": 1198479,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 18
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White/Black/White/Grey Heather",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061716/",
+            "productId": 1061716,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 7
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+            "productId": 1061850,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061851/",
+            "productId": 1061851,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061716/",
+            "productId": 1061716,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 7
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061854/",
+            "productId": 1061854,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": "8719849251451",
+      "url": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061716/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "Undertøj"
+        }
+      ],
+      "indexableStockInfo": [
+        {
+          "name": "Salling Aarhus",
+          "availableStock": 27,
+          "erpStock": 0,
+          "location": "Søndergade 27, 8000 Aarhus C",
+          "storeId": null
+        },
+        {
+          "name": "Salling Kultorvet",
+          "availableStock": 0,
+          "erpStock": 0,
+          "location": "Kultorvet 2, 1175 København K",
+          "storeId": null
+        },
+        {
+          "name": "Salling Aalborg",
+          "availableStock": 38,
+          "erpStock": 0,
+          "location": "Nytorv 8, 9000 Aalborg",
+          "storeId": null
+        }
+      ],
+      "availableQuantity": 7,
+      "id": 1061716,
+      "title": "Icon Cotton Stretch 5-pak Boxer Briefs, Black/White/Black/White/Grey Heather, XL",
+      "currentPriceTag": {
+        "total": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/55fly1wh/calvin-klein_009999_6h3_lv00nb43956h3.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/55fly1wh/calvin-klein_009999_6h3_lv00nb43956h3.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/m3yaij1u/calvin-klein_009999_6h3_lv00nb43956h3_2.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/m3yaij1u/calvin-klein_009999_6h3_lv00nb43956h3_2.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/kqoh2knq/calvin-klein_009999_6h3_lv00nb43956h3_5.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/kqoh2knq/calvin-klein_009999_6h3_lv00nb43956h3_5.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/cnoo12zg/calvin-klein_009999_6h3_lv00nb43956h3_3.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/cnoo12zg/calvin-klein_009999_6h3_lv00nb43956h3_3.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/c2ib3bze/calvin-klein_009999_6h3_lv00nb43956h3_4.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/c2ib3bze/calvin-klein_009999_6h3_lv00nb43956h3_4.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/a20guluf/calvin-klein_009999_6h3_lv00nb43956h3_6.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/a20guluf/calvin-klein_009999_6h3_lv00nb43956h3_6.jpg",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "Undertøj",
+      "manufacturerName": "Calvin Klein",
+      "isBuyable": true
+    },
+    {
+      "parentId": 126531,
+      "longDescription": null,
+      "shortDescription": "<ul>\n<li>Underbukser fra Calvin Klein</li>\n<li>5-pak</li>\n<li><span>Calvin Kleins signatur elastiske linning</span></li>\n<li>Medium taljehøjde</li>\n<li>Bomulds-elastanblanding</li>\n</ul>",
+      "attributes": [
+        {
+          "value": "Black/White/Black/White/Grey Heather",
+          "attributeType": {
+            "name": "Variantfarve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Calvin Klein",
+          "attributeType": {
+            "name": "Brand",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "størrelse",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "L",
+          "attributeType": {
+            "name": "MenClothingSize.Size",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "20250",
+          "attributeType": {
+            "name": "",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "Sort",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Grå",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Hvid",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "95 % Bomuld",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "5 % Elastan",
+          "attributeType": {
+            "name": "Materiale",
+            "displayOnWebsite": true
+          }
+        },
+        {
+          "value": "Hvid#FFFFFF107239",
+          "attributeType": {
+            "name": "Farve",
+            "displayOnWebsite": false
+          }
+        },
+        {
+          "value": "XXL",
+          "attributeType": {
+            "name": "Variantstørrelse",
+            "displayOnWebsite": false
+          }
+        }
+      ],
+      "variantAttributes": {
+        "farve": [
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198478/",
+            "productId": 1198478,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 51
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "Black/White/Black/White/Grey Heather",
+              "attributeType": {
+                "name": "Variantfarve",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          }
+        ],
+        "størrelse": [
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XS",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1198475/",
+            "productId": 1198475,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 3
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "S",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061850/",
+            "productId": 1061850,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "M",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061851/",
+            "productId": 1061851,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "L",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061715/",
+            "productId": 1061715,
+            "isSelected": true,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 1
+          },
+          {
+            "isAvailable": true,
+            "isBuyable": true,
+            "attribute": {
+              "value": "XL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-blackw/p-1061716/",
+            "productId": 1061716,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 7
+          },
+          {
+            "isAvailable": false,
+            "isBuyable": false,
+            "attribute": {
+              "value": "XXL",
+              "attributeType": {
+                "name": "Variantstørrelse",
+                "displayOnWebsite": false
+              }
+            },
+            "productUrl": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061854/",
+            "productId": 1061854,
+            "isSelected": false,
+            "currentPriceTag": {
+              "total": {
+                "value": 419.3,
+                "displayValue": "419,30 kr.",
+                "currency": "DKK"
+              },
+              "unitPrice": {
+                "value": 599,
+                "displayValue": "599 kr.",
+                "currency": "DKK"
+              }
+            },
+            "availableQuantity": 0
+          }
+        ]
+      },
+      "ean": null,
+      "url": "/herre/toej/undertoej/icon-cotton-stretch-5-pak-boxer-briefs-black-/p-1061854/",
+      "breadCrumbsData": [
+        {
+          "name": "Herre"
+        },
+        {
+          "name": "Tøj"
+        },
+        {
+          "name": "Undertøj"
+        }
+      ],
+      "indexableStockInfo": [],
+      "availableQuantity": 0,
+      "id": 1061854,
+      "title": "Icon Cotton Stretch 5-pak Boxer Briefs, Black/White/Black/White/Grey Heather, L",
+      "currentPriceTag": {
+        "total": {
+          "value": 419.3,
+          "displayValue": "419,30 kr.",
+          "currency": "DKK"
+        },
+        "unitPrice": {
+          "value": 599,
+          "displayValue": "599 kr.",
+          "currency": "DKK"
+        }
+      },
+      "images": [
+        {
+          "url": "https://assets.salling.structpim.com/media/55fly1wh/calvin-klein_009999_6h3_lv00nb43956h3.png",
+          "cdnUrl": "https://assets.salling.structpim.com/media/55fly1wh/calvin-klein_009999_6h3_lv00nb43956h3.png",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/m3yaij1u/calvin-klein_009999_6h3_lv00nb43956h3_2.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/m3yaij1u/calvin-klein_009999_6h3_lv00nb43956h3_2.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/kqoh2knq/calvin-klein_009999_6h3_lv00nb43956h3_5.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/kqoh2knq/calvin-klein_009999_6h3_lv00nb43956h3_5.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/cnoo12zg/calvin-klein_009999_6h3_lv00nb43956h3_3.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/cnoo12zg/calvin-klein_009999_6h3_lv00nb43956h3_3.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/c2ib3bze/calvin-klein_009999_6h3_lv00nb43956h3_4.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/c2ib3bze/calvin-klein_009999_6h3_lv00nb43956h3_4.jpg",
+          "isVideo": false
+        },
+        {
+          "url": "https://assets.salling.structpim.com/media/a20guluf/calvin-klein_009999_6h3_lv00nb43956h3_6.jpg",
+          "cdnUrl": "https://assets.salling.structpim.com/media/a20guluf/calvin-klein_009999_6h3_lv00nb43956h3_6.jpg",
+          "isVideo": false
+        }
+      ],
+      "primaryCategoryName": "Undertøj",
+      "manufacturerName": "Calvin Klein",
+      "isBuyable": false,
+      "_source_page_unavailable": true
+    }
+  ]
+}

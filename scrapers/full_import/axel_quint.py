@@ -233,6 +233,9 @@ class AxelQuintScraper:
         rows = []
         for color_id, payload in colors.items():
             option = payload['option']
+            if not isinstance(option.get('available'), bool):
+                raise IncompleteProduct('Missing explicit colour availability')
+            available = option['available']
             sizes = option.get('sizes')
             if not color_id or not isinstance(sizes, dict) or not sizes:
                 raise IncompleteProduct('Empty colour identity or sizes')
@@ -269,6 +272,16 @@ class AxelQuintScraper:
                     stores[key]['sizes'][label] = {'available': count > 0, 'stock': count}
                     stores[key]['total_stock'] += count
                     stores[key]['available'] = stores[key]['total_stock'] > 0
+            # Like Kaufmann, the explicit discontinued flag overrides stale stock.
+            # Keep the untouched source option/inventory in raw for diagnostics.
+            if not available:
+                for store in stores.values():
+                    store['available'] = False
+                    store['total_stock'] = 0
+                    for size in store['sizes'].values():
+                        size.update(available=False, stock=0)
+                for size in webshop:
+                    size.update(available=False, stock=0, online_warehouse_stock=0)
             total = sum(x['total_stock'] for x in stores.values())
             aarhus = stores[f'{self.store}-{self.config["aarhus"]}']
             row = {'source_parent_id': parent, 'source_color_id': color_id,
@@ -276,7 +289,10 @@ class AxelQuintScraper:
                    'local_inventory': {'stores': stores}, 'local_total_stock': total,
                    'local_available': total > 0, 'aarhus_total_stock': aarhus['total_stock'],
                    'aarhus_available': aarhus['available'], 'inventory_checked_at': checked,
-                   'scraped_at': checked, 'updated_at': checked}
+                   'scraped_at': checked, 'updated_at': checked,
+                   'publication_status': 'active' if available else 'unavailable',
+                   'status_reason': None if available else 'source_available_false',
+                   'status_checked_at': checked, 'discontinued_at': None if available else checked}
             if full:
                 specifications = {}
                 for line in payload.get('specifications', []):

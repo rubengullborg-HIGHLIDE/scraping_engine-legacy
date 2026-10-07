@@ -162,3 +162,21 @@ class StoreCatalogSyncTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AxelQuintLifecycleTests(unittest.TestCase):
+    def test_sunday_retains_explicit_unavailable_and_reactivates_returning_colour(self):
+        for store in ('axel', 'quint'):
+            before = [rains_row(i, updated_at='2026-08-25T10:00:00Z', publication_status='unavailable') for i in (1, 2)]
+            after = [rains_row(1, updated_at=CHECKED_AT, publication_status='unavailable'),
+                     rains_row(2, updated_at=CHECKED_AT)]
+            after[0]['status_reason'] = 'source_available_false'
+            client = FakeLifecycleClient()
+            stats = reconcile_catalog(store, before, after, STARTED_AT, CHECKED_AT, client,
+                                      miss_confirmations=2, min_seen_ratio=.5)
+            self.assertEqual(stats.reactivated, 1)
+            self.assertEqual(stats.seen, 2)
+            active = [ids for _, ids, payload in client.bulk_patches if payload.get('publication_status') == 'active']
+            self.assertEqual(active, [[2]])
+            self.assertTrue(any(ids == [1] and payload.get('consecutive_catalog_misses') == 0
+                                for _, ids, payload in client.bulk_patches))
