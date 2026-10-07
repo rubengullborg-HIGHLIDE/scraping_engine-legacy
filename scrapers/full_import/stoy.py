@@ -12,7 +12,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-BASE_URL = "https://stoy.com/da"
+BASE_URL = "https://stoy.com"
 MARKET_COUNTRY = "DK"
 EXPECTED_CURRENCY = "DKK"
 # Both are canonical men's catalogue collections. Keep accessories out of the
