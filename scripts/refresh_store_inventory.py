@@ -12,6 +12,7 @@ import uuid
 from collections import OrderedDict
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from functools import partial
 from pathlib import Path
 from typing import Any, Callable, Optional
 from urllib.parse import quote
@@ -157,6 +158,29 @@ STORE_SPECS: "OrderedDict[str, StoreSpec]" = OrderedDict(
         ),
     )
 )
+
+
+for _store in ("axel", "quint"):
+    STORE_SPECS[_store] = StoreSpec(
+        key=_store, table=f"{_store}_products",
+        identity_columns=("source_parent_id", "source_color_id"),
+        match_column="source_color_id",
+        dynamic_columns=COMMON_DYNAMIC_COLUMNS + TOTAL_COLUMNS + TIMESTAMP_COLUMNS,
+    )
+
+
+class LocalInventoryClient:
+    """Read sample existing rows without credentials or database access."""
+    def __init__(self, path):
+        self.rows = json.loads(Path(path).read_text())
+        if not isinstance(self.rows, list) or any(not isinstance(row, dict) or type(row.get("id")) is not int for row in self.rows):
+            raise ValueError("Local input must be a JSON list of existing rows with integer IDs")
+
+    def list_rows(self, spec):
+        return [row for row in self.rows if row.get("publication_status", "active") == "active"]
+
+    def close(self):
+        pass
 
 
 class SupabasePatchError(RuntimeError):
@@ -502,7 +526,7 @@ def apply_unavailable(
     payload.update(
         {
             "publication_status": "unavailable",
-            "status_reason": "page_404_or_410",
+            "status_reason": "source_item_missing" if refresh_status == "source_item_missing" else "page_404_or_410",
             "status_checked_at": checked_at,
             "discontinued_at": existing_row.get("discontinued_at") or checked_at,
         }
@@ -871,15 +895,19 @@ STORE_REFRESHERS: dict[
 }
 
 
+from scripts.refresh_axel_quint_inventory import refresh_store as refresh_axel_quint
+STORE_REFRESHERS.update({key: partial(refresh_axel_quint, key) for key in ("axel", "quint")})
+
+
 def refresh_stores(args: argparse.Namespace) -> int:
     load_dotenv(ROOT / ".env")
     supabase_url = env("SUPABASE_URL")
     supabase_key = env("SUPABASE_SECRET_KEY") or env("SUPABASE_SERVICE_ROLE_KEY")
-    if not supabase_url or not supabase_key:
+    if not getattr(args, "input", None) and (not supabase_url or not supabase_key):
         raise RuntimeError("SUPABASE_URL and SUPABASE_SECRET_KEY are required.")
 
     selected = list(STORE_SPECS) if args.all or not args.store else list(OrderedDict.fromkeys(args.store))
-    database = SupabaseInventoryClient(
+    database = LocalInventoryClient(args.input) if getattr(args, "input", None) else SupabaseInventoryClient(
         supabase_url,
         supabase_key,
         history_table=args.history_table,
@@ -1008,7 +1036,7 @@ def refresh_stores(args: argparse.Namespace) -> int:
     return 1 if totals.failed or store_failures or write_failed else 0
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args(argv=None) -> argparse.Namespace:
     load_dotenv(ROOT / ".env")
     parser = argparse.ArgumentParser(
         description=(
@@ -1078,7 +1106,10 @@ def parse_args() -> argparse.Namespace:
         default=env("LOG_LEVEL", "INFO"),
         choices=("DEBUG", "INFO", "WARNING", "ERROR"),
     )
-    arguments = parser.parse_args()
+    parser.add_argument("--input", help="Local existing-row JSON for AXEL/qUINT dry runs; no database access.")
+    arguments = parser.parse_args(argv)
+    if arguments.input and (not arguments.dry_run or arguments.all or arguments.store not in (["axel"], ["quint"])):
+        parser.error("--input requires --dry-run and exactly one --store axel or quint")
     if arguments.all and arguments.store:
         parser.error("use either --all or one or more --store values")
     if arguments.limit is not None and arguments.limit < 1:

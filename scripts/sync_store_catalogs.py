@@ -70,6 +70,8 @@ CATALOG_SPECS: "OrderedDict[str, CatalogSpec]" = OrderedDict(
         ),
         ("stoy", CatalogSpec("stoy", "scripts/import_stoy_products.py")),
         ("lakor", CatalogSpec("lakor", "scripts/import_lakor_products.py")),
+        ("axel", CatalogSpec("axel", "scripts/import_axel_products.py")),
+        ("quint", CatalogSpec("quint", "scripts/import_quint_products.py")),
     )
 )
 
