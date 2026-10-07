@@ -134,6 +134,10 @@ def import_skagen_clothing_products(args: argparse.Namespace) -> int:
                     indent=2,
                 ),
             )
+        elif pending_rows:
+            assert client is not None
+            client.upsert_products(table, pending_rows)
+            LOG.info("Upserted final %s Skagen Clothing rows to %s.", len(pending_rows), table)
         return 0
     except Exception:
         LOG.exception("Skagen Clothing import failed")

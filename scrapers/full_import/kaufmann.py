@@ -1,5 +1,6 @@
 import gzip
 import json
+import logging
 import random
 import re
 import time
@@ -13,6 +14,7 @@ import requests
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
+LOG = logging.getLogger(__name__)
 
 AARHUS_STORES = (
     {"seo_url": "bruuns-galleri", "label": "KAUFMANN Aarhus, Bruuns Galleri"},
