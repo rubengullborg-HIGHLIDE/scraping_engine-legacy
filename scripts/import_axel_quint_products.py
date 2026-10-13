@@ -14,6 +14,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scrapers.full_import.axel_quint import AxelQuintScraper
+from scrapers.source_http import StoreRateLimited
 from scripts.import_rains_products import SupabaseCatalogClient, env, load_dotenv
 
 LOG = logging.getLogger(__name__)
@@ -71,6 +72,10 @@ def import_products(store, args, scraper_factory=None):
                     directory = Path(args.fixtures_dir)
                     directory.mkdir(parents=True, exist_ok=True)
                     (directory / f'{store}-{index}.json').write_text(json.dumps(snapshot, ensure_ascii=False, indent=2))
+            except StoreRateLimited as exc:
+                failed += 1
+                LOG.warning('Stopping %s import: %s; catalogue reconciliation must be skipped.', store, exc)
+                break
             except Exception:
                 failed += 1
                 LOG.exception('Failed %s product %s; catalogue reconciliation must be skipped.', store, url)

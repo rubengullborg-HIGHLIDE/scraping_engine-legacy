@@ -10,7 +10,7 @@ from urllib.parse import urljoin, urlsplit, urlunsplit
 import requests
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
+from scrapers.source_http import SourceRetry, stop_on_source_rate_limit
 
 from scrapers.full_import.axel_quint import SourceUnavailable
 
@@ -79,13 +79,14 @@ def taxonomy(path):
 class PublicScraper:
     BASE_URL = ''
 
-    def __init__(self, *, max_retries=2, request_delay=.4):
+    def __init__(self, *, max_retries=2, request_delay=3):
         self.session = requests.Session()
         self.session.headers.update({'User-Agent': 'Mozilla/5.0 (compatible; HIGHLIDE catalog)',
                                      'Accept-Language': 'da-DK,da;q=0.9', 'Cache-Control': 'no-cache'})
-        retry = Retry(total=max_retries, backoff_factor=1, status_forcelist=(429,500,502,503,504),
+        retry = SourceRetry(total=max_retries, backoff_factor=1, status_forcelist=(500,502,503,504),
                       allowed_methods=frozenset({'GET'}), raise_on_status=False)
         self.session.mount('https://', HTTPAdapter(max_retries=retry))
+        self.session.hooks['response'].append(stop_on_source_rate_limit)
         self.request_delay = request_delay
         self.last_request = 0
         self.covered_urls = set()

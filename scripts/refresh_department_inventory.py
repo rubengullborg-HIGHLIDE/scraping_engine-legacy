@@ -7,6 +7,7 @@ from __future__ import annotations
 import logging
 from collections import OrderedDict
 from scrapers.full_import.department_stores import make_scraper, SourceUnavailable
+from scrapers.source_http import StoreRateLimited
 
 LOG = logging.getLogger(__name__)
 
@@ -14,7 +15,7 @@ LOG = logging.getLogger(__name__)
 def refresh_store(store, database, args):
     from scripts.refresh_store_inventory import (
         STORE_SPECS, RefreshStats, selected_rows, row_url, maybe_delay,
-        dynamic_payload, apply_full_row,
+        dynamic_payload, apply_full_row, retain_rate_limit_progress,
     )
     spec = STORE_SPECS[store]
     rows = selected_rows(database, spec, args)
@@ -50,6 +51,8 @@ def refresh_store(store, database, args):
                     if match is None:
                         raise ValueError('Known colour missing; retain existing style until catalog reconciliation')
                     batch.append((row, {**dynamic_payload(spec, match), 'source_color_id': match['source_color_id']}))
+            except StoreRateLimited:
+                raise
             except Exception:
                 stats.failed += len(existing)
                 LOG.exception('Failed %s style %s; existing data retained.', store, parent)
@@ -58,6 +61,9 @@ def refresh_store(store, database, args):
             # useful progress if interrupted; database failures still propagate.
             for row, current in batch:
                 apply_full_row(spec, database, row, current, args, stats)
+    except StoreRateLimited as exc:
+        retain_rate_limit_progress(exc, stats, len(rows))
+        raise
     finally:
         scraper.close()
     return stats
