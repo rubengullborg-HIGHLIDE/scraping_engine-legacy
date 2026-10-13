@@ -940,6 +940,8 @@ from scripts.refresh_axel_quint_inventory import refresh_store as refresh_axel_q
 STORE_REFRESHERS.update({key: partial(refresh_axel_quint, key) for key in ("axel", "quint")})
 from scripts.refresh_department_inventory import refresh_store as refresh_department
 STORE_REFRESHERS.update({key: partial(refresh_department, key) for key in ("salling", "magasin")})
+from scripts.refresh_weekday_database import refresh_store as refresh_weekday
+STORE_REFRESHERS["weekday"] = refresh_weekday
 
 
 def refresh_stores(args: argparse.Namespace) -> int:
@@ -949,7 +951,7 @@ def refresh_stores(args: argparse.Namespace) -> int:
     if not getattr(args, "input", None) and (not supabase_url or not supabase_key):
         raise RuntimeError("SUPABASE_URL and SUPABASE_SECRET_KEY are required.")
 
-    selected = list(STORE_SPECS) if args.all or not args.store else list(OrderedDict.fromkeys(args.store))
+    selected = list(STORE_REFRESHERS) if args.all or not args.store else list(OrderedDict.fromkeys(args.store))
     database = LocalInventoryClient(args.input) if getattr(args, "input", None) else SupabaseInventoryClient(
         supabase_url,
         supabase_key,
@@ -1096,7 +1098,7 @@ def parse_args(argv=None) -> argparse.Namespace:
     parser.add_argument(
         "--store",
         action="append",
-        choices=list(STORE_SPECS),
+        choices=list(STORE_REFRESHERS),
         help="Refresh one store; repeat for an explicit sequence. Defaults to all stores.",
     )
     parser.add_argument("--all", action="store_true", help="Refresh every configured store sequentially.")

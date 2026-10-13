@@ -1,2 +1,2 @@
-# Optional dependency for the experimental Weekday API proof. Python 3.9 compatible.
+# Weekday API transport for catalogue imports and daily refresh. Python 3.9 compatible.
 curl_cffi==0.13.0
