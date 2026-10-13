@@ -606,6 +606,12 @@ def configure_scraper(scraper: Any, args: argparse.Namespace) -> Any:
     session = getattr(scraper, "session", None)
     if session is None:
         return scraper
+    if getattr(args, "source_transport", "requests") == "system-curl":
+        from scrapers.system_curl import SystemCurlSession
+        scraper.session = SystemCurlSession(dict(session.headers))
+        session.close()
+        LOG.info("Using system curl source transport with a 3-second minimum request interval.")
+        return scraper
     retry = SourceRetry(
         total=args.max_retries,
         connect=args.max_retries,
@@ -1145,6 +1151,8 @@ def parse_args(argv=None) -> argparse.Namespace:
         help="Operational run table for sequential non-Kaufmann refreshes.",
     )
     parser.add_argument("--no-delay", action="store_true", help="Disable polite inter-product delays.")
+    parser.add_argument("--source-transport", choices=("requests", "system-curl"), default="requests",
+                        help="Opt-in transport trial for the eight Shopify stores; database and other stores are unchanged.")
     parser.add_argument("--min-delay", type=float, default=float(env("STORE_REFRESH_MIN_DELAY", "0.5")))
     parser.add_argument("--max-delay", type=float, default=float(env("STORE_REFRESH_MAX_DELAY", "1.0")))
     parser.add_argument("--variant-delay", type=float, default=float(env("STORE_REFRESH_VARIANT_DELAY", "0.2")))
