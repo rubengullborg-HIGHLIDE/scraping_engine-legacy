@@ -167,6 +167,7 @@ class KaufmanScraper(BaseScraper):
         self,
         url: str,
         allow_unavailable: bool = False,
+        available_only: bool = False,
     ) -> list[dict[str, Any]]:
         self._ensure_browser()
         assert self._browser is not None
@@ -193,7 +194,7 @@ class KaufmanScraper(BaseScraper):
 
             variants = page.evaluate(
                 """
-                async ({ aarhusStores }) => {
+                async ({ aarhusStores, availableOnly }) => {
                   const store = Alpine.store('productStore');
                   const aarhusSeoUrls = aarhusStores.map((store) => store.seo_url);
                   const canonical = document.querySelector('link[rel="canonical"]')?.href
@@ -335,12 +336,15 @@ class KaufmanScraper(BaseScraper):
 
                   const results = [];
                   for (const [colorId, option] of Object.entries(store.options || {})) {
+                    if (availableOnly && typeof option.available !== 'boolean') throw new Error('Missing colour availability');
+                    if (availableOnly && option.available === false) continue;
                     if (typeof store.setColor === 'function') {
                       store.setColor(colorId);
                       await new Promise((resolve) => setTimeout(resolve, 350));
                     }
 
                     const sourceAvailable = Boolean(store.available);
+                    if (availableOnly && !sourceAvailable) continue;
                     const sizes = summarizeSizes();
                     let aarhusTotalStock = sizes.reduce((sum, size) => sum + Number(size.aarhus_total_stock || 0), 0);
                     const aarhusInventory = summarizeAarhusInventory(sizes);
@@ -401,7 +405,7 @@ class KaufmanScraper(BaseScraper):
                   return results;
                 }
                 """,
-                {"aarhusStores": list(AARHUS_STORES)},
+                {"aarhusStores": list(AARHUS_STORES), "availableOnly": available_only},
             )
 
             scraped_at = datetime.now(timezone.utc).isoformat()

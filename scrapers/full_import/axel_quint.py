@@ -29,7 +29,7 @@ CONFIG = {
 
 # Only product-specific sections are read; recommendation cards and brand copy
 # elsewhere on the page must never supply descriptions or prices.
-SNAPSHOT_JS = """async ({full}) => {
+SNAPSHOT_JS = """async ({full, availableOnly}) => {
     const store = Alpine.store('productStore');
     const trackingNode = document.querySelector('[data-relewise-tracking-options]');
     const tracking = JSON.parse(trackingNode?.getAttribute('data-relewise-tracking-options') || '{}');
@@ -40,6 +40,11 @@ SNAPSHOT_JS = """async ({full}) => {
             try {return [JSON.parse(el.textContent)];} catch {return [];}
         }), colors: {}};
     for (const [id, option] of Object.entries(store.options || {})) {
+        if (availableOnly && typeof option.available !== 'boolean') throw new Error('Missing colour availability');
+        if (availableOnly && option.available === false) {
+            result.colors[id] = {option: JSON.parse(JSON.stringify(option))};
+            continue;
+        }
         if (full) {
             store.setColor(id);
             await Alpine.nextTick();
@@ -182,7 +187,49 @@ class AxelQuintScraper:
             raise IncompleteProduct('Sitemap contained no product URLs')
         return sorted(products)
 
-    def fetch_snapshot(self, url: str, *, full: bool = True) -> dict:
+    def fetch_availability_snapshot(self, url: str) -> dict:
+        """Read the same public colour options as Alpine without starting Chromium."""
+        from scrapers.stores.kaufmann_variations import extract_source_parent_id
+        url = self.clean_url(url)
+        response = self.session.get(url, headers={'Cache-Control': 'no-cache'}, timeout=30)
+        response.raise_for_status()
+        self.clean_url(response.url)
+        parent = extract_source_parent_id(response.text)
+        if not parent:
+            raise IncompleteProduct('Missing source parent in HTTP product page')
+        soup = BeautifulSoup(response.text, 'html.parser')
+        tracking_node = soup.select_one('[data-relewise-tracking-options]')
+        tracking = json.loads(tracking_node['data-relewise-tracking-options']) if tracking_node else {}
+        if tracking.get('parentId') != parent:
+            raise IncompleteProduct('HTTP setup and tracking parent identities disagree')
+        endpoint = f'{self.base_url}/widgets/product/variation/{parent}'
+        response = self.session.get(endpoint, headers={'Cache-Control': 'no-cache'}, timeout=30)
+        response.raise_for_status()
+        if response.url != endpoint:
+            raise IncompleteProduct('Unexpected variation endpoint redirect')
+        payload = response.json()
+        colors = payload.get('options', {}).get('color') if isinstance(payload, dict) else None
+        if not isinstance(colors, dict) or not colors or any(
+            not isinstance(option, dict) or not isinstance(option.get('available'), bool)
+            for option in colors.values()
+        ):
+            raise IncompleteProduct('Missing or invalid HTTP colour availability')
+        return {'canonical': url, 'url': url, 'tracking': tracking,
+                'jsonld': [json.loads(node.get_text()) for node in soup.select('script[type="application/ld+json"]')],
+                'colors': {key: {'option': option} for key, option in colors.items()},
+                'available_only': True}
+
+    def fetch_catalog_snapshot(self, url: str) -> dict:
+        probe = self.fetch_availability_snapshot(url)
+        if not any(color['option']['available'] for color in probe['colors'].values()):
+            LOG.info('%s HTTP check: all %s colours unavailable; browser skipped.', self.store, len(probe['colors']))
+            return probe
+        snapshot = self.fetch_snapshot(url, available_only=True)
+        if snapshot['tracking'].get('parentId') != probe['tracking'].get('parentId'):
+            raise IncompleteProduct('Source parent changed between HTTP and browser reads')
+        return snapshot
+
+    def fetch_snapshot(self, url: str, *, full: bool = True, available_only: bool = False) -> dict:
         from playwright.sync_api import sync_playwright
         url = self.clean_url(url)
         if self._browser is None:
@@ -203,7 +250,9 @@ class AxelQuintScraper:
                     raise IncompleteProduct(f'HTTP {response.status} for {url}')
                 self.clean_url(self._page.url)
                 self._page.wait_for_function("window.Alpine && Object.keys(Alpine.store('productStore')?.options || {}).length > 0", timeout=20000)
-                snapshot = self._page.evaluate(SNAPSHOT_JS, {'full': full})
+                snapshot = self._page.evaluate(SNAPSHOT_JS, {'full': full, 'availableOnly': available_only})
+                if available_only:
+                    snapshot['available_only'] = True
                 snapshot['canonical'] = self.clean_url(snapshot['canonical'])
                 return snapshot
             except SourceUnavailable:
@@ -293,7 +342,7 @@ class AxelQuintScraper:
                    'publication_status': 'active' if available else 'unavailable',
                    'status_reason': None if available else 'source_available_false',
                    'status_checked_at': checked, 'discontinued_at': None if available else checked}
-            if full:
+            if full and not (snapshot.get('available_only') and not available):
                 specifications = {}
                 for line in payload.get('specifications', []):
                     key, sep, value = line.partition(':')

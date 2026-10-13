@@ -24,9 +24,26 @@ if str(ROOT) not in sys.path:
 
 from scrapers.full_import.kaufmann import KaufmanScraper  # noqa: E402
 from scripts.catalog_sync_tracking import CatalogSyncRunRecorder, utc_now  # noqa: E402
-
+from scrapers.stores.kaufmann_variations import (  # noqa: E402
+    KaufmannVariationClient, variation_rows_from_payload,
+)
 
 LOG = logging.getLogger("sync_kaufmann_catalog")
+
+
+def available_catalog_rows(scraper, variation_client, product_url):
+    """Only browser-hydrate catalogue candidates with explicit available colours."""
+    parent = variation_client.resolve_source_parent_id(product_url)
+    probe = variation_rows_from_payload(variation_client.fetch_payload(parent), parent, product_url)
+    if not any(row['source_available'] for row in probe):
+        LOG.info('HTTP check: Kaufmann candidate unavailable; browser skipped: %s', product_url)
+        return []
+    rows = scraper.parse_product_variants_with_js(product_url, allow_unavailable=True, available_only=True)
+    if not rows:
+        raise RuntimeError('Available catalogue candidate returned no product variants; retry next run')
+    if any(row['source_parent_id'] != parent or row.get('source_available') is not True for row in rows):
+        raise ValueError('Kaufmann candidate identity/availability changed during hydration')
+    return rows
 
 
 def load_dotenv(path: Path) -> None:
@@ -155,6 +172,7 @@ def sync_kaufmann_catalog(args: argparse.Namespace) -> int:
         raise RuntimeError("SUPABASE_URL and SUPABASE_SECRET_KEY are required.")
 
     scraper = KaufmanScraper(launch_browser=False)
+    variation_client = KaufmannVariationClient(max_retries=args.max_retries)
     client: Optional[KaufmannCatalogClient] = None
     recorder: Optional[CatalogSyncRunRecorder] = None
     run_id: Optional[int] = None
@@ -263,11 +281,7 @@ def sync_kaufmann_catalog(args: argparse.Namespace) -> int:
                     len(selected_urls),
                     product_url,
                 )
-                rows = scraper.parse_product_variants_with_js(
-                    product_url, allow_unavailable=True
-                )
-                if not rows:
-                    raise RuntimeError("catalogue candidate page returned no product variants")
+                rows = available_catalog_rows(scraper, variation_client, product_url)
                 client.upsert_products(args.products_table, rows)
                 imported_variants += len(rows)
             except Exception:
@@ -323,6 +337,7 @@ def sync_kaufmann_catalog(args: argparse.Namespace) -> int:
         if client is not None:
             client.close()
         scraper.close()
+        variation_client.close()
 
 
 def parse_args() -> argparse.Namespace:

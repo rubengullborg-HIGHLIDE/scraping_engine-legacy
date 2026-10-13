@@ -245,6 +245,8 @@ class CatalogLifecycleClient:
 
 def importer_command(catalog: CatalogSpec, args: argparse.Namespace) -> list[str]:
     command = [sys.executable, str(ROOT / catalog.import_script), "--log-level", args.log_level]
+    if catalog.key in {"axel", "quint"}:
+        command.append("--availability-first")
     if args.dry_run:
         command.append("--dry-run")
     if args.no_delay:

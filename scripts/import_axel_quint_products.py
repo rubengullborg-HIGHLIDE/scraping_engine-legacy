@@ -20,9 +20,14 @@ LOG = logging.getLogger(__name__)
 
 
 def import_products(store, args, scraper_factory=None):
+    availability_first = getattr(args, 'availability_first', False)
+    if availability_first and store not in {'axel', 'quint'}:
+        raise ValueError('Availability-first import supports only AXEL/qUINT')
     scraper_factory = scraper_factory or AxelQuintScraper
     scraper = scraper_factory(store, max_retries=args.max_retries)
     client = None
+    lifecycle = None
+    existing_by_key = {}
     rows, pending, keys = [], [], set()
     failed = 0
     try:
@@ -43,6 +48,12 @@ def import_products(store, args, scraper_factory=None):
             if not url or not key:
                 raise ValueError('Supabase credentials required for writes')
             client = SupabaseCatalogClient(url, key)
+            if availability_first:
+                from scripts.sync_store_catalogs import CatalogLifecycleClient
+                lifecycle = CatalogLifecycleClient(url, key, history_table='store_inventory_history')
+                existing_by_key = {(r['source_parent_id'], r['source_color_id']): r
+                                   for r in lifecycle.list_rows(store)}
+        skipped_unavailable = updated_unavailable = 0
         for index, url in enumerate(urls, 1):
             covered = getattr(scraper, 'covered_urls', set())
             if isinstance(covered, set) and url in covered:
@@ -52,7 +63,8 @@ def import_products(store, args, scraper_factory=None):
             LOG.info('%s [%s/%s] Hydrating %s', store, index, len(urls), url)
             try:
                 started = time.monotonic()
-                snapshot = scraper.fetch_snapshot(url)
+                snapshot = (scraper.fetch_catalog_snapshot(url) if availability_first
+                            else scraper.fetch_snapshot(url))
                 batch = scraper.rows_from_snapshot(snapshot)
                 LOG.info('%s hydrated %s colour rows in %.2fs (%s unavailable).', store, len(batch), time.monotonic() - started, sum(r.get("publication_status") == "unavailable" for r in batch))
                 if args.fixtures_dir:
@@ -70,6 +82,18 @@ def import_products(store, args, scraper_factory=None):
                 keys.add(identity)
                 if args.dry_run:
                     rows.append(row)
+                elif availability_first and row['publication_status'] == 'unavailable':
+                    existing = existing_by_key.get(identity)
+                    if existing:
+                        from scripts.refresh_store_inventory import STORE_SPECS, dynamic_payload
+                        payload = dynamic_payload(STORE_SPECS[store], row)
+                        payload.update({key: row[key] for key in ('publication_status', 'status_reason', 'status_checked_at')})
+                        payload['discontinued_at'] = existing.get('discontinued_at') or row['discontinued_at']
+                        # Mark seen via updated_at without rewriting stable metadata/raw.
+                        lifecycle.patch_row(f'{store}_products', int(existing['id']), payload)
+                        updated_unavailable += 1
+                    else:
+                        skipped_unavailable += 1
                 else:
                     pending.append(row)
                     if len(pending) >= args.write_batch_size:
@@ -85,6 +109,8 @@ def import_products(store, args, scraper_factory=None):
                 Path(args.output).write_text(rendered)
             else:
                 print(rendered)
+        if availability_first:
+            LOG.info('%s HTTP-screened unavailable colours: existing_updated=%s new_skipped=%s', store, updated_unavailable, skipped_unavailable)
         LOG.info('%s import complete. rows=%s failed_pages=%s', store, len(keys), failed)
         return 1 if failed else 0
     except Exception:
@@ -94,6 +120,8 @@ def import_products(store, args, scraper_factory=None):
         scraper.close()
         if client:
             client.session.close()
+        if lifecycle:
+            lifecycle.close()
 
 
 def parse_args(store, argv=None):
@@ -102,6 +130,8 @@ def parse_args(store, argv=None):
     parser.add_argument('--limit', type=int)
     parser.add_argument('--offset', type=int, default=0)
     parser.add_argument('--discover-only', action='store_true')
+    if store in {'axel', 'quint'}:
+        parser.add_argument('--availability-first', action='store_true', help='HTTP availability check before browser metadata extraction; update known unavailable colours without importing new unavailable colours.')
     parser.add_argument('--preview', type=int, default=10)
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--output', help='Save dry-run rows or discovery URLs locally.')

@@ -621,7 +621,9 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                 product_rows_by_color = {
                     str(row["source_color_id"]): row for row in product_rows
                 }
-                if unknown_source_color_ids(scraped_rows, product_rows):
+                if unknown_source_color_ids(
+                    [row for row in scraped_rows if row.get('source_available') is True], product_rows
+                ):
                     new_variant_candidate_urls.add(canonical_url)
                 returned_colors: set[str] = set()
 
