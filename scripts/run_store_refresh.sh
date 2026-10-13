@@ -4,4 +4,6 @@ set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 mkdir -p logs
 
-exec .venv/bin/python scripts/refresh_store_inventory.py "$@"
+# Validated on the droplet for all eight Shopify sources. A trailing explicit
+# --source-transport requests remains available for diagnostic comparisons.
+exec .venv/bin/python scripts/refresh_store_inventory.py --source-transport system-curl "$@"
