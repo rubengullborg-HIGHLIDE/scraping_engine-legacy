@@ -31,3 +31,6 @@ backups/
 # Playwright/browser artifacts
 playwright-report/
 test-results/
+
+# Supabase CLI local state
+supabase/.temp/
