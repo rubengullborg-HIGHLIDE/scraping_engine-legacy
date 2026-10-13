@@ -31,6 +31,37 @@ LOG = logging.getLogger("refresh_store_inventory")
 EMPTY_LOCAL_INVENTORY = {"stores": {}}
 
 
+class StoreRateLimited(RuntimeError):
+    """Stop a source store for this run, without changing unobserved inventory."""
+
+    stats = None
+
+
+class SourceRetry(Retry):
+    def is_retry(self, method, status_code, has_retry_after=False):
+        # Removing 429 from status_forcelist alone is insufficient: urllib3 also
+        # retries it when Retry-After is present. Leave the source alone instead.
+        if status_code == 429:
+            return False
+        return super().is_retry(method, status_code, has_retry_after)
+
+
+def stop_on_source_rate_limit(response, *args, **kwargs):
+    if response.status_code == 429:
+        retry_after = response.headers.get("Retry-After", "not supplied")
+        response.close()
+        raise StoreRateLimited(
+            f"HTTP 429 from {response.url}; Retry-After={retry_after}. "
+            "No further requests to this store during this run; saved stock retained."
+        )
+    return response
+
+
+def retain_rate_limit_progress(exc, stats, row_count):
+    stats.skipped += max(0, row_count - stats.updated - stats.unavailable - stats.failed - stats.skipped)
+    exc.stats = stats
+
+
 @dataclass(frozen=True)
 class StoreSpec:
     key: str
@@ -591,13 +622,13 @@ def configure_scraper(scraper: Any, args: argparse.Namespace) -> Any:
     session = getattr(scraper, "session", None)
     if session is None:
         return scraper
-    retry = Retry(
+    retry = SourceRetry(
         total=args.max_retries,
         connect=args.max_retries,
         read=args.max_retries,
         status=args.max_retries,
         backoff_factor=0.75,
-        status_forcelist=(429, 500, 502, 503, 504),
+        status_forcelist=(500, 502, 503, 504),
         allowed_methods=frozenset({"GET", "POST"}),
         respect_retry_after_header=True,
         raise_on_status=False,
@@ -605,6 +636,8 @@ def configure_scraper(scraper: Any, args: argparse.Namespace) -> Any:
     adapter = HTTPAdapter(max_retries=retry)
     session.mount("http://", adapter)
     session.mount("https://", adapter)
+    if stop_on_source_rate_limit not in session.hooks["response"]:
+        session.hooks["response"].append(stop_on_source_rate_limit)
     return scraper
 
 
@@ -627,7 +660,7 @@ def refresh_single_row_store(
             try:
                 full_row = builder(scraper, existing_row, args)
                 apply_full_row(spec, database, existing_row, full_row, args, stats)
-            except SupabasePatchError:
+            except (SupabasePatchError, StoreRateLimited):
                 raise
             except Exception as exc:
                 if explicitly_unavailable(exc):
@@ -636,6 +669,9 @@ def refresh_single_row_store(
                     continue
                 stats.failed += 1
                 LOG.exception("Failed %s row id=%s url=%s", spec.key, existing_row["id"], url)
+    except StoreRateLimited as exc:
+        retain_rate_limit_progress(exc, stats, len(rows))
+        raise
     finally:
         close_scraper(scraper)
     return stats
@@ -811,7 +847,7 @@ def refresh_rains(
                         )
                     else:
                         apply_full_row(spec, database, existing_row, full_row, args, stats)
-            except SupabasePatchError:
+            except (SupabasePatchError, StoreRateLimited):
                 raise
             except Exception as exc:
                 if explicitly_unavailable(exc):
@@ -820,6 +856,9 @@ def refresh_rains(
                     continue
                 stats.failed += len(page_rows)
                 LOG.exception("Failed Rains product page %s", url)
+    except StoreRateLimited as exc:
+        retain_rate_limit_progress(exc, stats, len(rows))
+        raise
     finally:
         close_scraper(scraper)
     return stats
@@ -849,6 +888,8 @@ def refresh_suitclub(
                 page_cache[int(existing_row["id"])] = page_html
                 available_rows.append(existing_row)
                 config_html = page_html
+            except StoreRateLimited:
+                raise
             except Exception as exc:
                 stats.pages += 1
                 if explicitly_unavailable(exc):
@@ -880,7 +921,7 @@ def refresh_suitclub(
                     page_html = scraper.fetch_product_page(url)
                 full_row = scraper.product_to_row(product, page_html, inventory_snapshot)
                 apply_full_row(spec, database, existing_row, full_row, args, stats)
-            except SupabasePatchError:
+            except (SupabasePatchError, StoreRateLimited):
                 raise
             except Exception as exc:
                 if explicitly_unavailable(exc):
@@ -888,6 +929,9 @@ def refresh_suitclub(
                     continue
                 stats.failed += 1
                 LOG.exception("Failed SuitClub row id=%s url=%s", existing_row["id"], url)
+    except StoreRateLimited as exc:
+        retain_rate_limit_progress(exc, stats, len(rows))
+        raise
     finally:
         close_scraper(scraper)
     return stats
@@ -972,7 +1016,10 @@ def refresh_stores(args: argparse.Namespace) -> int:
                 LOG.error("Stopping all store refreshes after database write failure: %s", exc)
                 write_failed = True
                 break
-            except Exception:
+            except Exception as store_error:
+                if isinstance(store_error, StoreRateLimited) and store_error.stats is not None:
+                    for field in ("pages", "updated", "unavailable", "history_observations", "failed", "skipped"):
+                        setattr(totals, field, getattr(totals, field) + getattr(store_error.stats, field))
                 if not args.dry_run and not args.no_history:
                     try:
                         database.flush_history()
@@ -984,7 +1031,10 @@ def refresh_stores(args: argparse.Namespace) -> int:
                         write_failed = True
                         break
                 store_failures += 1
-                LOG.exception("Store-level refresh failure for %s", store_key)
+                if isinstance(store_error, StoreRateLimited):
+                    LOG.warning("Stopping %s for this run: %s", store_key, store_error)
+                else:
+                    LOG.exception("Store-level refresh failure for %s", store_key)
                 continue
             stores_completed += 1
             totals.pages += stats.pages
