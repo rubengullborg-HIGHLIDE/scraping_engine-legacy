@@ -1,0 +1,266 @@
+{
+  "url": "https://www.weekday.com/en-dk/p/men/jeans/loose-fit/astro-loose-baggy-leg-jeans-black-rinse-black-1114252035/",
+  "captured_at": "2026-10-07T13:33:05.416Z",
+  "inventory_url": "/en-dk/p/men/jeans/loose-fit/astro-loose-baggy-leg-jeans-black-rinse-black-1114252035/",
+  "product": {
+    "sku": "1114252035",
+    "productSku": "1114252",
+    "uri": "astro-loose-baggy-leg-jeans-black-rinse-black-1114252035",
+    "name": "Astro Mid Rise Loose Baggy Unisex Jeans",
+    "brandName": "Weekday",
+    "variantName": "Black Rinse - Black",
+    "categoryNames": [
+      "men",
+      "Jeans",
+      "Loose fit"
+    ],
+    "pricing": {
+      "price": "449.00 DKK",
+      "priceAsNumber": 449
+    },
+    "sizeVariants": [
+      {
+        "label": "24/32",
+        "inStock": "yes"
+      },
+      {
+        "label": "25/30",
+        "inStock": "yes"
+      },
+      {
+        "label": "25/32",
+        "inStock": "yes"
+      },
+      {
+        "label": "26/30",
+        "inStock": "yes"
+      },
+      {
+        "label": "26/32",
+        "inStock": "yes"
+      },
+      {
+        "label": "27/30",
+        "inStock": "yes"
+      },
+      {
+        "label": "27/32",
+        "inStock": "yes"
+      },
+      {
+        "label": "27/34",
+        "inStock": "yes"
+      },
+      {
+        "label": "28/30",
+        "inStock": "yes"
+      },
+      {
+        "label": "28/32",
+        "inStock": "yes"
+      },
+      {
+        "label": "28/34",
+        "inStock": "yes"
+      },
+      {
+        "label": "29/30",
+        "inStock": "yes"
+      },
+      {
+        "label": "29/32",
+        "inStock": "yes"
+      },
+      {
+        "label": "29/34",
+        "inStock": "yes"
+      },
+      {
+        "label": "30/30",
+        "inStock": "yes"
+      },
+      {
+        "label": "30/32",
+        "inStock": "yes"
+      },
+      {
+        "label": "30/34",
+        "inStock": "yes"
+      },
+      {
+        "label": "31/30",
+        "inStock": "yes"
+      },
+      {
+        "label": "31/32",
+        "inStock": "yes"
+      },
+      {
+        "label": "31/34",
+        "inStock": "yes"
+      },
+      {
+        "label": "32/30",
+        "inStock": "yes"
+      },
+      {
+        "label": "32/32",
+        "inStock": "yes"
+      },
+      {
+        "label": "32/34",
+        "inStock": "yes"
+      },
+      {
+        "label": "33/32",
+        "inStock": "yes"
+      },
+      {
+        "label": "33/34",
+        "inStock": "yes"
+      },
+      {
+        "label": "34/32",
+        "inStock": "yes"
+      },
+      {
+        "label": "34/34",
+        "inStock": "yes"
+      },
+      {
+        "label": "36/32",
+        "inStock": "yes"
+      }
+    ]
+  },
+  "store_address": "Guldsmedgade 10",
+  "store_text": "WeekdayGuldsmedgade 108100 Århus C",
+  "legend": [
+    {
+      "label": "Available",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-accentOne"
+    },
+    {
+      "label": "Few left",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-orange"
+    },
+    {
+      "label": "Not available",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    }
+  ],
+  "sizes": [
+    {
+      "label": "25/30",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "26/30",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "27/30",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-orange"
+    },
+    {
+      "label": "28/30",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "29/30",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "30/30",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "31/30",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "32/30",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "24/32",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-accentOne"
+    },
+    {
+      "label": "25/32",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-accentOne"
+    },
+    {
+      "label": "26/32",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-orange"
+    },
+    {
+      "label": "27/32",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-orange"
+    },
+    {
+      "label": "28/32",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "29/32",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-orange"
+    },
+    {
+      "label": "30/32",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-orange"
+    },
+    {
+      "label": "31/32",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-orange"
+    },
+    {
+      "label": "32/32",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "33/32",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "34/32",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "36/32",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "27/34",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "28/34",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-orange"
+    },
+    {
+      "label": "29/34",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "30/34",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "31/34",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    },
+    {
+      "label": "32/34",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-orange"
+    },
+    {
+      "label": "33/34",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-orange"
+    },
+    {
+      "label": "34/34",
+      "dot_class": "h-1.5 w-1.5 min-w-[12px] rounded-full bg-lightGray"
+    }
+  ]
+}

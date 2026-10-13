@@ -1,0 +1,2 @@
+# Optional dependency for the experimental Weekday API proof. Python 3.9 compatible.
+curl_cffi==0.13.0

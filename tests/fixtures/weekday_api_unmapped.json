@@ -1,0 +1,1623 @@
+{
+  "provenance": "Reduced live Weekday DK data from 2026-10-07. The source omits two Aarhus size SKUs from its public product size map. All inventory rows retained.",
+  "product": {
+    "sku": "1343655001",
+    "productSku": "1343655",
+    "uri": "void-low-rise-loose-baggy-jeans-bounty-blue-dark-blue-1343655001",
+    "url": "/en-dk/p/men/jeans/barrel/void-low-rise-loose-baggy-jeans-bounty-blue-dark-blue-1343655001",
+    "brandName": "Weekday",
+    "name": "VOID LOW RISE LOOSE BAGGY BARREL JEANS",
+    "variantName": "Bounty Blue - Dark Blue",
+    "categoryNames": [
+      "men",
+      "Jeans",
+      "Barrel"
+    ],
+    "categoryUri": "men/jeans/barrel",
+    "sizeVariants": [
+      {
+        "isDisabled": false,
+        "item": "58851-108404",
+        "label": "27/30",
+        "sizeId": 7870,
+        "sku": "1343655001012",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108407",
+        "label": "27/32",
+        "sizeId": 7871,
+        "sku": "1343655001013",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108411",
+        "label": "28/30",
+        "sizeId": 7875,
+        "sku": "1343655001015",
+        "inStock": "few",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108414",
+        "label": "28/32",
+        "sizeId": 7876,
+        "sku": "1343655001016",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108416",
+        "label": "29/30",
+        "sizeId": 7881,
+        "sku": "1343655001019",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108419",
+        "label": "29/32",
+        "sizeId": 7882,
+        "sku": "1343655001020",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108422",
+        "label": "29/34",
+        "sizeId": 7883,
+        "sku": "1343655001021",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108425",
+        "label": "30/30",
+        "sizeId": 7887,
+        "sku": "1343655001023",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108428",
+        "label": "30/32",
+        "sizeId": 7888,
+        "sku": "1343655001024",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108431",
+        "label": "30/34",
+        "sizeId": 7890,
+        "sku": "1343655001025",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108433",
+        "label": "31/32",
+        "sizeId": 7899,
+        "sku": "1343655001028",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108435",
+        "label": "31/34",
+        "sizeId": 7900,
+        "sku": "1343655001029",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108436",
+        "label": "32/32",
+        "sizeId": 7905,
+        "sku": "1343655001032",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108437",
+        "label": "32/34",
+        "sizeId": 7906,
+        "sku": "1343655001033",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108438",
+        "label": "33/32",
+        "sizeId": 7911,
+        "sku": "1343655001036",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108439",
+        "label": "33/34",
+        "sizeId": 7912,
+        "sku": "1343655001037",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108440",
+        "label": "34/32",
+        "sizeId": 7917,
+        "sku": "1343655001039",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108441",
+        "label": "34/34",
+        "sizeId": 7918,
+        "sku": "1343655001040",
+        "inStock": "yes",
+        "notifyIfBack": false
+      },
+      {
+        "isDisabled": false,
+        "item": "58851-108443",
+        "label": "36/32",
+        "sizeId": 7922,
+        "sku": "1343655001042",
+        "inStock": "yes",
+        "notifyIfBack": false
+      }
+    ],
+    "pricing": {
+      "price": "519.00 DKK",
+      "priceAsNumber": 519,
+      "originalPrice": "519.00 DKK",
+      "originalPriceAsNumber": 519,
+      "priceBeforeDiscount": "519.00 DKK",
+      "priceBeforeDiscountAsNumber": 519,
+      "previousMarkdownPrice": "519.00 DKK",
+      "previousMarkdownPriceAsNumber": 519,
+      "isOnSale": false
+    },
+    "voucher": {
+      "voucherStart": "11 September 2026 00:01 AM GMT+0100",
+      "voucherStop": "31 December 2026 11:59 PM GMT+0100",
+      "voucherPercentage": null,
+      "voucherLabel": "deal",
+      "voucherEligibleMarkets": [
+        "at",
+        "dk",
+        "eu",
+        "fr",
+        "de",
+        "gb",
+        "nl",
+        "no",
+        "se",
+        "ch",
+        "ww"
+      ]
+    }
+  },
+  "inventory": [
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001020"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001021"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001029"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001033"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001012"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001013"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001013"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001015"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001016"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001016"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001019"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001020"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001021"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001021"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001023"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001024"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001025"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001027"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001027"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001029"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001029"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001031"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001032"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001033"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001036"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001037"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001039"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001040"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001025"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001027"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001029"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001036"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001039"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001013"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001020"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001021"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001025"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001027"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001029"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001037"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001025"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001031"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001016"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001033"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001019"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001012"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001025"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001021"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 6,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001024"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001016"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 4,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001020"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001036"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001015"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001023"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 4,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001028"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001015"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001033"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001024"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0657",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Falkoner Allé 21"
+        },
+        "city": "Frederiksberg"
+      },
+      "variantId": "1343655001028"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001016"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001025"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001039"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001037"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001036"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001029"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001019"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001028"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001039"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001021"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001027"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001033"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001037"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001037"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 4,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001028"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001024"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001019"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001019"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001028"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001039"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001031"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001036"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 4,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001024"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001031"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001028"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001019"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001031"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001036"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001032"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001023"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001015"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001012"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 4,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001024"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 3,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001032"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001039"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0652",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Amagertorv 33"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001023"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0651",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Guldsmedgade 10"
+        },
+        "city": "Århus C"
+      },
+      "variantId": "1343655001020"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 2,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001032"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0653",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Algade 11"
+        },
+        "city": "Aalborg"
+      },
+      "variantId": "1343655001020"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0655",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Købmagergade 47"
+        },
+        "city": "Copenhagen K"
+      },
+      "variantId": "1343655001023"
+    },
+    {
+      "articleId": "1343655001",
+      "quantity": 1,
+      "store": {
+        "storeCode": "DK0659",
+        "countryCode": "DK",
+        "storeClass": "Weekday",
+        "address": {
+          "streetName1": "Rosengårdscentret"
+        },
+        "city": "Odense SØ"
+      },
+      "variantId": "1343655001023"
+    }
+  ]
+}
