@@ -172,6 +172,8 @@ class SupabaseKaufmannRefreshClient:
             }
             if not include_unavailable:
                 params["publication_status"] = "eq.active"
+                # The weekly --include-unavailable sweep recovers restocks.
+                params["aarhus_available"] = "eq.true"
             response = self.session.get(
                 self._table_url(table),
                 params=params,
@@ -573,7 +575,8 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
         LOG.info(
             "Loaded %s Kaufmann product pages for HTTP variation refresh%s.",
             len(pages),
-            " (including unavailable)" if args.include_unavailable else "",
+            " (including unavailable)" if args.include_unavailable or args.url
+            else " (active and available in Aarhus only)",
         )
 
         for index, page in enumerate(pages, start=1):
@@ -887,7 +890,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--include-unavailable",
         action="store_true",
-        help="Also recheck soft-tombstoned products; intended for weekly classification sweeps.",
+        help="Also recheck products without Aarhus stock and soft-tombstoned products; intended for weekly sweeps.",
     )
     parser.add_argument(
         "--new-variant-candidates-output",

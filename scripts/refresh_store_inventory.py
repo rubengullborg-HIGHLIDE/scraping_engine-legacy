@@ -186,7 +186,11 @@ class LocalInventoryClient:
             raise ValueError("Local input must be a JSON list of existing rows with integer IDs")
 
     def list_rows(self, spec):
-        return [row for row in self.rows if row.get("publication_status", "active") == "active"]
+        return [
+            row for row in self.rows
+            if row.get("publication_status", "active") == "active"
+            and row.get("aarhus_available") is True
+        ]
 
     def close(self):
         pass
@@ -278,6 +282,8 @@ class SupabaseInventoryClient:
                 params={
                     "select": ",".join(columns),
                     "publication_status": "eq.active",
+                    # Weekly catalogue imports recover restocks and unknown availability.
+                    "aarhus_available": "eq.true",
                     "order": "updated_at.asc,id.asc",
                 },
                 headers={"Range": f"{start}-{start + page_size - 1}"},
@@ -581,6 +587,7 @@ def selected_rows(
     args: argparse.Namespace,
 ) -> list[dict[str, Any]]:
     rows = database.list_rows(spec)
+    LOG.info("Selected %s active Aarhus-available %s rows for daily refresh.", len(rows), spec.key)
     if args.offset:
         rows = rows[args.offset :]
     if args.limit:
