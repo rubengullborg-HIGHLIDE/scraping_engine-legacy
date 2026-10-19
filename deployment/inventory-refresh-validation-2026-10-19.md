@@ -186,3 +186,16 @@ access for service_role. Weekday accepted exact replay and rejected stale and
 incomplete updates. Live tables, schemas and permissions were not changed.
 The full migration has not been applied; its full-volume duration is unmeasured.
 The offline suite remains 280 passing tests.
+
+### Catalog view dependency correction
+
+The first live migration attempt rolled back because the externally managed
+`weekday_catalog_products` view depended on `inventory_observed_at`. The earlier
+temporary-table test had omitted that view. The migration now replaces its
+verified timestamp expression before dropping the old columns, preserving its
+output interface, security options, grants, and downstream dependencies.
+A repeated rollback-only test included the actual catalog view definition and
+a dependent consumer view. It passed the migration, history-copy/replay checks,
+consumer query, service_role SELECT grant check, and security_invoker check.
+Live inspection after the failed attempt confirmed the original Weekday columns
+and Kaufmann history table remain; the corrected migration is not yet applied.

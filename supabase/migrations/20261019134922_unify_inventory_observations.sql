@@ -162,6 +162,21 @@ end;
 $$;
 alter table public.weekday_products enable trigger guard_weekday_product_observations;
 drop index public.weekday_products_aarhus_available_idx;
+-- Preserve the existing catalog API, grants and downstream view dependencies.
+-- This view is managed outside this repository and may not exist on a fresh DB.
+do $$
+declare
+    view_definition text;
+begin
+    if to_regclass('public.weekday_catalog_products') is not null then
+        view_definition := pg_get_viewdef('public.weekday_catalog_products'::regclass, true);
+        if strpos(view_definition, 'inventory_observed_at AS inventory_checked_at') = 0 then
+            raise exception 'Unexpected weekday_catalog_products definition; review before migrating';
+        end if;
+        execute 'create or replace view public.weekday_catalog_products as ' ||
+            replace(view_definition, 'inventory_observed_at AS inventory_checked_at', 'inventory_checked_at');
+    end if;
+end $$;
 alter table public.weekday_products drop column price_observed_at, drop column inventory_observed_at;
 create index weekday_products_aarhus_available_idx
     on public.weekday_products (aarhus_available, inventory_checked_at);
