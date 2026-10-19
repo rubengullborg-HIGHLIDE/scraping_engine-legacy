@@ -38,7 +38,8 @@ def refresh_store(store, database, args):
                 current = None
                 for url in candidates:
                     try:
-                        current = scraper.scrape(url, full=False)
+                        current = scraper.scrape(url, full=False,
+                                                 color_ids=[row['source_color_id'] for row in existing])
                         break
                     except SourceUnavailable:
                         continue

@@ -7,8 +7,11 @@ After=network-online.target
 Type=oneshot
 WorkingDirectory=/root/scraping_engine
 Environment=PYTHONUNBUFFERED=1
-ExecStart=/usr/bin/flock -n /tmp/highlide-inventory-refresh.lock /bin/bash /root/scraping_engine/scripts/run_kaufmann_weekly.sh
-TimeoutStartSec=12h
+ExecStart=/usr/bin/flock --verbose -w 43200 -E 75 /tmp/highlide-inventory-refresh.lock /bin/bash /root/scraping_engine/scripts/run_kaufmann_weekly.sh
+TimeoutStartSec=25h
+Restart=on-failure
+RestartSec=15min
+RestartPreventExitStatus=1
 Nice=10
 StandardOutput=append:/root/scraping_engine/logs/kaufmann_refresh.log
 StandardError=append:/root/scraping_engine/logs/kaufmann_refresh.log

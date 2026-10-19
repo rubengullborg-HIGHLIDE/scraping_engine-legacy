@@ -171,6 +171,48 @@ class ParserTests(unittest.TestCase):
         row=self.scraper.rows_from_snapshot(fixture(), full=False)[0]
         self.assertEqual(set(row), set(STORE_SPECS['axel'].dynamic_columns)|{'source_parent_id','source_color_id','publication_status','status_reason','status_checked_at','discontinued_at'})
 
+    def test_daily_refresh_uses_http_and_only_parses_selected_colours(self):
+        source = fixture(index=2)
+        selected = next(iter(source['colors']))
+        expected = self.scraper.rows_from_snapshot(copy.deepcopy(source), full=False)[0]
+        with patch.object(self.scraper, 'fetch_availability_snapshot', return_value=source) as http, \
+                patch.object(self.scraper, 'fetch_snapshot') as browser:
+            rows = self.scraper.scrape(source['canonical'], full=False, color_ids=[selected])
+        http.assert_called_once()
+        browser.assert_not_called()
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]['local_inventory'], expected['local_inventory'])
+        self.assertEqual(rows[0]['current_price'], expected['current_price'])
+        self.assertEqual(rows[0]['source_color_id'], selected)
+
+    def test_http_explicit_missing_remains_distinct_from_malformed_payload(self):
+        response = Mock(status_code=404)
+        with patch.object(self.scraper.session, 'get', return_value=response):
+            with self.assertRaises(SourceUnavailable):
+                self.scraper.scrape('https://www.axel.dk/produkt/example', full=False)
+
+    def test_known_parent_refresh_needs_one_variation_call_and_no_html(self):
+        source = fixture(index=2)
+        parent = source['tracking']['parentId']
+        selected = next(iter(source['colors']))
+        endpoint = self.scraper.base_url + '/widgets/product/variation/' + parent
+        payload = {'options': {'color': {key: value['option'] for key, value in source['colors'].items()}}}
+        response = Mock(status_code=200, url=endpoint)
+        response.json.return_value = payload
+        with patch.object(self.scraper.session, 'get', return_value=response) as get, \
+                patch.object(self.scraper, 'fetch_snapshot') as browser:
+            rows = self.scraper.scrape(source['canonical'], full=False, color_ids=[selected], source_parent_id=parent)
+        self.assertEqual(get.call_count, 1)
+        self.assertEqual(get.call_args.args[0], endpoint)
+        browser.assert_not_called()
+        expected = self.scraper.rows_from_snapshot(source, full=False)[0]
+        for key in ('current_price', 'list_price', 'local_inventory', 'webshop_sizes'):
+            self.assertEqual(rows[0][key], expected[key])
+        payload['options']['color'][selected]['price'] = 'EUR 650'
+        with patch.object(self.scraper.session, 'get', return_value=response):
+            with self.assertRaisesRegex(IncompleteProduct, 'currency/price'):
+                self.scraper.scrape(source['canonical'], full=False, color_ids=[selected], source_parent_id=parent)
+
     def test_size_guide_and_prices(self):
         self.assertEqual(formatted_price('DKK 1.300'),1300)
         self.assertEqual(formatted_price('199,60 kr.'),199.6)

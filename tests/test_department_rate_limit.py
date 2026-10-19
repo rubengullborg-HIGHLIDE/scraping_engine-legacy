@@ -10,6 +10,16 @@ from scripts import sync_store_catalogs as sunday
 
 
 class DepartmentRateLimitTests(unittest.TestCase):
+    def test_access_denied_stops_store_without_retrying_pages(self):
+        scraper = PublicScraper(request_delay=0)
+        self.addCleanup(scraper.close)
+        scraper.BASE_URL = 'https://example.com'
+        response = Mock(status_code=403, url='https://example.com/product')
+        with patch.object(scraper.session, 'get', return_value=response):
+            with self.assertRaisesRegex(StoreRateLimited, 'HTTP 403 access denied'):
+                scraper.get('/product')
+        response.close.assert_called_once()
+
     def test_transport_stops_429_even_with_retry_after_and_spaces_actual_requests(self):
         scraper = PublicScraper()
         self.addCleanup(scraper.close)
@@ -31,7 +41,7 @@ class DepartmentRateLimitTests(unittest.TestCase):
             with self.subTest(store=store):
                 database = Mock()
                 database.list_rows.return_value = [
-                    {'id': i, 'source_parent_id': str(i), 'canonical_url': f'https://example.com/{i}'}
+                    {'id': i, 'source_parent_id': str(i), 'source_color_id': str(i), 'canonical_url': f'https://example.com/{i}'}
                     for i in range(3)]
                 scraper = Mock()
                 scraper.scrape.side_effect = StoreRateLimited('HTTP 429')

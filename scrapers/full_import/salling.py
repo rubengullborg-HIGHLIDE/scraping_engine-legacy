@@ -141,7 +141,9 @@ class SallingScraper(PublicScraper):
             raise ValueError('Salling returned a different product')
         return product
 
-    def fetch_snapshot(self, url, full=True):
+    def fetch_snapshot(self, url, full=True, *, color_ids=None):
+        if color_ids is not None and (full or not color_ids):
+            raise ValueError('Colour selection requires a nonempty refresh scope')
         first = self.fetch_product(url)
         path = [v['name'] for v in first.get('breadCrumbsData', [])]
         if not classification(path, first.get('title')):
@@ -155,6 +157,12 @@ class SallingScraper(PublicScraper):
         if not colors:
             raise ValueError('Missing Salling colour enumeration')
         for color in colors:
+            if color_ids is not None:
+                value = text(color.get('attribute', {}).get('value'))
+                if not value:
+                    raise ValueError('Missing Salling colour selection identity')
+                if unicodedata.normalize('NFKC', value).casefold() not in color_ids:
+                    continue
             pid = str(color['productId'])
             try:
                 representative = fetched.get(pid) or self.fetch_product(color['productUrl'])

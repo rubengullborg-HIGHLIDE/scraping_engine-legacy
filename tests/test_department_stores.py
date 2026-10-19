@@ -7,7 +7,8 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 
 from scrapers.full_import.salling import SallingScraper, decode_nuxt
-from scrapers.full_import.magasin import MagasinScraper, parse_stock
+from scrapers.full_import.magasin import MagasinScraper, parse_stock, prices, size_variants
+from scrapers.source_http import SourcePayloadError, StoreRateLimited
 from scrapers.full_import.department_stores import classification, SourceUnavailable
 from scripts.refresh_department_inventory import refresh_store
 from scripts.refresh_store_inventory import parse_args as refresh_args, STORE_SPECS
@@ -21,6 +22,82 @@ def fixture(store, kind='regular'):
 
 
 class ParserTests(unittest.TestCase):
+    def test_empty_200_json_response_is_a_deferred_payload_error(self):
+        response = Mock(status_code=200, headers={'Content-Type': 'text/html'}, content=b'', text='')
+        response.json.side_effect = ValueError('Expecting value')
+        with patch.object(self.magasin, 'get', return_value=response):
+            with self.assertRaisesRegex(SourcePayloadError, 'HTTP 200.*bytes=0'):
+                self.magasin.product('BCRG70-1FCS')
+        response.headers['cf-mitigated'] = 'challenge'
+        with patch.object(self.magasin, 'get', return_value=response):
+            with self.assertRaises(StoreRateLimited):
+                self.magasin.product('BCRG70-1FCS')
+
+    def test_hidden_nonexistent_magasin_size_is_not_inventory_despite_in_stock_true(self):
+        source = fixture('magasin', 'sale')
+        p = source['colors'][0]['product']
+        hidden = {'id': '36', 'displayValue': '36', 'productId': '', 'url': '',
+                  'inStock': True, 'selectable': False, 'showProduct': False}
+        p['variationAttributes'][1]['values'].insert(0, hidden)
+        row = self.magasin.rows_from_snapshot(source)[0]
+        self.assertNotIn('36', row['local_inventory']['stores']['magasin-aarhus']['sizes'])
+        self.assertNotIn('36', [v['size'] for v in row['webshop_sizes']])
+        self.assertEqual(row['raw']['variations']['size'][0]['showProduct'], False)
+        self.assertTrue(row['raw']['variations']['size'][0]['inStock'])
+        for key in ('showProduct', 'selectable'):
+            hidden[key] = True
+            with self.assertRaisesRegex(ValueError, 'Missing Magasin size identity'):
+                size_variants(p)
+            hidden[key] = False
+        hidden['url'] = 'https://www.magasin.dk/something.html'
+        with self.assertRaisesRegex(ValueError, 'Missing Magasin size identity'):
+            size_variants(p)
+
+    def test_magasin_colour_request_can_return_its_selected_size(self):
+        source = fixture('magasin', 'sale')
+        p = source['colors'][0]['product']
+        color_id = p['colorVariantId']
+        p['id'] = p['variationAttributes'][1]['values'][0]['productId']
+        p['variationAttributes'][0]['values'][0]['productId'] = p['id']
+        p['schemaMarkup']['url'] = 'https://www.magasin.dk/active-shorts/' + p['id'] + '.html'
+        with patch.object(self.magasin, 'get', return_value=Mock(json=lambda: {'product': p})):
+            parsed = self.magasin.product(color_id)
+            self.assertEqual(parsed['id'], p['id'])
+            with self.assertRaisesRegex(ValueError, 'different/missing'):
+                self.magasin.product('WRONG-COLOUR')
+            p['showStockAvailabilityOption'] = False
+            snapshot = self.magasin.fetch_snapshot('https://www.magasin.dk/active-shorts/' + color_id + '.html', full=False)
+            self.assertEqual(snapshot['colors'][0]['product']['colorVariantId'], color_id)
+            self.assertIn('https://www.magasin.dk/active-shorts/' + color_id + '.html', self.magasin.covered_urls)
+        row = self.magasin.rows_from_snapshot(source)[0]
+        self.assertTrue(row['canonical_url'].endswith('/' + color_id + '.html'))
+        self.assertEqual(row['source_color_id'], color_id)
+        self.assertEqual(row['raw']['source_product']['id'], p['id'])
+
+    def test_magasin_range_uses_starting_price_and_requires_exact_size_prices(self):
+        source = fixture('magasin', 'sale')
+        entry = source['colors'][0]
+        lower = copy.deepcopy(entry['product']['price'])
+        upper = copy.deepcopy(lower)
+        upper['sales']['value'] = upper['list']['value']
+        entry['product']['price'] = {'type': 'range', 'min': lower, 'max': upper}
+        with self.assertRaisesRegex(ValueError, 'Missing exact Magasin size price'):
+            self.magasin.rows_from_snapshot(source)
+        entry['size_prices'] = {v['productId']: {'current_price': 279.3, 'list_price': 399}
+                               for v in entry['product']['variationAttributes'][1]['values']}
+        row = self.magasin.rows_from_snapshot(source)[0]
+        self.assertEqual((row['current_price'], row['list_price']), (279.3, 399))
+        self.assertEqual(row['raw']['source_product']['price']['max']['sales']['value'], 399)
+        self.assertTrue(all(v['current_price'] == 279.3 for v in row['webshop_sizes']))
+        upper['list']['value'] = 450
+        self.assertEqual(prices(entry['product']), (279.3, None))
+        upper['sales']['value'] = 200
+        with self.assertRaisesRegex(ValueError, 'Reversed'):
+            prices(entry['product'])
+        upper['sales']['currency'] = 'EUR'
+        with self.assertRaisesRegex(ValueError, 'invalid Magasin price'):
+            prices(entry['product'])
+
     def setUp(self):
         self.salling = SallingScraper()
         self.magasin = MagasinScraper()
@@ -253,6 +330,43 @@ class DiscoveryAndSourceTests(unittest.TestCase):
             rows=scraper.scrape('https://www.magasin.dk/check-flannel-shirt/BRYA69-00H5.html',full=False)
             get.assert_not_called()
         self.assertTrue(all(r['aarhus_available'] is None for r in rows))
+
+    def test_magasin_refresh_does_not_request_unselected_sibling_colours(self):
+        source = fixture('magasin')
+        products = {c['product']['colorVariantId']: copy.deepcopy(c['product']) for c in source['colors']}
+        selected = next(iter(products))
+        for product in products.values():
+            product['showStockAvailabilityOption'] = False
+        scraper = MagasinScraper()
+        self.addCleanup(scraper.close)
+        with patch.object(scraper, 'product', side_effect=lambda pid: products[pid]) as fetch, \
+                patch.object(scraper, 'get') as stock:
+            rows = scraper.scrape(scraper.color_url(products[selected]), full=False, color_ids=[selected])
+        self.assertEqual([call.args[0] for call in fetch.call_args_list], [selected])
+        self.assertEqual([row['source_color_id'] for row in rows], [selected])
+        stock.assert_not_called()
+
+    def test_salling_refresh_does_not_request_unselected_sibling_colours(self):
+        from scrapers.full_import.salling import color_key
+        source = fixture('salling')
+        products = {str(p['id']): p for p in source['products']}
+        selected = copy.deepcopy(source['products'][0])
+        selected['variantAttributes']['størrelse'] = [variant for variant in selected['variantAttributes']['størrelse']
+                                                      if str(variant['productId']) == str(selected['id'])]
+        products[str(selected['id'])] = selected
+        scraper = SallingScraper()
+        self.addCleanup(scraper.close)
+        fetched = []
+        def fetch(url):
+            import re
+            product = products[re.search(r'/p-(\d+)/', url)[1]]
+            fetched.append(product)
+            return copy.deepcopy(product)
+        with patch.object(scraper, 'fetch_product', side_effect=fetch):
+            rows = scraper.scrape('https://salling.dk' + selected['url'], full=False,
+                                  color_ids=[color_key(selected)])
+        self.assertEqual({row['source_color_id'] for row in rows}, {color_key(selected)})
+        self.assertTrue(all(color_key(product) == color_key(selected) for product in fetched))
 
     def test_complete_salling_stock_totals_are_exact(self):
         source=fixture('salling','sale')

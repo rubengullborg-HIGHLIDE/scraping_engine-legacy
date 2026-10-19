@@ -34,7 +34,7 @@ LOG = logging.getLogger("sync_kaufmann_catalog")
 def available_catalog_rows(scraper, variation_client, product_url):
     """Only browser-hydrate catalogue candidates with explicit available colours."""
     parent = variation_client.resolve_source_parent_id(product_url)
-    probe = variation_rows_from_payload(variation_client.fetch_payload(parent), parent, product_url)
+    probe = variation_rows_from_payload(variation_client.fetch_payload(parent, product_url=product_url), parent, product_url)
     if not any(row['source_available'] for row in probe):
         LOG.info('HTTP check: Kaufmann candidate unavailable; browser skipped: %s', product_url)
         return []

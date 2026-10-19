@@ -11,11 +11,12 @@ from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
+from scrapers.source_http import SourcePayloadError
 
 
 BASE_URL = "https://skagen-clothing.dk"
-MEN_COLLECTION_HANDLE = "alt-toj-til-maend"
-EXCLUDED_PRODUCT_TYPES = frozenset({"accessories", "beanie", "gavekort", "mystery box"})
+MEN_COLLECTION_HANDLE = "alt"
+EXCLUDED_PRODUCT_TYPES = frozenset({"accessories", "beanie", "caps", "gavekort", "mystery box"})
 TRACKED_STORES = {
     "skagen-aarhus": {
         "name": "Skagen Clothing Aarhus",
@@ -52,17 +53,23 @@ class SkagenClothingScraper:
                 timeout=30,
             )
             response.raise_for_status()
-            batch = response.json().get("products", [])
+            payload = response.json()
+            if not isinstance(payload, dict) or not isinstance(payload.get("products"), list):
+                raise SourcePayloadError("Invalid Skagen Clothing collection payload")
+            batch = payload["products"]
             if not batch:
                 break
             for product in batch:
-                if product.get("id") is not None and self.is_clothing(product):
+                if (product.get("id") is not None and self.is_clothing(product)
+                        and "ALT TØJ TIL MÆND" in self._strings(product.get("tags"))):
                     product_id = int(product["id"])
                     product["_discovery_collections"] = [collection_handle]
                     products[product_id] = product
             if len(batch) < 250:
                 break
             page += 1
+        if not products:
+            raise SourcePayloadError(f"Skagen Clothing collection {collection_handle!r} returned no clothing; verify discovery")
         return list(products.values())
 
     @staticmethod
@@ -235,42 +242,53 @@ class SkagenClothingScraper:
             slug: cls._empty_store(config["name"], config["address"])
             for slug, config in TRACKED_STORES.items()
         }
+        variants = list(variants)
         size_by_variant = {
             str(variant["id"]): cls._text(variant.get("public_title") or variant.get("title"))
             for variant in variants
             if variant.get("id") is not None
         }
+        if (not size_by_variant or len(size_by_variant) != len(variants)
+                or any(not size for size in size_by_variant.values())
+                or len(set(size_by_variant.values())) != len(size_by_variant)):
+            raise SourcePayloadError("Missing or duplicate Skagen Clothing variant identities/sizes")
         by_variant: dict[str, dict[str, Any]] = {}
         raw: list[dict[str, Any]] = []
         node = soup.select_one("[data-variant-inventories]")
         payload = node.get("data-variant-inventories") if node else None
         try:
-            inventories = json.loads(str(payload)) if payload else []
-        except (json.JSONDecodeError, TypeError):
-            inventories = []
-        if not inventories:
-            return {"stores": stores}, by_variant, raw
+            inventories = json.loads(str(payload)) if payload else None
+        except (json.JSONDecodeError, TypeError) as exc:
+            raise SourcePayloadError("Malformed Skagen Clothing inventory JSON") from exc
+        if not isinstance(inventories, list) or not inventories:
+            raise SourcePayloadError("Missing Skagen Clothing inventory; retaining previous stock")
 
         for store in stores.values():
             store["stock_known"] = True
             store["total_stock"] = 0
 
         for item in inventories:
-            inventory = item.get("inventory") or {}
+            inventory = item.get("inventory") if isinstance(item, dict) else None
+            if not isinstance(inventory, dict) or not isinstance(inventory.get("inventoryLevels"), list):
+                raise SourcePayloadError("Invalid Skagen Clothing variant inventory")
             variant_id = str(inventory.get("variant_id") or "").rsplit("/", 1)[-1]
             size = size_by_variant.get(variant_id)
-            if not variant_id:
-                continue
+            if variant_id not in size_by_variant or variant_id in by_variant:
+                raise SourcePayloadError(f"Unexpected or duplicate Skagen Clothing inventory variant: {variant_id}")
             by_variant[variant_id] = {}
             raw_levels: list[dict[str, Any]] = []
             for level in inventory.get("inventoryLevels") or []:
-                location = level.get("location") or {}
-                stock = cls._integer(level.get("available"))
+                if not isinstance(level, dict) or not isinstance(level.get("location"), dict):
+                    raise SourcePayloadError("Invalid Skagen Clothing inventory location")
+                location = level["location"]
+                stock = level.get("available")
                 raw_level = {"available": stock, "location": location}
                 raw_levels.append(raw_level)
                 slug = cls._store_slug(location)
                 if not slug:
                     continue
+                if slug in by_variant[variant_id] or type(stock) is not int or stock < 0:
+                    raise SourcePayloadError(f"Invalid or duplicate Skagen Clothing stock for {variant_id}/{slug}")
                 available = bool(stock and stock > 0)
                 by_variant[variant_id][slug] = {"available": available, "stock": stock}
                 if size:
@@ -279,12 +297,9 @@ class SkagenClothingScraper:
                 stores[slug]["total_stock"] += stock or 0
             raw.append({"variant_id": variant_id, "inventory_levels": raw_levels})
 
-        for variant_id, size in size_by_variant.items():
-            by_variant.setdefault(variant_id, {})
-            for slug, store in stores.items():
-                state = by_variant[variant_id].setdefault(slug, {"available": False, "stock": 0})
-                if size and size not in store["sizes"]:
-                    store["sizes"][size] = state.copy()
+        for variant_id in size_by_variant:
+            if set(by_variant.get(variant_id, {})) != set(TRACKED_STORES):
+                raise SourcePayloadError(f"Incomplete Skagen Clothing shop inventory for variant {variant_id}")
         return {"stores": stores}, by_variant, raw
 
     @staticmethod

@@ -18,7 +18,7 @@ from urllib.parse import urlsplit, urlunsplit
 import requests
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
+from scrapers.source_http import SourceRetry, StoreRateLimited, stop_on_source_rate_limit
 
 LOG = logging.getLogger(__name__)
 # Current product scope is Aarhus only. Other source locations are debug data.
@@ -145,8 +145,9 @@ class AxelQuintScraper:
         self.max_retries = max_retries
         self.session = requests.Session()
         self.session.headers.update({'User-Agent': 'Mozilla/5.0 (compatible; HIGHLIDE catalogue/1.0)', 'Accept-Language': 'da-DK,da;q=0.9'})
-        retry = Retry(total=max_retries, backoff_factor=1, status_forcelist=(429, 500, 502, 503, 504), allowed_methods={'GET'})
+        retry = SourceRetry(total=max_retries, backoff_factor=1, status_forcelist=(500, 502, 503, 504), allowed_methods={'GET'})
         self.session.mount('https://', HTTPAdapter(max_retries=retry))
+        self.session.hooks['response'].append(stop_on_source_rate_limit)
         self._playwright = self._browser = self._page = None
 
     def clean_url(self, url: str) -> str:
@@ -192,6 +193,10 @@ class AxelQuintScraper:
         from scrapers.stores.kaufmann_variations import extract_source_parent_id
         url = self.clean_url(url)
         response = self.session.get(url, headers={'Cache-Control': 'no-cache'}, timeout=30)
+        if response.status_code == 403:
+            raise StoreRateLimited(f'HTTP 403 from {url}; stopping this store')
+        if response.status_code in (404, 410):
+            raise SourceUnavailable(f'Source unavailable: {url}', response=response)
         response.raise_for_status()
         self.clean_url(response.url)
         parent = extract_source_parent_id(response.text)
@@ -202,8 +207,21 @@ class AxelQuintScraper:
         tracking = json.loads(tracking_node['data-relewise-tracking-options']) if tracking_node else {}
         if tracking.get('parentId') != parent:
             raise IncompleteProduct('HTTP setup and tracking parent identities disagree')
+        colors = self.fetch_variation_options(parent)
+        return {'canonical': url, 'url': url, 'tracking': tracking,
+                'jsonld': [json.loads(node.get_text()) for node in soup.select('script[type="application/ld+json"]')],
+                'colors': {key: {'option': option} for key, option in colors.items()},
+                'available_only': True}
+
+    def fetch_variation_options(self, parent):
+        if not isinstance(parent, str) or not re.fullmatch(r'[0-9a-f]{32}', parent):
+            raise IncompleteProduct('Invalid stored source parent identity')
         endpoint = f'{self.base_url}/widgets/product/variation/{parent}'
         response = self.session.get(endpoint, headers={'Cache-Control': 'no-cache'}, timeout=30)
+        if response.status_code == 403:
+            raise StoreRateLimited(f'HTTP 403 from {endpoint}; stopping this store')
+        if response.status_code in (404, 410):
+            raise SourceUnavailable(f'Source unavailable: {endpoint}', response=response)
         response.raise_for_status()
         if response.url != endpoint:
             raise IncompleteProduct('Unexpected variation endpoint redirect')
@@ -214,10 +232,7 @@ class AxelQuintScraper:
             for option in colors.values()
         ):
             raise IncompleteProduct('Missing or invalid HTTP colour availability')
-        return {'canonical': url, 'url': url, 'tracking': tracking,
-                'jsonld': [json.loads(node.get_text()) for node in soup.select('script[type="application/ld+json"]')],
-                'colors': {key: {'option': option} for key, option in colors.items()},
-                'available_only': True}
+        return colors
 
     def fetch_catalog_snapshot(self, url: str) -> dict:
         probe = self.fetch_availability_snapshot(url)
@@ -271,7 +286,8 @@ class AxelQuintScraper:
         canonical = self.clean_url(snapshot['canonical'])
         product = next((x for x in jsonld_items(snapshot.get('jsonld', [])) if x.get('@type') == 'Product'), {})
         offers = product.get('offers', {})
-        if not isinstance(offers, dict) or offers.get('priceCurrency') != 'DKK':
+        variation_only = snapshot.get('variation_only') is True and not full
+        if not variation_only and (not isinstance(offers, dict) or offers.get('priceCurrency') != 'DKK'):
             raise IncompleteProduct('Product currency is not verified DKK')
         category, category_path, source_path = taxonomy(snapshot)
         if full and not category:
@@ -289,6 +305,9 @@ class AxelQuintScraper:
             if not color_id or not isinstance(sizes, dict) or not sizes:
                 raise IncompleteProduct('Empty colour identity or sizes')
             current = price(option.get('priceRaw'))
+            if variation_only and (not text(option.get('price')).startswith('DKK ')
+                                   or formatted_price(option['price']) != current):
+                raise IncompleteProduct('Variation currency/price is not verified DKK')
             former = option.get('listPriceRaw')
             former = price(former) if former is not None else formatted_price(option.get('listPrice'))
             if former is not None and former <= current:
@@ -367,8 +386,19 @@ class AxelQuintScraper:
             rows.append(row)
         return rows
 
-    def scrape(self, url: str, *, full: bool = True) -> list[dict]:
-        return self.rows_from_snapshot(self.fetch_snapshot(url, full=full), full=full)
+    def scrape(self, url: str, *, full: bool = True, color_ids=None, source_parent_id=None) -> list[dict]:
+        if color_ids is not None and (full or not color_ids):
+            raise ValueError('Colour selection requires a nonempty refresh scope')
+        if not full and source_parent_id is not None:
+            canonical = self.clean_url(url)
+            options = self.fetch_variation_options(source_parent_id)
+            snapshot = {'canonical': canonical, 'tracking': {'parentId': source_parent_id},
+                        'variation_only': True, 'colors': {key: {'option': value} for key, value in options.items()}}
+        else:
+            snapshot = self.fetch_snapshot(url, full=True) if full else self.fetch_availability_snapshot(url)
+        if color_ids is not None:
+            snapshot['colors'] = {key: value for key, value in snapshot['colors'].items() if key in color_ids}
+        return self.rows_from_snapshot(snapshot, full=full)
 
     def close(self):
         try:

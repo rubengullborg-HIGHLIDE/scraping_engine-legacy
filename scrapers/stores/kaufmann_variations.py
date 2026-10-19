@@ -265,7 +265,7 @@ class KaufmannVariationClient:
         )
         self.session.mount("https://", HTTPAdapter(max_retries=retry))
 
-    def fetch_payload(self, source_parent_id: str) -> dict[str, Any]:
+    def fetch_payload(self, source_parent_id: str, *, product_url: Optional[str] = None) -> dict[str, Any]:
         url = VARIATION_URL_TEMPLATE.format(
             source_parent_id=quote(str(source_parent_id), safe="")
         )
@@ -283,6 +283,12 @@ class KaufmannVariationClient:
             raise KaufmannVariationParseError(
                 f"Variation endpoint returned a non-object payload: {url}"
             )
+        if (product_url and payload.get('hasVariants') is False
+                and payload.get('totalOptions') == 0
+                and payload.get('options') == {'color': []}):
+            # Empty variation JSON alone is not proof of removal. Only a page
+            # 404/410 may turn this response into an unavailable observation.
+            self.resolve_source_parent_id(product_url)
         return payload
 
     def resolve_source_parent_id(self, product_url: str) -> str:

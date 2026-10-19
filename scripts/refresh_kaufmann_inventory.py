@@ -613,7 +613,7 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                     canonical_url,
                     source_parent_id,
                 )
-                payload = variation_client.fetch_payload(source_parent_id)
+                payload = variation_client.fetch_payload(source_parent_id, product_url=canonical_url)
                 scraped_rows = variation_rows_from_payload(
                     payload,
                     source_parent_id,
@@ -715,10 +715,11 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                         unavailable_variants += 1
 
             except KaufmannVariationUnavailable as exc:
-                reason = f"variation_http_{exc.status_code}"
+                source = 'variation' if '/widgets/product/variation/' in exc.url else 'product_page'
+                reason = f"{source}_http_{exc.status_code}"
                 LOG.warning(
-                    "Variation endpoint unavailable for %s. Marking %s variants unavailable.",
-                    canonical_url,
+                    "Source unavailable at %s. Marking %s variants unavailable.",
+                    exc.url,
                     len(product_rows),
                 )
                 for product_row in product_rows:

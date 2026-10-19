@@ -1,12 +1,39 @@
 from __future__ import annotations
 
 import json
+import copy
 import unittest
 
 from scrapers.full_import.skagen_clothing import SkagenClothingScraper
+from scrapers.source_http import SourcePayloadError
 
 
 class SkagenClothingScraperTests(unittest.TestCase):
+    def test_incomplete_or_invalid_inventory_never_becomes_zero_stock(self):
+        variants = [{'id': 1, 'title': 'M'}]
+        good = [{'inventory': {'variant_id': 'gid://shopify/ProductVariant/1', 'inventoryLevels': [
+            {'available': 0, 'location': {'name': 'Aarhus Butik - Skagen Clothing'}},
+            {'available': 0, 'location': {'name': 'Skagen Clothing Copenhagen', 'zip': '1157'}},
+        ]}}]
+        def html(payload):
+            return f"<div data-variant-inventories='{json.dumps(payload)}'></div>"
+        inventory, _, _ = SkagenClothingScraper._inventory_from_page(html(good), variants)
+        self.assertEqual(inventory['stores']['skagen-aarhus']['total_stock'], 0)
+        self.assertFalse(inventory['stores']['skagen-aarhus']['available'])
+        broken = ['', "<div data-variant-inventories='{bad'></div>", html([]), html({}), html(good + good)]
+        partial = copy.deepcopy(good)
+        partial[0]['inventory']['inventoryLevels'].pop()
+        broken.append(html(partial))
+        for value in (None, True, '3', 1.5, -1):
+            bad = copy.deepcopy(good)
+            bad[0]['inventory']['inventoryLevels'][0]['available'] = value
+            broken.append(html(bad))
+        for source in broken:
+            with self.subTest(source=source), self.assertRaises(SourcePayloadError):
+                SkagenClothingScraper._inventory_from_page(source, variants)
+        with self.assertRaisesRegex(SourcePayloadError, 'Incomplete.*variant 2'):
+            SkagenClothingScraper._inventory_from_page(html(good), variants + [{'id': 2, 'title': 'L'}])
+
     def test_inventory_keeps_only_real_shops_and_exact_counts(self) -> None:
         variants = [
             {"id": 1, "title": "XS/28"},

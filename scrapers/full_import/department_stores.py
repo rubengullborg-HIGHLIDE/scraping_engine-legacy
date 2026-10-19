@@ -10,7 +10,7 @@ from urllib.parse import urljoin, urlsplit, urlunsplit
 import requests
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
-from scrapers.source_http import SourceRetry, stop_on_source_rate_limit
+from scrapers.source_http import SourceRetry, StoreRateLimited, stop_on_source_rate_limit
 
 from scrapers.full_import.axel_quint import SourceUnavailable
 
@@ -104,6 +104,12 @@ class PublicScraper:
         time.sleep(max(0, self.request_delay - (time.monotonic() - self.last_request)))
         self.last_request = time.monotonic()
         response = self.session.get(parsed.geturl(), timeout=60)
+        if response.status_code == 403:
+            response.close()
+            raise StoreRateLimited(
+                f'HTTP 403 access denied from {parsed.geturl()}; source may require browser verification. '
+                'Stopping this store; saved inventory retained. Retry only after access is resolved.'
+            )
         if response.status_code in (404,410):
             raise SourceUnavailable(f'Source unavailable: {parsed.path}', response=response)
         response.raise_for_status()
@@ -111,8 +117,11 @@ class PublicScraper:
             raise ValueError('Unexpected cross-host redirect')
         return response
 
-    def scrape(self, url, full=True):
-        return self.rows_from_snapshot(self.fetch_snapshot(url, full=full), full=full)
+    def scrape(self, url, full=True, *, color_ids=None):
+        if color_ids is not None and (full or not color_ids):
+            raise ValueError('Colour selection requires a nonempty refresh scope')
+        options = {'color_ids': color_ids} if color_ids is not None else {}
+        return self.rows_from_snapshot(self.fetch_snapshot(url, full=full, **options), full=full)
 
     def close(self):
         self.session.close()

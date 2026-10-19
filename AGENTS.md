@@ -250,6 +250,11 @@ from Shopify's online `available` flag. The latter belongs only in
 Use `local_available` and `aarhus_available` as query-friendly summaries;
 the total-stock columns remain zero because quantities are unknown.
 
+Require both tracked stores and an explicit available/unavailable marker for
+every Shopify size. Missing stores, missing sizes, duplicate sizes, or absent
+availability markers are source errors: retain the previous observation rather
+than writing an empty or unavailable inventory.
+
 Product pages include STOY's color swatch, composition, country of origin,
 fit guidance, category taxonomy, related colours, collection membership, and
 images. Store the source product metafields in `specifications`; STOY does not
@@ -329,10 +334,12 @@ Location:
 - `migrations/014_skagen_clothing_products.sql`
 
 Skagen Clothing is a Shopify storefront. Discover products from the broad
-`alt-toj-til-maend` collection and import them into the dedicated
-`skagen_clothing_products` table. The source collection currently contains
-203 clothing products after excluding the seven non-clothing product types:
-Mystery Box, Accessories, Beanie, and Gavekort. Filter on product type rather
+`alt` collection and import them into the dedicated
+`skagen_clothing_products` table. Verified on October 19, 2026: the former
+`alt-toj-til-maend` discovery returned no candidates; the current men's `alt`
+collection contains 214 products, of which 198 are clothing after excluding
+Mystery Box, Accessories, Beanie, Caps, and Gavekort. Require the explicit
+`ALT TØJ TIL MÆND` tag during discovery. Filter exclusions on product type rather
 than the `ACCESSORIES` tag or collection because Skagen also classifies three
 real tank tops as accessories.
 
@@ -358,8 +365,10 @@ skagen-copenhagen   Skagen Clothing Copenhagen, Klosterstræde 10
 Do not count the internal Viby J warehouse (`8260`) or `Fiktiv location`
 (`8240`) in clean local inventory or summary totals. Preserve all original
 locations in `raw`. `local_total_stock` is the sum of known exact stock across
-the two tracked shops; `aarhus_total_stock` is exact when the inventory payload
-is present and otherwise null.
+the two tracked shops. Require a complete inventory payload with both tracked
+shops for every Shopify variant, including explicit zero quantities. Missing,
+malformed, or partial inventory is a source error and must not overwrite saved
+stock. Unknown quantities remain nullable in the schema for historical rows.
 
 Skagen product pages expose description paragraphs, bullet highlights,
 material compositions, fit language, a three-point fit indicator, model text,

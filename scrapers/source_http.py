@@ -1,11 +1,18 @@
 """Shared source-store rate-limit policy; never used for database requests."""
 from urllib3.util.retry import Retry
+from email.utils import parsedate_to_datetime
+import time
 
 
 class StoreRateLimited(RuntimeError):
     """Stop a source store for this run, without changing unobserved inventory."""
 
     stats = None
+    retry_after_seconds = None
+
+
+class SourcePayloadError(ValueError):
+    """A source request succeeded but omitted the expected usable payload."""
 
 
 class SourceRetry(Retry):
@@ -21,8 +28,15 @@ def stop_on_source_rate_limit(response, *args, **kwargs):
     if response.status_code == 429:
         retry_after = response.headers.get("Retry-After", "not supplied")
         response.close()
-        raise StoreRateLimited(
+        error = StoreRateLimited(
             f"HTTP 429 from {response.url}; Retry-After={retry_after}. "
             "No further requests to this store during this run; saved stock retained."
         )
+        try:
+            value = response.headers.get('Retry-After', '').strip()
+            error.retry_after_seconds = (int(value) if value.isdecimal()
+                                         else max(0, parsedate_to_datetime(value).timestamp() - time.time()))
+        except (TypeError, ValueError, OverflowError):
+            pass
+        raise error
     return response

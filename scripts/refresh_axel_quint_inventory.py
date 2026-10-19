@@ -5,6 +5,7 @@ import logging
 from collections import OrderedDict
 
 from scrapers.full_import.axel_quint import AxelQuintScraper, SourceUnavailable
+from scrapers.source_http import StoreRateLimited
 
 LOG = logging.getLogger(__name__)
 
@@ -13,7 +14,7 @@ def refresh_store(store, database, args):
     # Imported at call time to avoid circular registry imports.
     from scripts.refresh_store_inventory import (
         STORE_SPECS, RefreshStats, apply_full_row, apply_unavailable,
-        dynamic_payload, maybe_delay, row_url, selected_rows,
+        dynamic_payload, maybe_delay, row_url, selected_rows, configure_scraper,
     )
     spec = STORE_SPECS[store]
     rows = selected_rows(database, spec, args)
@@ -23,6 +24,8 @@ def refresh_store(store, database, args):
         groups.setdefault(row_url(row), []).append(row)
     LOG.info('Loaded %s %s rows across %s pages.', len(rows), store, len(groups))
     scraper = AxelQuintScraper(store, max_retries=args.max_retries)
+    if getattr(args, 'source_transport', 'requests') == 'system-curl':
+        scraper = configure_scraper(scraper, args)
     staged, missing = [], []
     try:
         for index, (url, existing) in enumerate(groups.items(), 1):
@@ -30,7 +33,9 @@ def refresh_store(store, database, args):
             stats.pages += 1
             LOG.info('%s [%s/%s] Refreshing %s', store, index, len(groups), url)
             try:
-                current = scraper.scrape(url, full=False)
+                current = scraper.scrape(url, full=False,
+                                         color_ids=[row['source_color_id'] for row in existing],
+                                         source_parent_id=existing[0]['source_parent_id'])
                 parents = {r['source_parent_id'] for r in current}
                 if len(parents) != 1 or any(r['source_parent_id'] not in parents for r in existing):
                     raise ValueError('Source parent changed; refusing to patch or discontinue existing rows')
@@ -44,6 +49,8 @@ def refresh_store(store, database, args):
                         staged.append((row, {**dynamic_payload(spec, match),
                                              'source_color_id': match['source_color_id'],
                                              **{key: match[key] for key in ('publication_status', 'status_reason', 'status_checked_at', 'discontinued_at')}}))
+            except StoreRateLimited:
+                raise
             except SourceUnavailable:
                 missing.extend((row, 'page_unavailable') for row in existing)
             except Exception:

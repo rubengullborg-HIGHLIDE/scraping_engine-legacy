@@ -26,9 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-
 from scrapers.source_http import SourceRetry, StoreRateLimited, stop_on_source_rate_limit
-
 
 LOG = logging.getLogger("refresh_store_inventory")
 EMPTY_LOCAL_INVENTORY = {"stores": {}}
@@ -186,11 +184,8 @@ class LocalInventoryClient:
             raise ValueError("Local input must be a JSON list of existing rows with integer IDs")
 
     def list_rows(self, spec):
-        return [
-            row for row in self.rows
-            if row.get("publication_status", "active") == "active"
-            and row.get("aarhus_available") is True
-        ]
+        return [row for row in self.rows if row.get("publication_status", "active") == "active"
+                and row.get("aarhus_available") is True]
 
     def close(self):
         pass
@@ -282,7 +277,6 @@ class SupabaseInventoryClient:
                 params={
                     "select": ",".join(columns),
                     "publication_status": "eq.active",
-                    # Weekly catalogue imports recover restocks and unknown availability.
                     "aarhus_available": "eq.true",
                     "order": "updated_at.asc,id.asc",
                 },
@@ -587,7 +581,6 @@ def selected_rows(
     args: argparse.Namespace,
 ) -> list[dict[str, Any]]:
     rows = database.list_rows(spec)
-    LOG.info("Selected %s active Aarhus-available %s rows for daily refresh.", len(rows), spec.key)
     if args.offset:
         rows = rows[args.offset :]
     if args.limit:
@@ -1152,7 +1145,7 @@ def parse_args(argv=None) -> argparse.Namespace:
     )
     parser.add_argument("--no-delay", action="store_true", help="Disable polite inter-product delays.")
     parser.add_argument("--source-transport", choices=("requests", "system-curl"), default="requests",
-                        help="Opt-in transport trial for the eight Shopify stores; database and other stores are unchanged.")
+                        help="Source transport for the eight Shopify stores; database transport is unchanged.")
     parser.add_argument("--min-delay", type=float, default=float(env("STORE_REFRESH_MIN_DELAY", "0.5")))
     parser.add_argument("--max-delay", type=float, default=float(env("STORE_REFRESH_MAX_DELAY", "1.0")))
     parser.add_argument("--variant-delay", type=float, default=float(env("STORE_REFRESH_VARIANT_DELAY", "0.2")))

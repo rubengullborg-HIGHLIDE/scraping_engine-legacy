@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import unittest
+from unittest.mock import Mock, patch
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from scrapers.stores.kaufmann_variations import (
+    KaufmannVariationClient,
+    KaufmannVariationUnavailable,
     KaufmannVariationParseError,
     clean_product_url,
     extract_source_parent_id,
@@ -84,6 +87,25 @@ def product_row(**overrides: object) -> dict:
 
 
 class KaufmannVariationParserTests(unittest.TestCase):
+    def test_empty_variation_requires_page_confirmation_before_unavailable(self):
+        client = KaufmannVariationClient(max_retries=0)
+        self.addCleanup(client.close)
+        parent = 'a' * 32
+        payload = {'status': 200, 'hasVariants': False, 'totalOptions': 0, 'options': {'color': []}}
+        response = Mock(status_code=200)
+        response.json.return_value = payload
+        url = 'https://www.kaufmann.dk/produkt/example'
+        for status in (404, 410):
+            with patch.object(client.session, 'get', side_effect=[response, Mock(status_code=status)]):
+                with self.assertRaises(KaufmannVariationUnavailable) as caught:
+                    client.fetch_payload(parent, product_url=url)
+            self.assertEqual(caught.exception.url, url)
+        live_page = Mock(status_code=200, text=f"productStore.setup('{parent}')")
+        with patch.object(client.session, 'get', side_effect=[response, live_page]):
+            current = client.fetch_payload(parent, product_url=url)
+        with self.assertRaises(KaufmannVariationParseError):
+            variation_rows_from_payload(current, parent, url)
+
     def test_active_color_maps_prices_and_exact_aarhus_stock(self) -> None:
         rows = variation_rows_from_payload(
             variation_payload(

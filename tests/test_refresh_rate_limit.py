@@ -34,8 +34,9 @@ class RefreshRateLimitTests(unittest.TestCase):
         response._content_consumed = True
         adapter = session.get_adapter(response.url)
         with patch.object(adapter, 'send', return_value=response) as send, patch('time.sleep') as sleep:
-            with self.assertRaisesRegex(refresh.StoreRateLimited, 'Retry-After=86400'):
+            with self.assertRaisesRegex(refresh.StoreRateLimited, 'Retry-After=86400') as caught:
                 session.get(response.url)
+            self.assertEqual(caught.exception.retry_after_seconds, 86400)
             self.assertEqual(send.call_count, 1)
             sleep.assert_not_called()
         session.close()
@@ -54,6 +55,17 @@ class RefreshRateLimitTests(unittest.TestCase):
         database.patch_row.assert_not_called()
         database.queue_history_observation.assert_not_called()
         scraper.session.close.assert_called_once()
+
+    def test_retry_after_date_and_invalid_header(self):
+        for value, expected in [('Wed, 21 Oct 2015 07:28:00 GMT', 1445412480), ('invalid', None)]:
+            response = requests.Response()
+            response.status_code = 429
+            response.headers['Retry-After'] = value
+            response._content_consumed = True
+            with patch('scrapers.source_http.time.time', return_value=0):
+                with self.assertRaises(refresh.StoreRateLimited) as caught:
+                    refresh.stop_on_source_rate_limit(response)
+            self.assertEqual(caught.exception.retry_after_seconds, expected)
 
     def test_rains_aborts_first_product_and_retains_existing_stock(self):
         database, scraper = Mock(), Mock()

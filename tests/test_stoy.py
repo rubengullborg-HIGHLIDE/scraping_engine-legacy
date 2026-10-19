@@ -3,6 +3,17 @@ from __future__ import annotations
 import unittest
 
 from scrapers.full_import.stoy import StoyScraper
+from scrapers.source_http import SourcePayloadError
+
+
+def inventory_html():
+    return ''.join(f'''
+      <div class="store-availability-drawer__store">
+        <h6 class="store-availability-drawer__name">{store} Store</h6>
+        <li class="store-availability-drawer__size is-unavailable">
+          <span class="store-availability-drawer__size-label">M</span>
+        </li>
+      </div>''' for store in ('Aarhus', 'Copenhagen'))
 
 
 class StoyScraperTests(unittest.TestCase):
@@ -14,18 +25,34 @@ class StoyScraperTests(unittest.TestCase):
                 "title": "Pants",
                 "price": 740000,
                 "compare_at_price": None,
-                "variants": [],
+                "variants": [{"id": 11, "title": "M"}],
             },
             """
               <meta property="og:price:currency" content="DKK">
               <script id="stape-product-data" type="application/json">{"metafields": {"custom": {}}}</script>
-            """,
+            """ + inventory_html(),
         )
 
         self.assertEqual(7400.0, row["current_price"])
         self.assertEqual("DKK", row["currency"])
         self.assertEqual("DK", row["raw"]["market_country"])
         self.assertEqual("DKK", row["raw"]["page_currency"])
+        self.assertFalse(row["aarhus_available"])
+
+    def test_missing_or_ambiguous_inventory_is_rejected(self):
+        html = inventory_html()
+        for broken in ('', html.replace('Copenhagen Store', 'Unknown Store'),
+                       html.replace('is-unavailable', ''),
+                       html.replace('is-unavailable', 'is-unavailable is-available'),
+                       html + html):
+            with self.subTest(html=broken), self.assertRaises(SourcePayloadError):
+                StoyScraper._page_data(broken)
+
+    def test_missing_expected_size_is_rejected(self):
+        with self.assertRaisesRegex(SourcePayloadError, 'Incomplete STOY inventory sizes'):
+            StoyScraper().product_to_row(
+                {'id': 1, 'variants': [{'id': 11, 'title': 'M'}, {'id': 12, 'title': 'L'}]},
+                '<meta property="og:price:currency" content="DKK">' + inventory_html())
 
     def test_product_row_rejects_non_dkk_market_price(self) -> None:
         with self.assertRaisesRegex(ValueError, "expected DKK, got EUR"):
