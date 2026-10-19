@@ -16,6 +16,8 @@ if str(ROOT) not in sys.path:
 
 from scripts.import_rains_products import SupabaseCatalogClient, env, load_dotenv
 
+from scripts.catalog_manifest import manifest_items, add_manifest_argument
+
 LOG = logging.getLogger("import_stoy_products")
 
 
@@ -31,7 +33,7 @@ def import_stoy_products(args: argparse.Namespace) -> int:
     scraper = StoyScraper()
     client = SupabaseCatalogClient(url, key) if not args.dry_run else None
     try:
-        summaries = [{"handle": item} for item in args.url] if args.url else scraper.discover_products(args.collection or MEN_COLLECTION_HANDLES)
+        summaries = [{"handle": item} for item in args.url] if args.url else manifest_items(args, "stoy", lambda: scraper.discover_products(args.collection or MEN_COLLECTION_HANDLES))
         summaries = summaries[args.offset :]
         if args.limit:
             summaries = summaries[: args.limit]
@@ -72,6 +74,7 @@ def import_stoy_products(args: argparse.Namespace) -> int:
 def parse_args() -> argparse.Namespace:
     load_dotenv(ROOT / ".env")
     parser = argparse.ArgumentParser(description="Full-import STOY men's clothing and footwear with in-store availability.")
+    add_manifest_argument(parser)
     parser.add_argument("--table", default=env("STOY_PRODUCTS_TABLE", "stoy_products"))
     parser.add_argument("--url", action="append", help="Import one STOY product URL.")
     parser.add_argument("--collection", action="append", help="Override default clothing + footwear discovery; may be repeated.")

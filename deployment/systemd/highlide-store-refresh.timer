@@ -1,10 +1,9 @@
 [Unit]
-Description=Run HIGHLIDE non-Kaufmann inventory refresh daily
+Description=Resume HIGHLIDE daily inventory cycle while idle
 
 [Timer]
-OnCalendar=*-*-* 08:15:00
-Persistent=true
-RandomizedDelaySec=15m
+OnBootSec=2min
+OnUnitInactiveSec=30s
 Unit=highlide-store-refresh.service
 
 [Install]

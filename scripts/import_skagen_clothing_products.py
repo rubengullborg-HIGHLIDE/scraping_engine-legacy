@@ -16,6 +16,8 @@ if str(ROOT) not in sys.path:
 
 from scripts.import_rains_products import SupabaseCatalogClient, env, load_dotenv
 
+from scripts.catalog_manifest import manifest_items, add_manifest_argument
+
 LOG = logging.getLogger("import_skagen_clothing_products")
 
 
@@ -35,7 +37,7 @@ def import_skagen_clothing_products(args: argparse.Namespace) -> int:
         summaries = (
             [{"handle": item, "_discovery_collections": []} for item in args.url]
             if args.url
-            else scraper.discover_products(args.collection)
+            else manifest_items(args, "skagen_clothing", lambda: scraper.discover_products(args.collection))
         )
         summaries = summaries[args.offset :]
         if args.limit:
@@ -149,6 +151,7 @@ def parse_args() -> argparse.Namespace:
 
     load_dotenv(ROOT / ".env")
     parser = argparse.ArgumentParser(description="Full-import Skagen Clothing men's clothing and exact store stock.")
+    add_manifest_argument(parser)
     parser.add_argument("--table", default=env("SKAGEN_CLOTHING_PRODUCTS_TABLE", "skagen_clothing_products"))
     parser.add_argument("--url", action="append", help="Import one product URL; linked colours are retained.")
     parser.add_argument("--collection", default=MEN_COLLECTION_HANDLE, help="Override the men's collection handle.")

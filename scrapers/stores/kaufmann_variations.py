@@ -8,7 +8,7 @@ from urllib.parse import quote, urlsplit, urlunsplit
 
 import requests
 from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
+from scrapers.source_http import SourceRetry, stop_on_source_rate_limit
 
 
 VARIATION_URL_TEMPLATE = "https://www.kaufmann.dk/widgets/product/variation/{source_parent_id}"
@@ -252,7 +252,7 @@ class KaufmannVariationClient:
         self.timeout_seconds = timeout_seconds
         self.session.headers.update(DEFAULT_HEADERS)
 
-        retry = Retry(
+        retry = SourceRetry(
             total=max_retries,
             connect=max_retries,
             read=max_retries,
@@ -270,6 +270,7 @@ class KaufmannVariationClient:
             source_parent_id=quote(str(source_parent_id), safe="")
         )
         response = self.session.get(url, timeout=self.timeout_seconds)
+        stop_on_source_rate_limit(response)
         if response.status_code in {404, 410}:
             raise KaufmannVariationUnavailable(response.status_code, url)
         response.raise_for_status()
@@ -294,6 +295,7 @@ class KaufmannVariationClient:
     def resolve_source_parent_id(self, product_url: str) -> str:
         canonical_url = clean_product_url(product_url)
         response = self.session.get(canonical_url, timeout=self.timeout_seconds)
+        stop_on_source_rate_limit(response)
         if response.status_code in {404, 410}:
             raise KaufmannVariationUnavailable(response.status_code, canonical_url)
         response.raise_for_status()

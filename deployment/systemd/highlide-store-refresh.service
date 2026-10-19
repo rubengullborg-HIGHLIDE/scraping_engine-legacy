@@ -1,5 +1,5 @@
 [Unit]
-Description=HIGHLIDE sequential non-Kaufmann inventory refresh
+Description=HIGHLIDE resumable inventory refresh for all stores
 Wants=network-online.target
 After=network-online.target
 
@@ -7,8 +7,8 @@ After=network-online.target
 Type=oneshot
 WorkingDirectory=/root/scraping_engine
 Environment=PYTHONUNBUFFERED=1
-ExecStart=/usr/bin/flock -w 43200 /tmp/highlide-inventory-refresh.lock /bin/bash /root/scraping_engine/scripts/run_store_refresh.sh --all
-TimeoutStartSec=20h
+ExecStart=/root/scraping_engine/.venv/bin/python /root/scraping_engine/scripts/run_inventory_batches.py --checkpoint /root/scraping_engine/logs/daily-inventory-cycle.json --scheduled
+TimeoutStartSec=90min
 Nice=10
 StandardOutput=append:/root/scraping_engine/logs/store_refresh.log
 StandardError=append:/root/scraping_engine/logs/store_refresh.log

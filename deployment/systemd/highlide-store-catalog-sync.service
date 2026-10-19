@@ -1,5 +1,5 @@
 [Unit]
-Description=HIGHLIDE sequential weekly non-Kaufmann catalog sync
+Description=HIGHLIDE resumable weekly non-Kaufmann catalog batches
 Wants=network-online.target
 After=network-online.target
 
@@ -7,8 +7,10 @@ After=network-online.target
 Type=oneshot
 WorkingDirectory=/root/scraping_engine
 Environment=PYTHONUNBUFFERED=1
-ExecStart=/usr/bin/flock -w 86400 /tmp/highlide-inventory-refresh.lock /bin/bash /root/scraping_engine/scripts/run_store_catalog_sync.sh --all
-TimeoutStartSec=40h
+ExecStart=/root/scraping_engine/.venv/bin/python /root/scraping_engine/scripts/run_catalog_batches.py --checkpoint /root/scraping_engine/logs/catalog-cycle.json
+TimeoutStartSec=14h
+KillMode=mixed
+TimeoutStopSec=45s
 Nice=10
 StandardOutput=append:/root/scraping_engine/logs/store_catalog_sync.log
 StandardError=append:/root/scraping_engine/logs/store_catalog_sync.log

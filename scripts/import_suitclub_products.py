@@ -16,6 +16,8 @@ if str(ROOT) not in sys.path:
 
 from scripts.import_rains_products import SupabaseCatalogClient, env, load_dotenv
 
+from scripts.catalog_manifest import manifest_items, add_manifest_argument
+
 LOG = logging.getLogger("import_suitclub_products")
 
 
@@ -42,11 +44,21 @@ def import_suitclub_products(args: argparse.Namespace) -> int:
                 else:
                     LOG.warning("Skipping out-of-scope SuitClub product: %s (%s)", product.get("title"), product.get("type"))
         else:
-            summaries = scraper.discover_products(args.collection or DEFAULT_COLLECTION_HANDLES)
+            summaries = manifest_items(args, "suitclub", lambda: scraper.discover_products(args.collection or DEFAULT_COLLECTION_HANDLES))
 
         summaries = summaries[args.offset :]
         if args.limit:
             summaries = summaries[: args.limit]
+        if getattr(args, 'catalog_manifest', None) and not args.discover_only:
+            fresh_products = []
+            for index, summary in enumerate(summaries):
+                if index and not args.no_delay:
+                    time.sleep(random.uniform(args.min_delay, args.max_delay))
+                product = scraper.fetch_product(summary['handle'])
+                product['_discovery_collections'] = summary.get('_discovery_collections') or []
+                if scraper.is_catalog_product(product):
+                    fresh_products.append(product)
+            summaries = fresh_products
         LOG.info("Selected %s SuitClub clothing and footwear products.", len(summaries))
 
         if args.discover_only:
@@ -116,6 +128,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Full-import SuitClub men's clothing and footwear with exact store stock."
     )
+    add_manifest_argument(parser)
     parser.add_argument("--table", default=env("SUITCLUB_PRODUCTS_TABLE", "suitclub_products"))
     parser.add_argument("--url", action="append", help="Import one in-scope SuitClub product URL.")
     parser.add_argument(

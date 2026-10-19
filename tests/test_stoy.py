@@ -17,6 +17,19 @@ def inventory_html():
 
 
 class StoyScraperTests(unittest.TestCase):
+    def test_shopify_xtra_large_matches_drawer_xl_without_losing_stock(self):
+        product = {'id': 1, 'price': 10000, 'variants': [{'id': 11, 'title': 'XTRA LARGE'}]}
+        html = '<meta property="og:price:currency" content="DKK">' + inventory_html().replace('>M<', '>XL<').replace('is-unavailable', 'is-available')
+        row = StoyScraper().product_to_row(product, html)
+        self.assertEqual('XL', row['webshop_sizes'][0]['size'])
+        self.assertTrue(row['local_inventory']['stores']['stoy-aarhus']['sizes']['XL']['available'])
+
+    def test_size_alias_collision_is_rejected(self):
+        product = {'id': 1, 'variants': [{'id': 11, 'title': 'XTRA LARGE'}, {'id': 12, 'title': 'XL'}]}
+        html = '<meta property="og:price:currency" content="DKK">' + inventory_html().replace('>M<', '>XL<')
+        with self.assertRaisesRegex(SourcePayloadError, 'duplicate STOY variant sizes'):
+            StoyScraper().product_to_row(product, html)
+
     def test_product_row_accepts_dkk_and_converts_shopify_subunits(self) -> None:
         row = StoyScraper().product_to_row(
             {

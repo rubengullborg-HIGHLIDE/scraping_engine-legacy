@@ -16,6 +16,8 @@ if str(ROOT) not in sys.path:
 
 from scripts.import_rains_products import SupabaseCatalogClient, env, load_dotenv
 
+from scripts.catalog_manifest import manifest_items, add_manifest_argument
+
 LOG = logging.getLogger("import_cejf_products")
 
 
@@ -44,11 +46,21 @@ def import_cejf_products(args: argparse.Namespace) -> int:
                 else:
                     LOG.warning("Skipping CEJF product without the men tag: %s", product.get("title"))
         else:
-            products = scraper.discover_products(args.collection or MEN_COLLECTION_HANDLE)
+            products = manifest_items(args, "cejf", lambda: scraper.discover_products(args.collection or MEN_COLLECTION_HANDLE))
 
         products = products[args.offset :]
         if args.limit:
             products = products[: args.limit]
+        if getattr(args, 'catalog_manifest', None) and not args.discover_only:
+            fresh_products = []
+            for index, summary in enumerate(products):
+                if index and not args.no_delay:
+                    time.sleep(random.uniform(args.min_delay, args.max_delay))
+                product = scraper.fetch_product(summary['handle'])
+                product['_discovery_collections'] = summary.get('_discovery_collections') or []
+                if scraper.is_mens_product(product):
+                    fresh_products.append(product)
+            products = fresh_products
         LOG.info("Selected %s CEJF men's products.", len(products))
 
         if args.discover_only:
@@ -88,6 +100,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Full-import CEJF men's clothing with published webshop availability."
     )
+    add_manifest_argument(parser)
     parser.add_argument("--table", default=env("CEJF_PRODUCTS_TABLE", "cejf_products"))
     parser.add_argument("--url", action="append", help="Import one CEJF men's product URL.")
     parser.add_argument("--collection", default=MEN_COLLECTION_HANDLE, help="Override the men's collection handle.")

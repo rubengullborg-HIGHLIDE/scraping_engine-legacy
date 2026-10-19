@@ -282,6 +282,8 @@ def reconcile_catalog(
     *,
     miss_confirmations: int,
     min_seen_ratio: float,
+    seen_product_ids: Optional[set[int]] = None,
+    observed_at: Optional[dict[int, str]] = None,
 ) -> CatalogStats:
     spec = STORE_SPECS[store_key]
     stats = CatalogStats(rows_before=len(rows_before), rows_after=len(rows_after))
@@ -295,7 +297,8 @@ def reconcile_catalog(
     seen_rows = [
         row
         for row in rows_after
-        if parse_timestamp(row.get("updated_at")) >= import_started_at
+        if (int(row['id']) in seen_product_ids if seen_product_ids is not None
+            else parse_timestamp(row.get("updated_at")) >= import_started_at)
     ]
     seen_ids = {int(row["id"]) for row in seen_rows}
     stats.seen = len(seen_rows)
@@ -308,14 +311,18 @@ def reconcile_catalog(
 
     # AXEL/qUINT publish explicit colour availability, including discontinued
     # colours still listed in the sitemap. Being seen must not reactivate these.
-    active_seen_ids = seen_ids
+    active_seen_ids = {
+        int(row['id']) for row in seen_rows
+        if observed_at is None or parse_timestamp(row.get('updated_at')) <=
+        parse_timestamp(observed_at.get(int(row['id'])))
+    }
     if store_key in {"axel", "quint"}:
         unavailable_ids = {
             int(row["id"]) for row in seen_rows
             if row.get("publication_status") == "unavailable"
             and row.get("status_reason") == "source_available_false"
         }
-        active_seen_ids = seen_ids - unavailable_ids
+        active_seen_ids -= unavailable_ids
         stats.reactivated = sum(
             before_by_id.get(row_id, {}).get("publication_status") in {"missing", "unavailable"}
             for row_id in active_seen_ids
@@ -358,6 +365,12 @@ def reconcile_catalog(
     for row in rows_after:
         row_id = int(row["id"])
         if row_id in seen_ids or row.get("publication_status") == "missing":
+            continue
+        if seen_product_ids is not None and (
+            row_id not in before_ids or parse_timestamp(row.get('updated_at')) >= import_started_at
+        ):
+            # A different import/refresh observed this row while the cycle yielded.
+            # Do not turn that newer observation into an absence.
             continue
         misses = int(row.get("consecutive_catalog_misses") or 0) + 1
         if misses < miss_confirmations:

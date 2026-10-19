@@ -19,6 +19,8 @@ from scrapers.full_import.axel_quint import AxelQuintScraper, SourceUnavailable
 from scrapers.source_http import SourcePayloadError, StoreRateLimited
 from scripts.import_rains_products import SupabaseCatalogClient, env, load_dotenv
 
+from scripts.catalog_manifest import manifest_items, add_manifest_argument
+
 LOG = logging.getLogger(__name__)
 
 
@@ -86,7 +88,7 @@ def import_products(store, args, scraper_factory=None):
             if not completed.issubset(urls):
                 raise ValueError('Checkpoint completed pages are outside its manifest')
         else:
-            urls = sorted({scraper.clean_url(url) for url in args.url}) if args.url else scraper.discover_product_urls()
+            urls = sorted({scraper.clean_url(url) for url in args.url}) if args.url else manifest_items(args, store, lambda: scraper.discover_product_urls())
             if checkpoint_path:
                 if getattr(args, 'seed_import_log', None):
                     completed = committed_salling_pages(args.seed_import_log).intersection(urls)
@@ -275,6 +277,7 @@ def import_products(store, args, scraper_factory=None):
 
 def parse_args(store, argv=None):
     parser = argparse.ArgumentParser(description=f'Import {store} clothing/footwear and published shop inventory.')
+    add_manifest_argument(parser)
     parser.add_argument('--url', action='append', default=[])
     parser.add_argument('--limit', type=int)
     parser.add_argument('--offset', type=int, default=0)

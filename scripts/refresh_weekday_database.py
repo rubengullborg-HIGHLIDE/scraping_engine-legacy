@@ -11,17 +11,18 @@ LOG = logging.getLogger(__name__)
 SPEC = SimpleNamespace(key='weekday', table='weekday_products')
 
 
-def list_rows(database):
-    # Weekday has observation timestamps, not the generic publication lifecycle.
+def list_rows(database, *, include_unavailable=False):
     columns = ('id', 'source_parent_id', 'source_color_id', 'canonical_url',
-               *sorted(PRICE_FIELDS | INVENTORY_FIELDS))
+               'inventory_checked_at', 'updated_at',
+               *sorted((PRICE_FIELDS | INVENTORY_FIELDS) - {'price_observed_at', 'inventory_observed_at'}))
     rows = []
     while True:
         start = len(rows)
         response = database.session.get(
             database._table_url(SPEC.table),
-            params={'select': ','.join(columns), 'aarhus_available': 'eq.true',
-                    'order': 'inventory_observed_at.asc,id.asc'},
+            params={'select': ','.join(columns),
+                    **({} if include_unavailable else {'aarhus_available': 'eq.true'}),
+                    'order': 'inventory_checked_at.asc,id.asc'},
             headers={'Range': f'{start}-{start + 999}'}, timeout=database.timeout_seconds,
         )
         response.raise_for_status()
@@ -31,10 +32,10 @@ def list_rows(database):
             return rows
 
 
-def refresh_store(database, args):
+def refresh_store(database, args, *, existing_rows=None, stop_on_block=False):
     from scripts.refresh_store_inventory import RefreshStats, history_payload
 
-    rows = list_rows(database)[args.offset:]
+    rows = (list_rows(database) if existing_rows is None else existing_rows)[args.offset:]
     if args.limit:
         rows = rows[:args.limit]
     stats = RefreshStats()
@@ -56,6 +57,12 @@ def refresh_store(database, args):
     finally:
         client.close()
 
+    if stop_on_block and any(result['status'] == 'blocked' for result in results):
+        from scrapers.source_http import StoreRateLimited
+        error = StoreRateLimited('Weekday blocked; defer remaining batches')
+        error.retry_after_seconds = 86400
+        raise error
+
     # Validate the whole selected sample before persisting any inventory, so an
     # empty/broken upstream response cannot erase most of the stored catalogue.
     updated, guards = apply_observations(rows, rows, results)
@@ -69,14 +76,17 @@ def refresh_store(database, args):
             stats.failed += 1
             LOG.warning('Weekday %s: %s', existing['source_color_id'],
                         '; '.join(result['warnings'] + result['errors'] + guards))
+            continue
         if not patch:
             continue
+        checked = min(patch.pop('price_observed_at'), patch.pop('inventory_observed_at'))
+        patch.update(inventory_checked_at=checked, updated_at=checked, scraped_at=checked)
         if not args.dry_run:
             database.patch_row(SPEC, existing['id'], patch)
             # Never record retained old inventory as a new stock observation.
-            if not args.no_history and 'inventory_observed_at' in patch:
+            if not args.no_history:
                 database.queue_history_observation(history_payload(
-                    SPEC, existing, current, checked_at=patch['inventory_observed_at'],
+                    SPEC, existing, current, checked_at=checked,
                     refresh_status='ok',
                 ))
                 stats.history_observations += 1

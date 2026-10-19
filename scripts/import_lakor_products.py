@@ -15,6 +15,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from scripts.catalog_manifest import manifest_items, add_manifest_argument
+
 LOG = logging.getLogger("import_lakor_products")
 
 
@@ -69,7 +71,7 @@ def import_lakor_products(args: argparse.Namespace) -> int:
     scraper = LakorScraper()
     client = SupabaseCatalogClient(supabase_url, supabase_key) if not args.dry_run else None
     try:
-        summaries = [{"handle": url} for url in args.url] if args.url else scraper.discover_products(args.collection or CLOTHING_COLLECTION_HANDLE)
+        summaries = [{"handle": url} for url in args.url] if args.url else manifest_items(args, "lakor", lambda: scraper.discover_products(args.collection or CLOTHING_COLLECTION_HANDLE))
         summaries = summaries[args.offset :]
         if args.limit:
             summaries = summaries[: args.limit]
@@ -122,6 +124,7 @@ def import_lakor_products(args: argparse.Namespace) -> int:
 def parse_args() -> argparse.Namespace:
     load_dotenv(ROOT / ".env")
     parser = argparse.ArgumentParser(description="Full-import LAKOR clothing and public local-store availability.")
+    add_manifest_argument(parser)
     parser.add_argument("--table", default=env("LAKOR_PRODUCTS_TABLE", "lakor_products"))
     parser.add_argument("--url", action="append", help="Import one product URL.")
     parser.add_argument("--collection", help="Override the default all-clothing collection handle.")

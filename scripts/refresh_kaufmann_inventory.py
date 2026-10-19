@@ -27,6 +27,7 @@ from scrapers.stores.kaufmann_variations import (
 
 
 LOG = logging.getLogger("refresh_kaufmann_inventory")
+from scrapers.source_http import StoreRateLimited
 
 DYNAMIC_PRODUCT_COLUMNS = (
     "current_price",
@@ -49,7 +50,8 @@ DYNAMIC_PRODUCT_COLUMNS = (
 )
 
 SNAPSHOT_COLUMNS = (
-    "kaufmann_product_id",
+    "store",
+    "product_id",
     "state_hash",
     "observed_from",
     "observed_through",
@@ -58,7 +60,9 @@ SNAPSHOT_COLUMNS = (
     "refresh_status",
     "current_price",
     "list_price",
-    "aarhus_inventory",
+    "local_inventory",
+    "local_total_stock",
+    "local_available",
     "aarhus_total_stock",
     "aarhus_available",
     "source_available",
@@ -304,7 +308,8 @@ def snapshot_payload(
     refresh_status: str = "ok",
 ) -> dict[str, Any]:
     payload = {
-        "kaufmann_product_id": product_row["id"],
+        "store": "kaufmann",
+        "product_id": product_row["id"],
         # The database trigger replaces this placeholder with a fingerprint of
         # the stored state before deciding whether to insert or extend an interval.
         "state_hash": "pending",
@@ -316,8 +321,10 @@ def snapshot_payload(
         "updated_at": checked_at,
         "current_price": scraped_row.get("current_price"),
         "list_price": scraped_row.get("list_price"),
-        "aarhus_inventory": scraped_row.get("aarhus_inventory")
+        "local_inventory": scraped_row.get("aarhus_inventory")
         or EMPTY_AARHUS_INVENTORY,
+        "local_total_stock": scraped_row.get("aarhus_total_stock") or 0,
+        "local_available": bool(scraped_row.get("aarhus_available")),
         "aarhus_total_stock": scraped_row.get("aarhus_total_stock") or 0,
         "aarhus_available": bool(scraped_row.get("aarhus_available")),
         "source_available": scraped_row.get("source_available"),
@@ -446,14 +453,14 @@ def unknown_source_color_ids(
     return returned - known
 
 
-def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
+def refresh_kaufmann_inventory(args: argparse.Namespace, *, client_override=None, result_out=None) -> int:
     load_dotenv(ROOT / ".env")
     products_table = args.products_table or env(
         "KAUFMANN_PRODUCTS_TABLE", "kaufmann_products"
     )
     history_table = args.history_table or env(
-        "KAUFMANN_INVENTORY_HISTORY_TABLE",
-        "kaufmann_inventory_history",
+        "STORE_INVENTORY_HISTORY_TABLE",
+        "store_inventory_history",
     )
     runs_table = args.runs_table or env(
         "KAUFMANN_INVENTORY_REFRESH_RUNS_TABLE",
@@ -462,10 +469,10 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
     supabase_url = env("SUPABASE_URL")
     supabase_key = env("SUPABASE_SECRET_KEY") or env("SUPABASE_SERVICE_ROLE_KEY")
 
-    if not args.dry_run and (not supabase_url or not supabase_key):
+    if client_override is None and not args.dry_run and (not supabase_url or not supabase_key):
         raise RuntimeError("SUPABASE_URL and SUPABASE_SECRET_KEY are required for writes.")
 
-    client = (
+    client = client_override if client_override is not None else (
         SupabaseKaufmannRefreshClient(supabase_url, supabase_key)
         if supabase_url and supabase_key
         else None
@@ -752,6 +759,10 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
                             )
                         )
                     unavailable_variants += 1
+            except StoreRateLimited:
+                failed_pages += 1
+                stopped_early = True
+                raise
             except Exception as exc:
                 failed_pages += 1
                 LOG.exception("Failed to refresh Kaufmann product page %s", canonical_url)
@@ -837,6 +848,10 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
             args.new_variant_candidates_output,
         )
 
+    if result_out is not None:
+        result_out.update(pages=pages_processed, failed=failed_pages,
+                          unavailable=unavailable_variants, candidates=sorted(new_variant_candidate_urls))
+
     LOG.info(
         "Kaufmann refresh complete. refreshed_variants=%s unavailable_variants=%s "
         "missing_variants=%s skipped_new_variants=%s failed_pages=%s "
@@ -852,7 +867,7 @@ def refresh_kaufmann_inventory(args: argparse.Namespace) -> int:
     return 1 if failed_pages else 0
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args(argv=None) -> argparse.Namespace:
     load_dotenv(ROOT / ".env")
     parser = argparse.ArgumentParser(
         description=(
@@ -869,8 +884,8 @@ def parse_args() -> argparse.Namespace:
         "--snapshots-table",
         dest="history_table",
         default=env(
-            "KAUFMANN_INVENTORY_HISTORY_TABLE",
-            "kaufmann_inventory_history",
+            "STORE_INVENTORY_HISTORY_TABLE",
+            "store_inventory_history",
         ),
         help=(
             "Change-based Kaufmann history table. --snapshots-table remains as "
@@ -937,7 +952,7 @@ def parse_args() -> argparse.Namespace:
         default=env("LOG_LEVEL", "INFO"),
         choices=["DEBUG", "INFO", "WARNING", "ERROR"],
     )
-    arguments = parser.parse_args()
+    arguments = parser.parse_args(argv)
     if arguments.min_delay < 0 or arguments.max_delay < arguments.min_delay:
         parser.error("delay values must satisfy 0 <= min-delay <= max-delay")
     if arguments.request_timeout <= 0:

@@ -52,17 +52,18 @@ class WeekdayDailyTests(unittest.TestCase):
         self.assertNotIn('name', payload)
         self.assertNotIn('raw', payload)
         self.assertNotIn('refresh_status', payload)
-        self.assertIn('inventory_observed_at', payload)
+        self.assertIn('inventory_checked_at', payload)
+        self.assertEqual(payload['inventory_checked_at'], payload['updated_at'])
+        self.assertNotIn('price_observed_at', payload)
+        self.assertNotIn('inventory_observed_at', payload)
         self.assertEqual(stats.history_observations, 1)
         self.assertEqual(self.db.queue_history_observation.call_args.args[0]['store'], 'weekday')
         self.client.close.assert_called_once()
 
-    def test_blocked_inventory_retains_stock_but_saves_valid_price(self):
+    def test_blocked_inventory_retains_entire_previous_observation(self):
         self.client.fetch_inventory.side_effect = Blocked('HTTP 403')
         stats = self.run_refresh()
-        payload = self.db.patch_row.call_args.args[2]
-        self.assertIn('price_observed_at', payload)
-        self.assertNotIn('local_inventory', payload)
+        self.db.patch_row.assert_not_called()
         self.assertEqual(stats.failed, 1)
         self.db.queue_history_observation.assert_not_called()
 
@@ -72,7 +73,7 @@ class WeekdayDailyTests(unittest.TestCase):
         ] * 100
         stats = self.run_refresh()
         self.assertEqual(stats.failed, 1)
-        self.assertNotIn('inventory_observed_at', self.db.patch_row.call_args.args[2])
+        self.db.patch_row.assert_not_called()
 
     def test_dry_run_never_writes(self):
         self.args.dry_run = True

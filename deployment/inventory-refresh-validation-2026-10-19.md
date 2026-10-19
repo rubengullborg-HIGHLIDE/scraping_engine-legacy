@@ -137,3 +137,52 @@ avoid another host but share resources; separate droplets isolate workloads
 and add operational cost. Both require ownership/locking changes: the current
 runner holds one global host lock and must not be launched as a multi-worker
 system as-is. Magasin access from the actual droplet remains unverified here.
+
+## STOY droplet smoke-test follow-up
+
+The Cow Dancer Mesh Tee product reproduced the reported mismatch locally:
+Shopify returned S, M, L, XTRA LARGE, while both physical-store drawers returned
+S, M, L, XL. All four sizes were present; the completeness guard was comparing
+two source spellings for the same size. The parser now maps this verified
+Shopify alias to XL for validation and webshop-size output. Missing-size checks
+remain strict, and duplicate sizes introduced by normalization are rejected.
+The captured live payload parsed at DKK 690 with M/L available in Aarhus and
+S/XL unavailable. This is a point-in-time source observation, not a database
+write. The full offline suite passed 269 tests after the fix.
+
+## Unified Kaufmann and Weekday batches
+
+Both inventory and catalog batch registries now contain 14 stores. The shared
+inventory service runs one bounded batch per tick; the catalog service keeps
+its existing per-store tick logic with specialized Kaufmann/Weekday workers.
+Legacy Kaufmann timers are disabled by the enable script.
+
+Validation: 280 offline tests passed, including shared Kaufmann history
+routing, first-missing-colour behavior without false stock history, Weekday
+partial-observation retention and timestamp-based replay protection, shared
+registries, and special catalog journal recovery without repeating source
+checks/counters. All 71 Python source files compiled in memory; shell syntax
+checks passed. Native systemd execution was not available on this macOS host.
+The Weekday catalog-run constraint change accepted Weekday and Kaufmann records
+on a temporary clone of the production run table, then rolled back. No live
+schema or product/history/run data was changed.
+
+Deployment prerequisites remain: commit/push code, apply
+`20261019133636_weekday_catalog_batch_runs.sql` and
+`20261019134922_unify_inventory_observations.sql`, install both updated shared
+service/timer pairs, and run bounded droplet pilots. Backstage still needs its
+Kaufmann health lookup switched to the shared daily cycle records, and its
+store registry updated. The new runners use shared inventory history and do not create duplicate
+per-batch or separate Kaufmann daily operational records.
+
+### History unification validation
+
+The unification migration passed against temporary copies on the connected
+PostgreSQL database, ending in ROLLBACK. Twenty existing Kaufmann intervals
+were copied and compared across all retained fields, timestamps and counts.
+Replaying the latest identical observation created no duplicate interval and
+left the observation count unchanged. The compatibility view rejected write
+access for service_role. Weekday accepted exact replay and rejected stale and
+incomplete updates. Live tables, schemas and permissions were not changed.
+The full migration has not been applied; its full-volume duration is unmeasured.
+The offline suite remains 280 passing tests.

@@ -999,3 +999,28 @@ Until then, treat size availability on multi-color products as best-effort.
 - Store raw/debug data only when actively debugging; keep long-term history narrow.
 - Use UTC timestamps in the database.
 - Avoid schema churn in the frontend-facing `products` table unless the frontend is updated with it.
+
+### Resumable weekly non-Kaufmann catalog cycles
+
+`run_catalog_batches.py` is the systemd catalog entry point. It freezes discovery
+with `catalog_manifest.py`, advances only successful batches, and releases the
+shared inventory lock between them. All twelve shared catalog stores participate;
+Kaufmann retains its separate weekly runner. Do not add an outer flock to this
+service. Do not reconcile absence from a partial manifest or count intervening
+daily inventory timestamps as catalog observations. Keep the checkpoint and its
+manifest directory together. Refer to the October 19 follow-up in
+`deployment/digitalocean.md` for scheduling, retries and recovery limits.
+
+### Unified store batches (supersedes separate Kaufmann scheduling)
+
+Both batch runners now include Kaufmann and Weekday, for 14 stores including
+Magasin. After `20261019134922_unify_inventory_observations.sql`, Kaufmann and
+Weekday write shared `store_inventory_history`. Weekday saves price and stock
+together using `inventory_checked_at`, `scraped_at`, and `updated_at`. `run_special_catalog_batch.py`
+provides journaled catalog batches for both; do not apply generic catalog-miss
+reconciliation to them. Daily operational cycles use the shared run table,
+with Kaufmann history copied into the shared table without losing interval
+counts or lifecycle fields. The old name is a read-only compatibility view;
+`kaufmann_inventory_history_archive` is the frozen original backup.
+The shared timers replace both legacy Kaufmann timers. Weekday catalog tracking
+requires `20261019133636_weekday_catalog_batch_runs.sql` before deployment.

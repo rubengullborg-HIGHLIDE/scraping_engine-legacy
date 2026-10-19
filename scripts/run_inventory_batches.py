@@ -24,6 +24,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts import refresh_store_inventory as refresh
+from scripts import special_store_batches as special
+
+SPECS = {**refresh.STORE_SPECS, **special.SPECS}
 
 LOG = logging.getLogger(__name__)
 
@@ -88,11 +91,19 @@ def put_run(database, payload):
 
 
 class BatchInventoryClient(refresh.SupabaseInventoryClient):
+    def list_rows(self, spec):
+        if spec.key in special.SPECS:
+            return special.read_rows(self, spec.key)
+        return super().list_rows(spec)
+
     def patch_row(self, spec, row_id, payload):
         # Refuse stale journal replay if another writer ran after interruption.
+        guard = {'updated_at': f"lte.{payload['updated_at']}"} if payload.get('updated_at') else {}
+        if not guard:
+            raise ValueError('Observation timestamp required for journal replay')
         response = self.session.patch(
             self._table_url(spec.table),
-            params={'id': f'eq.{row_id}', 'updated_at': f"lte.{payload['updated_at']}", 'select': 'id'},
+            params={'id': f'eq.{row_id}', **guard, 'select': 'id'},
             headers={'Prefer': 'return=representation'}, json=payload,
             timeout=self.timeout_seconds,
         )
@@ -125,7 +136,7 @@ def commit(database, path, state):
     journal = state['journal']
     store = journal['store']
     for patch in journal['patches']:
-        database.patch_row(refresh.STORE_SPECS[store], patch['id'], patch['payload'])
+        database.patch_row(SPECS[store], patch['id'], patch['payload'])
     # Replay the exact observations, including their original UTC timestamps.
     # The existing history trigger merges repeated identical observations.
     for observation in journal['history']:
@@ -134,7 +145,7 @@ def commit(database, path, state):
     # Build the next checkpoint separately; a failed run write must not advance it.
     next_state = copy.deepcopy(state)
     job = next_state['jobs'][store].pop(0)
-    completed = {patch['id'] for patch in journal['patches']}
+    completed = special.completed_ids(store, journal['patches'])
     remaining = [row for row in job['rows'] if row['id'] not in completed]
     if remaining:
         job.update(rows=remaining, retry_at=max(job['retry_at'], time.time() + state['retry_seconds']),
@@ -198,7 +209,8 @@ def process_cycle(database, path, state, args, max_batches):
         error = None
         LOG.info('Starting %s batch %s: %s rows', store, job['id'], len(job['rows']))
         try:
-            stats = refresh.STORE_REFRESHERS[store](staged, args)
+            stats = (special.run(staged, args) if store in special.SPECS
+                     else refresh.STORE_REFRESHERS[store](staged, args))
         except Exception as exc:
             error = f'{type(exc).__name__}: {exc}'
             LOG.exception('%s batch failed; retaining uncommitted rows for retry', store)
@@ -212,10 +224,12 @@ def process_cycle(database, path, state, args, max_batches):
                     pending['retry_at'] = time.time() + cooldown
         patch_ids = [patch['id'] for patch in staged.patches]
         history_ids = [entry['product_id'] for entry in staged.history]
-        if (len(set(patch_ids)) != len(patch_ids) or sorted(patch_ids) != sorted(history_ids)
-                or any(entry['store'] != store for entry in staged.history)):
+        valid_history = (set(history_ids).issubset(patch_ids) if store in special.SPECS
+                         else sorted(patch_ids) == sorted(history_ids))
+        if (len(set(patch_ids)) != len(patch_ids) or len(set(history_ids)) != len(history_ids) or not valid_history
+                or any(entry.get('store') != store for entry in staged.history)):
             raise ValueError('Each committed row must have exactly one history observation')
-        incomplete = len(staged.patches) < len(job['rows'])
+        incomplete = len(special.completed_ids(store, staged.patches)) < len(job['rows'])
         result = {'status': 'partial' if error or stats.failed or stats.skipped or incomplete else 'succeeded',
                   'stores_completed': 0 if error else 1, 'failed_stores': int(error is not None),
                   'pages_processed': stats.pages, 'updated_products': len(staged.patches) - stats.unavailable if not error else 0,
@@ -234,12 +248,13 @@ def process_cycle(database, path, state, args, max_batches):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--store', action='append', required=True, choices=list(refresh.STORE_SPECS))
+    parser.add_argument('--store', action='append', choices=list(SPECS), help='Repeat to select stores; defaults to all 14.')
     parser.add_argument('--checkpoint', type=Path, required=True)
     parser.add_argument('--batch-pages', type=int, default=20)
     parser.add_argument('--max-batches', type=int, default=0, help='Stop after this many batches; 0 runs all due work.')
     parser.add_argument('--retry-seconds', type=int, default=3600)
     parser.add_argument('--new-cycle', action='store_true', help='Start a fresh snapshot only after the previous cycle completed.')
+    parser.add_argument('--scheduled', action='store_true', help='Resume one batch; start a new cycle when complete and 24 hours old.')
     parser.add_argument('--source-transport', choices=('requests', 'system-curl'), default='system-curl')
     options = parser.parse_args(argv)
     if options.batch_pages < 1 or options.max_batches < 0 or options.retry_seconds < 1:
@@ -250,20 +265,29 @@ def main(argv=None):
     key = refresh.env('SUPABASE_SECRET_KEY') or refresh.env('SUPABASE_SERVICE_ROLE_KEY')
     if not url or not key:
         raise RuntimeError('SUPABASE_URL and Supabase secret credentials are required')
-    stores = list(dict.fromkeys(options.store))
+    stores = list(dict.fromkeys(options.store or SPECS))
     with open('/tmp/highlide-inventory-refresh.lock', 'a') as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            if options.scheduled:
+                return 0
+            raise
         database = BatchInventoryClient(url, key, history_table=args.history_table,
             runs_table=args.runs_table, timeout_seconds=args.supabase_timeout, max_retries=args.max_retries)
         try:
             path = options.checkpoint.resolve()
             state = json.loads(path.read_text()) if path.exists() else None
-            identity = {'version': 2, 'url': url.rstrip('/'), 'stores': stores,
+            identity = {'version': 3, 'url': url.rstrip('/'), 'stores': stores,
                         'history_table': args.history_table, 'runs_table': args.runs_table,
                         'batch_pages': options.batch_pages, 'retry_seconds': options.retry_seconds,
                         'source_transport': options.source_transport}
             if state and any(state.get(key) != value for key, value in identity.items()):
                 raise ValueError('Checkpoint configuration differs; resume with its original configuration')
+            if options.scheduled and state and not state['journal'] and not any(state['jobs'].values()):
+                if time.time() < datetime.fromisoformat(state['started_at']).timestamp() + 86400:
+                    return 0
+                state = None
             if state and options.new_cycle:
                 if state['journal'] or any(state['jobs'].values()):
                     raise ValueError('Cannot replace an unfinished cycle')
@@ -273,11 +297,12 @@ def main(argv=None):
                          'cycle_id': str(uuid.uuid4()), 'started_at': now(),
                          'totals': dict.fromkeys(COUNTERS, 0), 'batches': [], 'active_batch': None}
                 for store in stores:
-                    rows = database.list_rows(refresh.STORE_SPECS[store])
+                    rows = database.list_rows(SPECS[store])
                     state['jobs'][store] = [{'id': str(uuid.uuid4()), 'rows': batch, 'retry_at': 0}
                                             for batch in batches(store, rows, options.batch_pages)]
                 save(path, state)
-            return run_cycle(database, path, state, args, options.max_batches)
+            return_code = run_cycle(database, path, state, args, 1 if options.scheduled else options.max_batches)
+            return 0 if options.scheduled else return_code
         finally:
             database.close()
 

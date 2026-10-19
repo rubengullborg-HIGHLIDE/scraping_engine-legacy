@@ -1,6 +1,6 @@
 # DigitalOcean Deployment
 
-This guide deploys HIGHLIDE's sequential inventory refresh jobs on a Linux droplet.
+This guide deploys HIGHLIDE's resumable daily inventory and weekly catalog cycles on a Linux droplet. The October 19 unified-store follow-up below supersedes the legacy separate Kaufmann schedules.
 
 ### October 19 safety and compatibility changes
 
@@ -197,16 +197,12 @@ Kaufmann refresh complete. refreshed_variants=...
 ## 6. Install Systemd Timer
 
 ```bash
-sudo cp deployment/systemd/highlide-kaufmann-refresh.service /etc/systemd/system/
-sudo cp deployment/systemd/highlide-kaufmann-refresh.timer /etc/systemd/system/
-sudo cp deployment/systemd/highlide-kaufmann-weekly-sweep.service /etc/systemd/system/
-sudo cp deployment/systemd/highlide-kaufmann-weekly-sweep.timer /etc/systemd/system/
 sudo cp deployment/systemd/highlide-store-refresh.service /etc/systemd/system/
 sudo cp deployment/systemd/highlide-store-refresh.timer /etc/systemd/system/
 sudo cp deployment/systemd/highlide-store-catalog-sync.service /etc/systemd/system/
 sudo cp deployment/systemd/highlide-store-catalog-sync.timer /etc/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl enable --now highlide-kaufmann-refresh.timer highlide-kaufmann-weekly-sweep.timer highlide-store-refresh.timer highlide-store-catalog-sync.timer
+bash scripts/continual_scraping_on.sh
 ```
 
 After the systemd unit files have been installed once, all continual scraping
@@ -327,13 +323,13 @@ where store = 'stoy'
   and product_id = 1
 order by observed_through desc;
 ```
-## Resumable inventory batches (opt-in; not deployed)
+## Resumable inventory batches (manual pilot and scheduled modes)
 
 `scripts/run_inventory_batches.py` provides one durable refresh cycle for the
-twelve stores registered in `STORE_SPECS`: the eight original Shopify stores,
-AXEL, qUINT, Salling and Magasin. Kaufmann and Weekday still use their existing
-runners. This is a single-host step toward the shared scheduler, not the
-continuous service or multi-droplet queue yet.
+fourteen stores: the eight original Shopify stores, AXEL, qUINT, Salling,
+Magasin, Kaufmann and Weekday. Store-specific adapters retain their observation
+rules and history destinations. This remains a single-host scheduler, not a
+multi-droplet queue.
 
 From the repository root, a bounded pilot after deployment is:
 
@@ -444,3 +440,192 @@ Validation:
 .venv/bin/python -m unittest discover -s tests -p 'test_*.py'
 .venv/bin/python scripts/run_inventory_batches.py --help
 ```
+
+## Resumable weekly catalog service (October 19 follow-up)
+
+The checked-in `highlide-store-catalog-sync.service` now invokes
+`scripts/run_catalog_batches.py` directly. **Do not wrap this runner in flock**:
+its coordinator lock protects its checkpoint, and it acquires the shared
+inventory lock separately for each store batch. The legacy
+`run_store_catalog_sync.sh --all` command still performs an uninterrupted full
+pass; it is retained for manual use, not used by the updated service.
+
+Each catalog invocation processes at most one batch of 10 discovery entries per due
+store, rotating the starting store across interruptions. Importers can follow
+linked colour families, so 10 entries is not a strict product/request cap.
+The inventory lock is released between batches, with a five-second handoff gap.
+If another job owns it, the runner exits successfully and resumes on the next
+timer tick instead of waiting for hours. The timer runs five minutes after boot
+and 15 minutes after the service becomes inactive. A fresh catalog cycle starts
+only after the previous cycle finishes and seven days have elapsed since its
+start. It is no longer anchored to Sunday. Kaufmann and Weekday now participate through their own catalog adapters. The old
+Kaufmann timers must stay disabled.
+
+Discovery order and collection metadata are frozen in manifests beside
+`logs/catalog-cycle.json`. Price/inventory data are fetched afresh for each
+batch, including CEJF and SuitClub's collection-feed products. A successful
+batch advances the saved offset; an interrupted or failed batch repeats from
+its beginning. Successfully committed rows remain saved. Failed sources are
+conservatively deferred 24 hours because importer exit codes do not identify
+Retry-After values. Other stores continue. The default per-batch subprocess
+timeout is one hour. Do not delete a checkpoint to bypass a failure.
+
+One `catalog_sync_runs` record per store and cycle is reused across batches.
+Its details show discovery-page progress and retry times. Only successful
+imports under the shared lock contribute catalog observations; intervening
+inventory refreshes do not count as catalog discovery. Absence reconciliation
+runs only after all discovery entries for that store succeeded, and retains the
+existing coverage threshold and two-pass missing rule. Newly updated unseen
+rows are conservatively excluded from absence marking. Reconciliation is saved
+as a journal before writes; recovery replays the same patches/history. A newer
+product observation blocks stale journal replay and needs operator review.
+Product and history writes are recoverable, not one database transaction.
+
+Deployment from the existing droplet checkout, after committing/pushing this
+follow-up and with timers paused:
+
+```bash
+# Explicitly interrupt the old full catalog invocation and waiting refresh jobs.
+sudo systemctl stop highlide-kaufmann-refresh.service highlide-store-refresh.service highlide-store-catalog-sync.service
+# Verify no other manual jobs are running before updating files.
+git pull --ff-only && .venv/bin/python -m unittest discover -s tests -p 'test_*.py'
+.venv/bin/python scripts/run_catalog_batches.py --help
+sudo cp deployment/systemd/highlide-store-catalog-sync.service /etc/systemd/system/
+sudo cp deployment/systemd/highlide-store-catalog-sync.timer /etc/systemd/system/
+sudo systemctl daemon-reload
+```
+
+Run the pending read-only source smoke test before enabling timers:
+
+```bash
+flock --verbose -n -E 75 /tmp/highlide-inventory-refresh.lock \
+  bash scripts/run_store_refresh.sh --store stoy --store skagen_clothing --limit 3 --dry-run
+```
+
+Then explicitly start the catalog service for a first **writing** tick and
+inspect `logs/store_catalog_sync.log` plus the saved checkpoint. This executes
+one batch per configured store, not an entire weekly pass:
+
+```bash
+sudo systemctl start --no-block highlide-store-catalog-sync.service
+tail -n 40 logs/store_catalog_sync.log
+```
+
+After verifying that tick and the inventory pilot, restore schedules with
+`bash scripts/continual_scraping_on.sh`. The old interrupted run's database
+record is not automatically repaired; inspect it separately. Its already saved
+products will be refreshed again by the new cycle. Keep checkpoint files and
+manifests together when backing up or moving the worker.
+
+Local validation uses Python 3.9.6; the prior droplet output showed Python 3.12.
+This runner uses POSIX file locks/process groups and is intended for Linux
+systemd deployment. It adds no dependencies. The unified-store follow-up requires the Weekday
+catalog-run constraint migration described below. Native
+systemd execution and production writes must be verified on the droplet.
+
+## Unified Kaufmann/Weekday follow-up (required before enabling new services)
+
+Both batch runners now select all 14 stores by default, including Magasin.
+Kaufmann and Weekday both write to `store_inventory_history` after the
+unification migration. Existing Kaufmann intervals are copied with their counts
+and lifecycle fields intact; the original table is retained as a read-only
+archive. The old table name becomes a read-only compatibility view over the
+shared history (history row IDs are reassigned). Operational daily cycles use one shared
+`store_inventory_refresh_runs` row for all selected stores, including Kaufmann.
+They no longer create separate Kaufmann daily operational rows. Backstage must
+read Kaufmann health from the shared cycle record and add Weekday/new stores to
+its store list; do not interpret the last legacy Kaufmann run as current health.
+No Backstage code has been changed here.
+
+Kaufmann's daily adapter calls the existing HTTP variation refresh engine and
+retains its two-observation missing-colour confirmation rule. A first missing
+colour updates the confirmation counter without fabricating an inventory
+history observation. Its weekly adapter freezes the union of the current
+sitemap and known pages, sweeps existing rows including unavailable variants,
+and browser-hydrates only new products or newly discovered available colours.
+There is no second generic catalog-absence tombstone pass.
+
+Weekday uses `inventory_checked_at`, `scraped_at`, and `updated_at`. Price and
+inventory are persisted together only after both succeed; partial responses
+retain the previous observation and leave the job pending. Local JSON proof
+files may still contain separate source-request timestamps; database rows do not. Blocked sources defer all
+remaining daily Weekday batches for 24 hours. The weekly cycle checks known
+unavailable colours as well as newly discovered and linked colours. New rows
+must pass existing positive-Aarhus, exact-inventory and image requirements.
+Absence from the online listing never marks physical Weekday stock unavailable.
+
+Special catalog batches save patches, history and new rows before writes. A
+completed batch result is replayed without repeating missing-colour counters.
+Interrupted writes resume from that journal. Newer observations block stale
+replay instead of being overwritten; such a conflict needs operator review.
+Keep both per-batch journals and manifests alongside the cycle checkpoint.
+Do not run an independent full import for the same store concurrently.
+
+The shared inventory timer now resumes **one batch** every 30 seconds after its
+service exits. It returns without waiting when the lock is busy. A completed
+cycle starts afresh only after 24 hours since its start. The shared catalog
+timer retains its 15-minute resume interval and seven-day cycle interval.
+`continual_scraping_on.sh` disables the two legacy Kaufmann timers before
+starting the two shared timers. Their old service files remain available for
+explicit diagnostics; do not start them alongside a shared cycle.
+
+Before deploying, stop all scraper writers and apply both reviewed migrations
+through the normal Supabase migration workflow:
+
+- `supabase/migrations/20261019133636_weekday_catalog_batch_runs.sql`
+- `supabase/migrations/20261019134922_unify_inventory_observations.sql`
+
+The second migration requires PostgreSQL 15+ and was tested on temporary copies
+in PostgreSQL 17.6. It locks affected tables, preserves each Kaufmann interval
+with an exact-value copy check, and rolls back on mismatch. It removes Weekday's
+two separate timestamps after retaining the earlier one as the common timestamp.
+The distinction between those old timestamps is lost. Take a database backup
+before applying. Neither migration has been applied to live tables by this work.
+
+Use fresh cycle checkpoint paths for this schema version (daily version 3,
+catalog version 2); old checkpoints are rejected. Preserve old checkpoints and
+journals for inspection rather than deleting them. Do not replay old Weekday
+payloads or dedicated Kaufmann history payloads after migration. Kaufmann's
+standalone history configuration now uses `STORE_INVENTORY_HISTORY_TABLE`.
+The compatibility view is read-only: old history writers must remain stopped.
+A code-only rollback is incompatible with the new Weekday schema; restore the
+pre-migration database backup together with the matching code if rollback is
+needed. The archive is a frozen backup, not a second current history source.
+
+With all old jobs stopped and changes committed/pushed:
+
+```bash
+cd /root/scraping_engine
+bash scripts/continual_scraping_off.sh
+sudo systemctl stop highlide-kaufmann-refresh.service highlide-kaufmann-weekly-sweep.service highlide-store-refresh.service highlide-store-catalog-sync.service
+git pull --ff-only && .venv/bin/python -m unittest discover -s tests -p 'test_*.py'
+sudo cp deployment/systemd/highlide-store-refresh.service /etc/systemd/system/
+sudo cp deployment/systemd/highlide-store-refresh.timer /etc/systemd/system/
+sudo cp deployment/systemd/highlide-store-catalog-sync.service /etc/systemd/system/
+sudo cp deployment/systemd/highlide-store-catalog-sync.timer /etc/systemd/system/
+sudo systemctl daemon-reload
+```
+
+Repeat the read-only STOY/Skagen pilot, then bounded writing pilots before
+restoring timers. To exercise one inventory batch of each new adapter:
+
+```bash
+.venv/bin/python scripts/run_inventory_batches.py --store kaufmann --store weekday \
+  --checkpoint logs/kaufmann-weekday-pilot.json --batch-pages 2 --max-batches 2
+```
+
+This writes inventory/history; exit 1 can mean unfinished work. Complete the
+pilot checkpoint before enabling another inventory cycle for these stores.
+For one small catalog batch per new store, after the migration is applied:
+
+```bash
+.venv/bin/python scripts/run_catalog_batches.py --store kaufmann --store weekday \
+  --checkpoint logs/kaufmann-weekday-catalog-pilot.json --batch-pages 2
+```
+
+This also writes products, history and run records. Do not start a second catalog
+cycle for those stores while this pilot is unfinished: continue its exact
+configuration, or review and explicitly retire the pilot before the all-store
+service starts. Frozen store lists/batch sizes cannot be changed mid-cycle.
+Once pilots and run/history records have been checked, enable the shared timers
+with `bash scripts/continual_scraping_on.sh`.

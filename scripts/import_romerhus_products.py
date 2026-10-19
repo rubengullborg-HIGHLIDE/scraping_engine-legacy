@@ -15,6 +15,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from scripts.catalog_manifest import manifest_items, add_manifest_argument
+
 LOG = logging.getLogger("import_romerhus_products")
 
 
@@ -69,7 +71,7 @@ def import_romerhus_products(args: argparse.Namespace) -> int:
     scraper = RomerhusScraper()
     client = SupabaseCatalogClient(supabase_url, supabase_key) if not args.dry_run else None
     try:
-        products = [scraper.fetch_product(url) for url in args.url] if args.url else scraper.discover_products(args.collection or MEN_COLLECTION_HANDLES)
+        products = [scraper.fetch_product(url) for url in args.url] if args.url else manifest_items(args, "romerhus", lambda: scraper.discover_products(args.collection or MEN_COLLECTION_HANDLES))
         products = products[args.offset :]
         if args.limit:
             products = products[: args.limit]
@@ -104,6 +106,7 @@ def import_romerhus_products(args: argparse.Namespace) -> int:
 def parse_args() -> argparse.Namespace:
     load_dotenv(ROOT / ".env")
     parser = argparse.ArgumentParser(description="Full-import Rømerhus men's products and exact local store stock.")
+    add_manifest_argument(parser)
     parser.add_argument("--table", default=env("ROMERHUS_PRODUCTS_TABLE", "romerhus_products"))
     parser.add_argument("--url", action="append", help="Import one product URL.")
     parser.add_argument("--collection", action="append", help="Limit discovery to a Rømerhus collection handle.")

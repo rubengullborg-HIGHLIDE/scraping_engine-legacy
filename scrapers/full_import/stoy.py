@@ -99,14 +99,17 @@ class StoyScraper:
         page_data, inventory, store_source = self._page_data(page_html)
         custom = (page_data.get("metafields") or {}).get("custom") or {}
         variants = [variant for variant in product.get("variants", []) if variant.get("id") is not None]
-        expected_sizes = [self._text(v.get("public_title") or v.get("title")) for v in variants]
+        expected_sizes = [self._size_label(v.get("public_title") or v.get("title")) for v in variants]
         if (not expected_sizes or len(variants) != len(product.get("variants", []))
                 or len({v["id"] for v in variants}) != len(variants)
                 or any(not size for size in expected_sizes) or len(set(expected_sizes)) != len(expected_sizes)):
             raise SourcePayloadError("Missing or duplicate STOY variant sizes")
         for slug, store in inventory["stores"].items():
             if set(store["sizes"]) != set(expected_sizes):
-                raise SourcePayloadError(f"Incomplete STOY inventory sizes for {slug}")
+                raise SourcePayloadError(
+                    f"Incomplete STOY inventory sizes for {slug}: "
+                    f"expected={sorted(expected_sizes)!r}, observed={sorted(store['sizes'])!r}"
+                )
         style_code = self._text(custom.get("manufacturer_style_code"))
         color = self._color(custom, product, style_code)
         source_parent_id = self._style_reference(style_code, variants, product_id)
@@ -114,7 +117,7 @@ class StoyScraper:
         model_info, size_guide = self._size_and_fit(page_html)
         webshop_sizes = []
         for variant in variants:
-            size = self._text(variant.get("public_title") or variant.get("title"))
+            size = self._size_label(variant.get("public_title") or variant.get("title"))
             store_states = {
                 slug: bool(inventory["stores"][slug]["sizes"].get(size, {}).get("available"))
                 for slug in TRACKED_STORES
@@ -186,6 +189,12 @@ class StoyScraper:
             "scraped_at": scraped_at,
             "updated_at": scraped_at,
         }
+
+    @classmethod
+    def _size_label(cls, value: Any) -> str:
+        label = cls._text(value)
+        # Verified on Cow Dancer: Shopify says XTRA LARGE, the store drawer XL.
+        return "XL" if label == "XTRA LARGE" else label
 
     @classmethod
     def _page_data(cls, html: str) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:

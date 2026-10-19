@@ -12,7 +12,7 @@ FIELDS = (
     'category_path', 'description_html', 'images', 'material', 'fit',
     'current_price', 'list_price', 'currency', 'local_inventory', 'local_total_stock',
     'local_available', 'aarhus_total_stock', 'aarhus_available', 'scraped_at',
-    'price_observed_at', 'inventory_observed_at', 'inventory_complete', 'inventory_warnings',
+    'inventory_complete', 'inventory_warnings',
 )
 
 
@@ -58,6 +58,8 @@ def database_row(row):
     reasons = exclusion_reasons(row)
     require(not reasons, 'Product is not eligible for database import: ' + ', '.join(reasons))
     result = {key: row[key] for key in FIELDS}
+    checked = min(row['price_observed_at'], row['inventory_observed_at'])
+    result.update(inventory_checked_at=checked, updated_at=checked)
     result['raw'] = {key: row[key] for key in ('source_sizes', 'source_metadata', 'source_inventory')}
     return result
 

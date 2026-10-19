@@ -15,6 +15,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from scripts.catalog_manifest import manifest_items, add_manifest_argument
+
 LOG = logging.getLogger("import_rains_products")
 
 
@@ -80,7 +82,7 @@ def import_rains_products(args: argparse.Namespace) -> int:
         if args.url:
             summaries = [{"handle": url, "_collection_handles": []} for url in args.url]
         else:
-            summaries = scraper.discover_products(args.collection or MEN_COLLECTION_HANDLES)
+            summaries = manifest_items(args, "rains", lambda: scraper.discover_products(args.collection or MEN_COLLECTION_HANDLES))
         summaries = summaries[args.offset :]
         if args.limit:
             summaries = summaries[: args.limit]
@@ -149,6 +151,7 @@ def import_rains_products(args: argparse.Namespace) -> int:
 def parse_args() -> argparse.Namespace:
     load_dotenv(ROOT / ".env")
     parser = argparse.ArgumentParser(description="Full-import Rains men's clothing and exact Danish store stock.")
+    add_manifest_argument(parser)
     parser.add_argument("--table", default=env("RAINS_PRODUCTS_TABLE", "rains_products"))
     parser.add_argument("--url", action="append", help="Import one product URL; all colours on the page are retained.")
     parser.add_argument("--collection", action="append", help="Override discovery with one or more collection handles.")
