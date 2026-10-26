@@ -1,5 +1,5 @@
 [Unit]
-Description=HIGHLIDE resumable weekly non-Kaufmann catalog batches
+Description=HIGHLIDE resumable weekly catalog batches for all stores
 Wants=network-online.target
 After=network-online.target
 
@@ -7,7 +7,7 @@ After=network-online.target
 Type=oneshot
 WorkingDirectory=/root/scraping_engine
 Environment=PYTHONUNBUFFERED=1
-ExecStart=/root/scraping_engine/.venv/bin/python /root/scraping_engine/scripts/run_catalog_batches.py --checkpoint /root/scraping_engine/logs/catalog-cycle.json
+ExecStart=/root/scraping_engine/.venv/bin/python /root/scraping_engine/scripts/run_catalog_batches.py --checkpoint /root/scraping_engine/logs/catalog-cycle.json --scheduled
 TimeoutStartSec=14h
 KillMode=mixed
 TimeoutStopSec=45s

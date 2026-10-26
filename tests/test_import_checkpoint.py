@@ -25,10 +25,10 @@ class CheckpointTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'checkpoint.json'
             scraper = self.scraper()
-            scraper.discover_product_urls.return_value = [f'https://example.com/{n}' for n in range(6)]
+            scraper.discover_product_urls.return_value = [f'https://example.com/{n}' for n in range(26)]
             scraper.fetch_snapshot.side_effect = SourcePayloadError('Empty HTTP 200')
-            self.assertEqual(self.run_batch(path, Mock(), scraper, pages=6), 1)
-            self.assertEqual(scraper.fetch_snapshot.call_count, 5)
+            self.assertEqual(self.run_batch(path, Mock(), scraper, pages=26), 1)
+            self.assertEqual(scraper.fetch_snapshot.call_count, 25)
             self.assertEqual(json.loads(path.read_text())['last_batch']['status'], 'blocked')
 
     def server_error(self, code=500):
@@ -48,17 +48,17 @@ class CheckpointTests(unittest.TestCase):
             self.assertEqual(state['last_batch']['status'], 'partial')
             self.assertTrue(runner.batch_can_continue({}, state, 1))
 
-    def test_five_consecutive_server_errors_stop_without_visiting_sixth_page(self):
+    def test_25_consecutive_server_errors_stop_without_visiting_26th_page(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'checkpoint.json'
             scraper = self.scraper()
-            scraper.discover_product_urls.return_value = [f'https://example.com/{n}' for n in range(6)]
+            scraper.discover_product_urls.return_value = [f'https://example.com/{n}' for n in range(26)]
             scraper.fetch_snapshot.side_effect = self.server_error(503)
-            self.assertEqual(self.run_batch(path, Mock(), scraper, pages=6), 1)
-            self.assertEqual(scraper.fetch_snapshot.call_count, 5)
+            self.assertEqual(self.run_batch(path, Mock(), scraper, pages=26), 1)
+            self.assertEqual(scraper.fetch_snapshot.call_count, 25)
             state = json.loads(path.read_text())
             self.assertEqual(state['last_batch']['status'], 'blocked')
-            self.assertEqual(len(state['deferred']), 4)
+            self.assertEqual(len(state['deferred']), 24)
             self.assertFalse(runner.batch_can_continue({}, state, 1))
 
     def test_runner_processes_next_batch_after_partial_error(self):

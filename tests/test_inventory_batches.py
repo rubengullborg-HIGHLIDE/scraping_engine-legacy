@@ -38,6 +38,72 @@ class InventoryBatchTests(unittest.TestCase):
     def run_cycle(self, max_batches=0):
         return runner.run_cycle(self.database, self.path, self.state, self.args, max_batches)
 
+    def prepare_rollover(self):
+        self.state.update(version=3, url='https://example.com', history_table='history',
+                          runs_table='runs', batch_pages=20, source_transport='system-curl')
+        self.database.list_rows.return_value = [row(2), row(3)]
+
+    def test_rollover_preserves_pending_rows_and_cooldowns_and_closes_partial(self):
+        self.prepare_rollover()
+        self.state['jobs']['stoy'] = []
+        self.state['jobs']['cejf'][0].update(retry_at=123456, error='StoreRateLimited: HTTP 403')
+        with patch.object(runner, 'put_run') as write:
+            runner.rollover(self.database, self.path, self.state)
+        self.assertEqual(write.call_args.args[1]['status'], 'partial')
+        self.assertIsNotNone(write.call_args.args[1]['finished_at'])
+        self.assertEqual(self.state['previous_cycle_id'], 'one-cycle')
+        self.assertEqual([r['id'] for j in self.state['jobs']['cejf'] for r in j['rows']], [1, 2, 3])
+        self.assertEqual(self.state['jobs']['cejf'][0]['retry_at'], 123456)
+        self.assertEqual(self.state['jobs']['stoy'][0]['retry_at'], 0)
+        self.assertTrue((self.path.parent / 'state.json.cycles/one-cycle.json').exists())
+        self.assertEqual(self.state['totals'], dict.fromkeys(runner.COUNTERS, 0))
+
+    def test_rollover_database_failure_reuses_prepared_cycle(self):
+        self.prepare_rollover()
+        with patch.object(runner, 'put_run', side_effect=RuntimeError('offline')):
+            with self.assertRaisesRegex(RuntimeError, 'offline'):
+                runner.rollover(self.database, self.path, self.state)
+        saved = json.loads(self.path.read_text())
+        next_id = saved['rollover']['cycle_id']
+        self.database.list_rows.reset_mock()
+        with patch.object(runner, 'put_run'):
+            runner.rollover(self.database, self.path, saved)
+        self.database.list_rows.assert_not_called()
+        self.assertEqual(saved['cycle_id'], next_id)
+
+    def test_rollover_replays_journal_before_reading_fresh_rows(self):
+        self.prepare_rollover()
+        with patch.dict(refresh.STORE_REFRESHERS, cejf=stage), patch.object(runner, 'put_run'):
+            self.database.flush_history.side_effect = RuntimeError('offline')
+            with self.assertRaises(RuntimeError):
+                self.run_cycle(1)
+            with self.assertRaises(RuntimeError):
+                runner.rollover(self.database, self.path, self.state)
+            self.database.list_rows.assert_not_called()
+            self.database.flush_history.side_effect = None
+            runner.rollover(self.database, self.path, self.state)
+        self.assertIsNone(self.state['journal'])
+        self.assertNotIn(1, [r['id'] for j in self.state['jobs']['cejf'] for r in j['rows']])
+
+    def test_scheduled_rollover_runs_at_24_hours_even_with_pending_jobs(self):
+        self.prepare_rollover()
+        self.state.update(history_table=self.args.history_table, runs_table=self.args.runs_table,
+                          started_at='2026-10-19T10:00:00+00:00')
+        runner.save(self.path, self.state)
+        started = runner.datetime.fromisoformat(self.state['started_at']).timestamp()
+        with patch.object(runner.refresh, 'env', side_effect=lambda name, default='':
+                     'https://example.com' if name.startswith('SUPABASE_') else default), \
+                patch.object(runner, 'BatchInventoryClient', return_value=self.database), \
+                patch.object(runner.fcntl, 'flock'), patch.object(runner, 'rollover') as roll, \
+                patch.object(runner, 'run_cycle', return_value=1), \
+                patch.object(runner.time, 'time', return_value=started + 86399) as clock:
+            arguments = ['--checkpoint', str(self.path), '--store', 'cejf', '--store', 'stoy', '--scheduled']
+            self.assertEqual(runner.main(arguments), 0)
+            roll.assert_not_called()
+            clock.return_value = started + 86400
+            self.assertEqual(runner.main(arguments), 0)
+            roll.assert_called_once()
+
     def test_rotates_stores_and_finishes_once(self):
         order = []
         def scrape(database, args):

@@ -11,7 +11,7 @@ import sys
 import time
 import uuid
 from dataclasses import asdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -188,6 +188,18 @@ def process_store(state, store, path, client, recorder, args):
              store, job['offset'], job['total'], job.get('done', False))
 
 
+def sunday_start(timestamp):
+    current = datetime.fromtimestamp(timestamp, timezone.utc)
+    return (current - timedelta(days=(current.weekday() + 1) % 7)).replace(
+        hour=12, minute=15, second=0, microsecond=0).timestamp()
+
+
+def catalog_cycle_due(timestamp, state):
+    current = datetime.fromtimestamp(timestamp, timezone.utc)
+    return (current.weekday() == 6 and timestamp >= sunday_start(timestamp)
+            and (state is None or timestamp >= sunday_start(state['next_cycle_at'])))
+
+
 def tick(args):
     path = Path(args.checkpoint).resolve()
     # Separate coordinator lock prevents two invocations from racing while the
@@ -203,14 +215,20 @@ def tick(args):
                         min_seen_ratio=args.min_seen_ratio)
         if state and (state.get('version') != 2 or state['stores'] != args.store or state['settings'] != settings):
             raise ValueError('Checkpoint configuration mismatch; do not discard unfinished work')
-        if state and all(job.get('done') for job in state['jobs'].values()):
-            if time.time() < state['next_cycle_at']:
+        scheduled = getattr(args, 'scheduled', False)
+        timestamp = time.time()
+        completed = state is not None and all(job.get('done') for job in state['jobs'].values())
+        if state is None or completed:
+            if scheduled and not catalog_cycle_due(timestamp, state):
+                LOG.info('No unfinished catalog cycle; waiting for Sunday 12:15 UTC')
+                return 0
+            if completed and not scheduled and timestamp < state['next_cycle_at']:
                 return 0
             state = None
         if state is None:
             state = dict(version=2, cycle_id=str(uuid.uuid4()), stores=args.store, batch_pages=args.batch_pages,
                          settings=settings, next_store=0,
-                         next_cycle_at=time.time() + 7 * 86400, jobs={store: {} for store in args.store})
+                         next_cycle_at=(sunday_start(timestamp) if scheduled else timestamp) + 7 * 86400, jobs={store: {} for store in args.store})
             save_state(path, state)
         url = sync.env('SUPABASE_URL')
         key = sync.env('SUPABASE_SECRET_KEY') or sync.env('SUPABASE_SERVICE_ROLE_KEY')
@@ -230,8 +248,8 @@ def tick(args):
                     try:
                         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
                     except BlockingIOError:
-                        LOG.info('Inventory/catalog job holds the lock; resume on next tick')
-                        break
+                        LOG.info('Waiting for the current inventory batch to release the lock')
+                        fcntl.flock(lock, fcntl.LOCK_EX)
                     try:
                         process_store(state, store, path, client, recorder, args)
                     except Exception as exc:
@@ -259,6 +277,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--store', action='append', choices=STORES)
     parser.add_argument('--checkpoint', required=True)
+    parser.add_argument('--scheduled', action='store_true',
+                        help='Start new cycles on Sunday after 12:15 UTC; resume unfinished cycles any day.')
     parser.add_argument('--batch-pages', type=int, default=10)
     parser.add_argument('--batch-timeout', type=int, default=3600)
     parser.add_argument('--miss-confirmations', type=int, default=2)

@@ -141,19 +141,41 @@ class CatalogBatchTests(unittest.TestCase):
             observed_at={1:'2026-08-26T10:30:00+00:00'})
         self.assertEqual([], client.bulk_patches)
 
-    def test_tick_yields_to_existing_job_without_starting_imports(self):
+    def test_tick_waits_for_inventory_lock_then_runs_catalog(self):
         args = SimpleNamespace(checkpoint=str(self.path), store=['rains'], batch_pages=1,
                                miss_confirmations=2, min_seen_ratio=.5)
-        lock_path = str(self.path.parent/'inventory.lock')
-        with open(lock_path, 'a') as owner:
-            fcntl.flock(owner, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            with patch.object(runner, 'LOCK', lock_path), \
-                 patch.object(runner.sync, 'env', return_value='test'), \
-                 patch.object(runner.sync, 'CatalogLifecycleClient', return_value=self.client), \
-                 patch.object(runner.sync, 'CatalogSyncRunRecorder', return_value=self.recorder), \
-                 patch.object(runner, 'process_store') as process:
-                self.assertEqual(0, runner.tick(args))
-                process.assert_not_called()
+        with patch.object(runner, 'LOCK', str(self.path.parent/'inventory.lock')), \
+             patch.object(runner.sync, 'env', return_value='test'), \
+             patch.object(runner.sync, 'CatalogLifecycleClient', return_value=self.client), \
+             patch.object(runner.sync, 'CatalogSyncRunRecorder', return_value=self.recorder), \
+             patch.object(runner, 'process_store') as process, \
+             patch.object(runner.time, 'sleep'), \
+             patch.object(runner.fcntl, 'flock', side_effect=[None, BlockingIOError, None]) as lock:
+            self.assertEqual(0, runner.tick(args))
+            process.assert_called_once()
+            self.assertEqual(fcntl.LOCK_EX, lock.call_args_list[-1].args[1])
+
+    def test_scheduled_new_cycles_only_start_on_sunday_after_1215_utc(self):
+        from datetime import datetime
+        def timestamp(value):
+            return datetime.fromisoformat(value).timestamp()
+        self.assertFalse(runner.catalog_cycle_due(timestamp('2026-10-20T12:15:00+00:00'), None))
+        self.assertFalse(runner.catalog_cycle_due(timestamp('2026-10-25T12:14:59+00:00'), None))
+        self.assertTrue(runner.catalog_cycle_due(timestamp('2026-10-25T12:15:00+00:00'), None))
+        old = {'next_cycle_at':timestamp('2026-10-26T14:15:00+00:00')}
+        self.assertTrue(runner.catalog_cycle_due(timestamp('2026-10-25T12:15:00+00:00'), old))
+        future = {'next_cycle_at':timestamp('2026-11-01T12:15:00+00:00')}
+        self.assertFalse(runner.catalog_cycle_due(timestamp('2026-10-25T13:00:00+00:00'), future))
+
+    def test_scheduled_empty_checkpoint_waits_on_weekday_without_connecting(self):
+        from datetime import datetime
+        args = SimpleNamespace(checkpoint=str(self.path), store=['rains'], batch_pages=1,
+                               miss_confirmations=2, min_seen_ratio=.5, scheduled=True)
+        with patch.object(runner.time, 'time', return_value=datetime(2026,10,20,tzinfo=runner.timezone.utc).timestamp()), \
+             patch.object(runner.sync, 'CatalogLifecycleClient') as client:
+            self.assertEqual(0,runner.tick(args))
+        client.assert_not_called()
+        self.assertFalse(self.path.exists())
 
     def test_stop_terminates_child_group_before_propagating(self):
         child = Mock(pid=12345)
@@ -171,6 +193,7 @@ class CatalogBatchTests(unittest.TestCase):
         state = dict(version=2, cycle_id='retained', stores=args.store, batch_pages=1,
             settings=dict(batch_pages=1, miss_confirmations=2, min_seen_ratio=.5),
             next_store=1, next_cycle_at=0, jobs={'rains':{}, 'stoy':{}})
+        args.scheduled = True
         save_state(self.path, state)
         lock_path = str(self.path.parent/'inventory.lock')
         order = []

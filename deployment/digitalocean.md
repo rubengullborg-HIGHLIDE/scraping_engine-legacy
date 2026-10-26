@@ -60,7 +60,7 @@ An HTTP 5xx response that remains after the source transport's bounded retries
 defers only that product. Empty or malformed variation JSON also defers the
 product with HTTP status, response content type and byte count recorded in its
 error. Magasin can return empty HTTP 200 responses for stale catalogue links.
-Five consecutive server/payload-error products stop the store as a probable
+Twenty-five consecutive server/payload-error products stop the store as a probable
 outage; a successful product resets this count. Verification challenges, access blocks,
 rate limits, connection errors and database-write failures still stop the run.
 
@@ -562,8 +562,8 @@ Keep both per-batch journals and manifests alongside the cycle checkpoint.
 Do not run an independent full import for the same store concurrently.
 
 The shared inventory timer now resumes **one batch** every 30 seconds after its
-service exits. It returns without waiting when the lock is busy. A completed
-cycle starts afresh only after 24 hours since its start. The shared catalog
+service exits. It returns without waiting when the lock is busy. After 24 hours since cycle start, the next invocation starts a new cycle,
+carrying unfinished rows and retry deadlines forward. The shared catalog
 timer retains its 15-minute resume interval and seven-day cycle interval.
 `continual_scraping_on.sh` disables the two legacy Kaufmann timers before
 starting the two shared timers. Their old service files remain available for
@@ -629,3 +629,50 @@ configuration, or review and explicitly retire the pilot before the all-store
 service starts. Frozen store lists/batch sizes cannot be changed mid-cycle.
 Once pilots and run/history records have been checked, enable the shared timers
 with `bash scripts/continual_scraping_on.sh`.
+
+## October 20: Sunday starts and catalog lock contention
+
+The catalog service now passes `--scheduled`. New scheduled cycles begin only
+on Sundays at or after 12:15 UTC (the former timer time on the UTC droplet).
+Unfinished cycles retain their cycle ID, manifests, offsets and retries and
+resume on any day. On completion, legacy seven-day due timestamps are aligned
+to the Sunday of that due week. The 15-minute resume timer stays in place.
+A fresh installation on a weekday waits for Sunday; manual CLI execution
+without `--scheduled` still permits an initial out-of-schedule cycle.
+Do not delete the current checkpoint or restart discovery to apply this change.
+
+If inventory owns the shared lock, catalog now waits for its release instead
+of skipping the next 15 minutes. This addresses the observed repeated lock-busy
+exits. Catalog still releases the lock between stores and sleeps five seconds;
+inventory continues to skip busy locks safely. A waiting catalog process is
+normal and does not mean it is making product requests. The service's existing
+14-hour limit bounds the invocation; no additional lock file is introduced.
+
+Deployment: with code committed/pushed, wait for the catalog service to be
+inactive (or stop it cleanly), pull the code, run the offline tests, copy the
+updated catalog service file, and run `sudo systemctl daemon-reload`. Keep
+existing checkpoints and timer state. An already running Python process keeps
+its loaded code until its invocation ends; do not expect hot reload.
+
+Read-only October 20 diagnosis: Magasin returns a Cloudflare challenge from
+both Requests and ordinary Chromium on 46.101.137.153; the same listing works
+locally. Ordinary curl 8.5.0 IPv4 HTTP/1.1 and HTTP/2 also return a
+Cloudflare challenge. The droplet has no default IPv6 route, and curl IPv6
+hostname resolution fails. No proxy environment variables were configured in
+the diagnostic SSH session. No proxy was tested and no retailer contacted.
+The approved-access draft remains on hold at the user’s request.
+Skagen's failing variant 55575926997368 publishes Aarhus stock -1; the current
+parser correctly retains saved inventory rather than accepting this invalid
+quantity. Its exact business meaning has not been verified with the retailer.
+
+Daily rollover fix (local code; deploy before relying on this behavior): after
+24 hours the scheduled runner closes the old cycle as partial if work remains,
+archives it under `<checkpoint>.cycles/<cycle_id>.json`, and creates a fresh
+cycle containing pending rows plus currently eligible products. Pending rows
+come first, duplicates are removed, and store cooldowns survive rollover.
+Prepared replacement UUIDs are checkpointed before closing the old database
+run, so a lost response can be retried. Any pending write journal must commit
+first; database failures or stale-write conflicts still stop rollover for
+operator investigation. Version 3 checkpoints remain compatible. Keep these
+archives with checkpoints; they contain product data and have mode 0600.
+No database migration or new dependency is required for rollover.

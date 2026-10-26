@@ -122,7 +122,7 @@ def cycle_record(state):
     failed = state.get('write_failed', False) or any(
         batch['error'] or batch['result']['failed_products'] for batch in state['batches'])
     return {'id': state['cycle_id'], 'mode': 'selected', 'selected_stores': state['stores'],
-            'status': 'running' if pending else 'partial' if failed else 'succeeded',
+            'status': 'running' if pending and not state.get('finished_at') else 'partial' if pending or failed else 'succeeded',
             'started_at': state['started_at'], 'finished_at': state.get('finished_at'),
             'updated_at': now(), 'row_limit': None, 'row_offset': 0, 'history_enabled': True,
             'stores_planned': len(state['stores']),
@@ -164,6 +164,47 @@ def commit(database, path, state):
     save(path, next_state)
     state.clear()
     state.update(next_state)
+
+
+def rollover(database, path, state):
+    """Carry unfinished work forward without losing a journal or cooldown."""
+    if state['journal']:
+        commit(database, path, state)
+    if 'rollover' not in state:
+        replacement = {key: copy.deepcopy(state[key]) for key in (
+            'version', 'url', 'stores', 'history_table', 'runs_table',
+            'batch_pages', 'retry_seconds', 'source_transport', 'next_store')}
+        replacement.update(cycle_id=str(uuid.uuid4()), started_at=now(),
+                           previous_cycle_id=state['cycle_id'], journal=None, active_batch=None,
+                           jobs={}, batches=[], totals=dict.fromkeys(COUNTERS, 0),
+                           store_retry_at=copy.deepcopy(state.get('store_retry_at', {})))
+        for store in state['stores']:
+            pending = state['jobs'][store]
+            rows = OrderedDict((row['id'], row) for job in pending for row in job['rows'])
+            retry = {row['id']: job['retry_at'] for job in pending for row in job['rows']}
+            # Older checkpoints recorded store cooldowns only on their jobs.
+            cooldown = max([replacement['store_retry_at'].get(store, 0)] + [
+                job['retry_at'] for job in pending
+                if (job.get('error') or '').startswith('StoreRateLimited:')])
+            replacement['store_retry_at'][store] = cooldown
+            for row in database.list_rows(SPECS[store]):
+                rows[row['id']] = row
+            replacement['jobs'][store] = [
+                {'id': str(uuid.uuid4()), 'rows': batch,
+                 'retry_at': max([cooldown] + [retry.get(row['id'], 0) for row in batch])}
+                for batch in batches(store, rows.values(), state['batch_pages'])]
+        state['rollover'] = replacement
+        save(path, state)
+    # Persist the replacement UUID before closing the old run: retrying a lost
+    # database response must not create another cycle or drop pending work.
+    closed = {key: value for key, value in state.items() if key != 'rollover'}
+    closed['finished_at'] = state.get('finished_at') or state['rollover']['started_at']
+    put_run(database, cycle_record(closed))
+    save(path.parent / (path.name + '.cycles') / (state['cycle_id'] + '.json'), closed)
+    replacement = state['rollover']
+    save(path, replacement)
+    state.clear()
+    state.update(replacement)
 
 
 def run_cycle(database, path, state, args, max_batches):
@@ -220,8 +261,10 @@ def process_cycle(database, path, state, args, max_batches):
             staged.history.clear()
             if isinstance(exc, refresh.StoreRateLimited):
                 cooldown = max(state['retry_seconds'], exc.retry_after_seconds or 86400)
+                deadline = time.time() + cooldown
+                state.setdefault('store_retry_at', {})[store] = deadline
                 for pending in state['jobs'][store]:
-                    pending['retry_at'] = time.time() + cooldown
+                    pending['retry_at'] = deadline
         patch_ids = [patch['id'] for patch in staged.patches]
         history_ids = [entry['product_id'] for entry in staged.history]
         valid_history = (set(history_ids).issubset(patch_ids) if store in special.SPECS
@@ -254,7 +297,7 @@ def main(argv=None):
     parser.add_argument('--max-batches', type=int, default=0, help='Stop after this many batches; 0 runs all due work.')
     parser.add_argument('--retry-seconds', type=int, default=3600)
     parser.add_argument('--new-cycle', action='store_true', help='Start a fresh snapshot only after the previous cycle completed.')
-    parser.add_argument('--scheduled', action='store_true', help='Resume one batch; start a new cycle when complete and 24 hours old.')
+    parser.add_argument('--scheduled', action='store_true', help='Resume one batch; roll over after 24 hours, carrying unfinished work and cooldowns.')
     parser.add_argument('--source-transport', choices=('requests', 'system-curl'), default='system-curl')
     options = parser.parse_args(argv)
     if options.batch_pages < 1 or options.max_batches < 0 or options.retry_seconds < 1:
@@ -284,10 +327,12 @@ def main(argv=None):
                         'source_transport': options.source_transport}
             if state and any(state.get(key) != value for key, value in identity.items()):
                 raise ValueError('Checkpoint configuration differs; resume with its original configuration')
+            if state and ('rollover' in state or (options.scheduled and
+                    time.time() >= datetime.fromisoformat(state['started_at']).timestamp() + 86400)):
+                rollover(database, path, state)
             if options.scheduled and state and not state['journal'] and not any(state['jobs'].values()):
                 if time.time() < datetime.fromisoformat(state['started_at']).timestamp() + 86400:
                     return 0
-                state = None
             if state and options.new_cycle:
                 if state['journal'] or any(state['jobs'].values()):
                     raise ValueError('Cannot replace an unfinished cycle')

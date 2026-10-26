@@ -190,7 +190,7 @@ def import_products(store, args, scraper_factory=None):
                 consecutive_source_errors = consecutive_source_errors + 1 if recoverable_source_error else 0
                 transport_failure = isinstance(exc, requests.RequestException) and not isinstance(exc, SourceUnavailable)
                 if ((transport_failure and not recoverable_source_error) or
-                        (recoverable_source_error and consecutive_source_errors >= 5)):
+                        (recoverable_source_error and consecutive_source_errors >= 25)):
                     blocked = True
                     if checkpoint is not None:
                         checkpoint['last_batch']['error'] = str(exc)[:2000]
