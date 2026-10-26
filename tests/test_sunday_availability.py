@@ -8,7 +8,7 @@ from unittest.mock import Mock, patch
 from scrapers.full_import.axel_quint import AxelQuintScraper, IncompleteProduct
 from scrapers.stores.kaufmann_variations import KaufmannVariationParseError
 from scripts.import_axel_quint_products import import_products, parse_args
-from scripts.sync_kaufmann_catalog import available_catalog_rows
+from scripts.run_special_catalog_batch import available_catalog_rows
 from scripts.sync_store_catalogs import CATALOG_SPECS, importer_command, reconcile_catalog
 from tests.test_axel_quint import fixture
 from tests.test_kaufmann_variations import variation_payload

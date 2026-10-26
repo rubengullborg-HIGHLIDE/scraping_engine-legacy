@@ -388,7 +388,9 @@ class KaufmanScraper(BaseScraper):
                         source_size_variant_id: size.source_size_variant_id,
                         source_product_number: size.source_product_number,
                       })),
-                      aarhus_inventory: aarhusInventory,
+                      local_inventory: aarhusInventory,
+                      local_total_stock: aarhusTotalStock,
+                      local_available: sourceAvailable && aarhusTotalStock > 0,
                       aarhus_total_stock: aarhusTotalStock,
                       aarhus_available: sourceAvailable && aarhusTotalStock > 0,
                       source_available: sourceAvailable,
@@ -417,12 +419,10 @@ class KaufmanScraper(BaseScraper):
                 variant["discontinued_at"] = (
                     None if variant.get("source_available") else scraped_at
                 )
-                variant["last_inventory_checked_at"] = scraped_at
+                variant["inventory_checked_at"] = scraped_at
                 variant["last_seen_in_catalog_at"] = scraped_at
                 variant["consecutive_source_misses"] = 0
                 variant["consecutive_catalog_misses"] = 0
-                variant["last_refresh_error"] = None
-                variant["last_refresh_error_at"] = None
                 variant["scraped_at"] = scraped_at
                 variant["updated_at"] = scraped_at
                 cleaned.append(variant)

@@ -15,6 +15,26 @@ from scripts.catalog_manifest import save_state
 from scripts import special_store_batches as special
 from scripts.run_inventory_batches import BatchInventoryClient, StagedClient, now
 from scripts import sync_store_catalogs as sync
+from scripts import refresh_store_inventory as refresh
+from scripts.refresh_kaufmann_inventory import refresh_store as refresh_kaufmann
+
+LOG = logging.getLogger(__name__)
+
+
+def available_catalog_rows(scraper, variation_client, product_url):
+    """Only browser-hydrate Kaufmann candidates with explicit available colours."""
+    from scrapers.stores.kaufmann_variations import variation_rows_from_payload
+    parent = variation_client.resolve_source_parent_id(product_url)
+    probe = variation_rows_from_payload(variation_client.fetch_payload(parent, product_url=product_url), parent, product_url)
+    if not any(row['source_available'] for row in probe):
+        LOG.info('HTTP check: Kaufmann candidate unavailable; browser skipped: %s', product_url)
+        return []
+    rows = scraper.parse_product_variants_with_js(product_url, allow_unavailable=True, available_only=True)
+    if not rows:
+        raise RuntimeError('Available catalogue candidate returned no product variants; retry next run')
+    if any(row['source_parent_id'] != parent or row.get('source_available') is not True for row in rows):
+        raise ValueError('Kaufmann candidate identity/availability changed during hydration')
+    return rows
 
 
 def report_path(manifest, offset):
@@ -24,7 +44,7 @@ def report_path(manifest, offset):
 def discover(store, rows):
     known = {row['canonical_url'] for row in rows}
     if store == 'kaufmann':
-        from scripts.sync_kaufmann_catalog import KaufmanScraper
+        from scrapers.full_import.kaufmann import KaufmanScraper
         scraper = KaufmanScraper(launch_browser=False)
         try:
             urls = set(scraper.discover_product_links_from_sitemap('https://www.kaufmann.dk/sitemap.xml'))
@@ -52,16 +72,19 @@ def discover(store, rows):
 def prepare(store, urls, rows):
     selected = [row for row in rows if row['canonical_url'] in urls]
     staged = StagedClient(store, selected)
-    args = SimpleNamespace(no_delay=False, dry_run=False, no_history=False, offset=0, limit=None)
+    args = SimpleNamespace(**{**vars(refresh.parse_args([])), 'no_delay': False})
     known = {row['canonical_url'] for row in rows}
     new_urls = set(urls) - known
     new_rows = []
     if store == 'kaufmann':
-        stats, candidates = special.run_kaufmann(staged, args, include_unavailable=True)
+        # The selected rows include sold-out and unpublished colours, so the
+        # shared adapter rechecks them and reports unknown available colours.
+        candidates = set()
+        stats = refresh_kaufmann(staged, args, candidates=candidates)
         if stats.failed:
             raise ValueError('Incomplete Kaufmann sweep; retry the batch without advancing missing-colour counters')
-        from scripts.sync_kaufmann_catalog import KaufmanScraper, KaufmannVariationClient, available_catalog_rows
-        from scrapers.stores.kaufmann_variations import KaufmannVariationUnavailable
+        from scrapers.full_import.kaufmann import KaufmanScraper
+        from scrapers.stores.kaufmann_variations import KaufmannVariationClient, KaufmannVariationUnavailable
         scraper = KaufmanScraper(launch_browser=False)
         variations = KaufmannVariationClient()
         keys = {(row['source_parent_id'], row['source_color_id']) for row in rows}
@@ -114,7 +137,7 @@ def prepare(store, urls, rows):
 
 
 def apply(database, store, plan):
-    spec = special.SPECS[store]
+    spec = special.CATALOG_SPECS[store]
     for patch in plan['patches']:
         database.patch_row(spec, patch['id'], patch['payload'])
     for entry in plan['history']:
@@ -143,7 +166,7 @@ def apply(database, store, plan):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--store', required=True, choices=list(special.SPECS))
+    parser.add_argument('--store', required=True, choices=list(special.CATALOG_SPECS))
     parser.add_argument('--catalog-manifest', required=True, type=Path)
     parser.add_argument('--offset', type=int, required=True)
     parser.add_argument('--limit', type=int, required=True)

@@ -11,6 +11,7 @@ from scripts import run_catalog_batches as catalog
 from scripts import run_special_catalog_batch as special_catalog
 from scripts import special_store_batches as special
 from scripts import refresh_kaufmann_inventory as kaufmann
+from scripts import refresh_store_inventory as refresh
 from scripts import refresh_weekday_database as weekday
 from scrapers.source_http import StoreRateLimited
 from tests.test_kaufmann_variations import product_row, variation_payload
@@ -51,30 +52,59 @@ class UnifiedBatchTests(unittest.TestCase):
         self.assertEqual(14, len(inventory.SPECS))
         self.assertEqual(set(inventory.SPECS), set(catalog.STORES))
 
-    def test_kaufmann_adapter_reuses_parser_and_shared_history(self):
+    def test_store_order_keeps_existing_checkpoint_identities(self):
+        # Checkpoints embed the store list; moving Kaufmann must not reorder it.
+        self.assertEqual(['magasin', 'kaufmann', 'weekday'], list(inventory.SPECS)[-3:])
+        self.assertEqual(['kaufmann', 'weekday'], catalog.STORES[-2:])
+
+    def test_kaufmann_is_a_shared_refresher_not_a_special_batch(self):
+        self.assertIn('kaufmann', refresh.STORE_REFRESHERS)
+        self.assertNotIn('kaufmann', special.REFRESH_SPECS)
+        self.assertIs(refresh.STORE_SPECS['kaufmann'], special.CATALOG_SPECS['kaufmann'])
+
+    def test_kaufmann_batch_writes_shared_columns_and_history(self):
         staged = inventory.StagedClient('kaufmann', [product_row()])
         client = Mock()
         client.fetch_payload.return_value = variation_payload(source_available=True, webshop_stock=4, aarhus_stock=3)
         with patch.object(kaufmann, 'KaufmannVariationClient', return_value=client):
-            stats, candidates = special.run_kaufmann(staged, SimpleNamespace(no_delay=True))
+            stats = refresh.STORE_REFRESHERS['kaufmann'](staged, refresh.parse_args(['--no-delay']))
         self.assertEqual(1, stats.pages)
-        self.assertEqual([], candidates)
-        self.assertEqual(3, staged.patches[0]['payload']['aarhus_total_stock'])
-        self.assertNotIn('source_url', staged.patches[0]['payload'])
+        payload = staged.patches[0]['payload']
+        self.assertEqual(3, payload['aarhus_total_stock'])
+        self.assertEqual(3, payload['local_total_stock'])
+        self.assertTrue(payload['local_available'])
+        self.assertIn('inventory_checked_at', payload)
+        self.assertNotIn('aarhus_inventory', payload)
+        self.assertNotIn('last_inventory_checked_at', payload)
+        self.assertNotIn('source_url', payload)
         self.assertEqual(785, staged.history[0]['product_id'])
         self.assertEqual('kaufmann', staged.history[0]['store'])
-        self.assertEqual(staged.patches[0]['payload']['aarhus_inventory'], staged.history[0]['local_inventory'])
+        self.assertTrue(staged.history[0]['source_available'])
+        self.assertEqual(payload['local_inventory'], staged.history[0]['local_inventory'])
 
-    def test_first_missing_kaufmann_colour_has_no_false_history_observation(self):
-        row = product_row(source_color_id='gone')
-        staged = inventory.StagedClient('kaufmann', [row])
-        client = Mock()
-        client.fetch_payload.return_value = variation_payload(source_available=True, webshop_stock=1, aarhus_stock=1)
-        with patch.object(kaufmann, 'KaufmannVariationClient', return_value=client):
-            special.run_kaufmann(staged, SimpleNamespace(no_delay=True))
-        self.assertEqual(1, staged.patches[0]['payload']['consecutive_source_misses'])
-        self.assertNotIn('aarhus_inventory', staged.patches[0]['payload'])
-        self.assertEqual([], staged.history)
+    def test_first_missing_kaufmann_colour_commits_without_history(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'state.json'
+            row = product_row(source_color_id='gone', updated_at='2026-10-19T12:00:00Z')
+            state = dict(stores=['kaufmann'], next_store=0, cycle_id='cycle', started_at=inventory.now(),
+                batches=[], totals=dict.fromkeys(inventory.COUNTERS, 0), retry_seconds=3600,
+                active_batch=None, journal=None, jobs={'kaufmann': [dict(id='job', rows=[row], retry_at=0)]})
+            client = Mock()
+            client.fetch_payload.return_value = variation_payload(source_available=True, webshop_stock=1, aarhus_stock=1)
+            database = Mock()
+            with patch.object(kaufmann, 'KaufmannVariationClient', return_value=client), \
+                 patch.object(inventory, 'put_run'):
+                inventory.process_cycle(database, path, state, refresh.parse_args(['--no-delay']), 1)
+            database.patch_row.assert_called_once()
+            self.assertEqual(1, database.patch_row.call_args.args[2]['consecutive_source_misses'])
+            database.queue_history_observation.assert_not_called()
+            self.assertEqual([], state['jobs']['kaufmann'])
+
+    def test_kaufmann_groups_batches_by_style(self):
+        rows = [product_row(id=1, canonical_url='https://www.kaufmann.dk/produkt/a'),
+                product_row(id=2, canonical_url='https://www.kaufmann.dk/produkt/b'),
+                product_row(id=3, source_parent_id='parent-2')]
+        self.assertEqual([[1, 2], [3]], [[row['id'] for row in batch] for batch in inventory.batches('kaufmann', rows, 1)])
 
     def test_kaufmann_rate_limit_escapes_adapter_and_stops_source(self):
         staged = inventory.StagedClient('kaufmann', [product_row()])
@@ -82,7 +112,7 @@ class UnifiedBatchTests(unittest.TestCase):
         client.fetch_payload.side_effect = StoreRateLimited('HTTP 429')
         with patch.object(kaufmann, 'KaufmannVariationClient', return_value=client):
             with self.assertRaises(StoreRateLimited):
-                special.run_kaufmann(staged, SimpleNamespace(no_delay=True))
+                kaufmann.refresh_store(staged, refresh.parse_args(['--no-delay']))
         self.assertEqual([], staged.patches)
         client.close.assert_called_once()
 
@@ -98,7 +128,7 @@ class UnifiedBatchTests(unittest.TestCase):
         response.json.return_value = [{'id':1}]
         values = dict(updated_at='2026-10-19T12:00:00Z', inventory_checked_at='2026-10-19T12:00:00Z')
         with patch.object(database.session, 'patch', return_value=response) as send:
-            database.patch_row(special.SPECS['weekday'], 1, values)
+            database.patch_row(special.REFRESH_SPECS['weekday'], 1, values)
         params = send.call_args.kwargs['params']
         self.assertEqual('lte.' + values['updated_at'], params['updated_at'])
 
@@ -133,7 +163,7 @@ class UnifiedBatchTests(unittest.TestCase):
             self.assertTrue(json.loads(path.read_text())['done'])
 
     def test_completed_special_catalog_never_uses_generic_absence_reconciliation(self):
-        for store in special.SPECS:
+        for store in special.CATALOG_SPECS:
             with self.subTest(store=store), tempfile.TemporaryDirectory() as directory:
                 path=Path(directory)/'state.json'
                 job=dict(before=[{'id':1}], run_id=1, offset=1, total=1, observed={'1':'2026-10-19T12:00:00Z'})

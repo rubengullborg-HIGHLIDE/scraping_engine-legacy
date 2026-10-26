@@ -197,6 +197,10 @@ def variation_rows_from_payload(
             int(store.get("total_stock") or 0)
             for store in inventory["stores"].values()
         )
+        # Kaufmann's tracked shops are all in Aarhus, so local equals Aarhus.
+        aarhus_available = source_available and any(
+            store["available"] for store in inventory["stores"].values()
+        )
         current_price = parse_price(
             color_option.get("priceRaw")
             if color_option.get("priceRaw") is not None
@@ -218,19 +222,18 @@ def variation_rows_from_payload(
                 "current_price": current_price,
                 "list_price": list_price,
                 "webshop_sizes": webshop_sizes,
-                "aarhus_inventory": inventory,
+                "local_inventory": inventory,
+                "local_total_stock": aarhus_total_stock,
+                "local_available": aarhus_available,
                 "aarhus_total_stock": aarhus_total_stock,
-                "aarhus_available": source_available
-                and any(store["available"] for store in inventory["stores"].values()),
+                "aarhus_available": aarhus_available,
                 "source_available": source_available,
                 "publication_status": "active" if source_available else "unavailable",
                 "status_reason": None if source_available else "source_available_false",
                 "status_checked_at": checked_at,
                 "discontinued_at": None if source_available else checked_at,
-                "last_inventory_checked_at": checked_at,
+                "inventory_checked_at": checked_at,
                 "consecutive_source_misses": 0,
-                "last_refresh_error": None,
-                "last_refresh_error_at": None,
                 "scraped_at": checked_at,
                 "updated_at": checked_at,
             }

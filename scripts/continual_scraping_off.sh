@@ -2,15 +2,11 @@
 set -euo pipefail
 
 TIMERS=(
-  highlide-kaufmann-refresh.timer
-  highlide-kaufmann-weekly-sweep.timer
   highlide-store-refresh.timer
   highlide-store-catalog-sync.timer
 )
 
 SERVICES=(
-  highlide-kaufmann-refresh.service
-  highlide-kaufmann-weekly-sweep.service
   highlide-store-refresh.service
   highlide-store-catalog-sync.service
 )

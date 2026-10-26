@@ -26,7 +26,7 @@ if str(ROOT) not in sys.path:
 from scripts import refresh_store_inventory as refresh
 from scripts import special_store_batches as special
 
-SPECS = {**refresh.STORE_SPECS, **special.SPECS}
+SPECS = {**refresh.STORE_SPECS, **special.REFRESH_SPECS}
 
 LOG = logging.getLogger(__name__)
 
@@ -55,7 +55,7 @@ def batches(store, rows, size):
     # Never split a style/page across batches: disappearance guards need siblings.
     groups = OrderedDict()
     for row in rows:
-        key = row['source_parent_id'] if store in ('salling', 'magasin') else refresh.row_url(row)
+        key = row['source_parent_id'] if store in ('salling', 'magasin', 'kaufmann') else refresh.row_url(row)
         groups.setdefault(key, []).append(row)
     values = list(groups.values())
     return [sum(values[index:index + size], []) for index in range(0, len(values), size)]
@@ -92,7 +92,7 @@ def put_run(database, payload):
 
 class BatchInventoryClient(refresh.SupabaseInventoryClient):
     def list_rows(self, spec):
-        if spec.key in special.SPECS:
+        if spec.key in special.REFRESH_SPECS:
             return special.read_rows(self, spec.key)
         return super().list_rows(spec)
 
@@ -113,6 +113,7 @@ class BatchInventoryClient(refresh.SupabaseInventoryClient):
                 f'{spec.key} id={row_id} is missing or newer than the journal; refusing stale replay')
 
 
+MISS_COUNTER_COLUMNS = {'consecutive_source_misses', 'status_checked_at', 'updated_at'}
 COUNTERS = ('pages_processed', 'updated_products', 'unavailable_products',
             'history_observations', 'failed_products', 'skipped_products')
 
@@ -250,7 +251,7 @@ def process_cycle(database, path, state, args, max_batches):
         error = None
         LOG.info('Starting %s batch %s: %s rows', store, job['id'], len(job['rows']))
         try:
-            stats = (special.run(staged, args) if store in special.SPECS
+            stats = (special.run(staged, args) if store in special.REFRESH_SPECS
                      else refresh.STORE_REFRESHERS[store](staged, args))
         except Exception as exc:
             error = f'{type(exc).__name__}: {exc}'
@@ -267,8 +268,12 @@ def process_cycle(database, path, state, args, max_batches):
                     pending['retry_at'] = deadline
         patch_ids = [patch['id'] for patch in staged.patches]
         history_ids = [entry['product_id'] for entry in staged.history]
-        valid_history = (set(history_ids).issubset(patch_ids) if store in special.SPECS
-                         else sorted(patch_ids) == sorted(history_ids))
+        # Every patch is one observation, except a first missing-colour
+        # counter, which deliberately records no inventory history.
+        observed_ids = [patch['id'] for patch in staged.patches
+                        if not ('consecutive_source_misses' in patch['payload']
+                                and set(patch['payload']) <= MISS_COUNTER_COLUMNS)]
+        valid_history = sorted(observed_ids) == sorted(history_ids)
         if (len(set(patch_ids)) != len(patch_ids) or len(set(history_ids)) != len(history_ids) or not valid_history
                 or any(entry.get('store') != store for entry in staged.history)):
             raise ValueError('Each committed row must have exactly one history observation')
