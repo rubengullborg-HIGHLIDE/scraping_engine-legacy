@@ -667,7 +667,7 @@ catalog batch still uses `run_special_catalog_batch.py` (shared with Weekday)
 because it sweeps known rows and hydrates only new pages instead of reimporting
 4,900 pages with Playwright.
 
-`supabase/migrations/20261026140000_align_kaufmann_inventory_columns.sql`
+`supabase/migrations/20261026150000_align_kaufmann_inventory_columns.sql`
 renames `aarhus_inventory` to `local_inventory` and `last_inventory_checked_at`
 to `inventory_checked_at`, adds `local_total_stock`/`local_available`, drops
 `last_refresh_error*`, and drops the `kaufmann_inventory_history` view and its
@@ -711,10 +711,14 @@ The new code requires the migration, and the old code cannot write after it
 
    ```bash
    psql "$DB" -X -f maintenance/verify_kaufmann_readers.sql > before.txt
-   psql "$DB" -X -v ON_ERROR_STOP=1 -f supabase/migrations/20261026140000_align_kaufmann_inventory_columns.sql
+   psql "$DB" -X -v ON_ERROR_STOP=1 -f supabase/migrations/20261026150000_align_kaufmann_inventory_columns.sql
+   psql "$DB" -X -c "select public.refresh_search_catalog()"
    psql "$DB" -X -f maintenance/verify_kaufmann_readers.sql > after.txt
    diff before.txt after.txt
    ```
+
+   The explicit refresh proves the `refresh-search-catalog` pg_cron job still
+   runs against the migrated table.
 
 4. Pull, test and smoke-test on the droplet:
 

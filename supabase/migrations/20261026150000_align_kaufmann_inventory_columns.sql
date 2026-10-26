@@ -5,10 +5,12 @@
 -- the Aarhus summaries. aarhus_total_stock and aarhus_available stay, as on
 -- every other store table.
 --
--- Database readers: search_products_ranked, get_highlide_dashboard and the
--- backstage_catalogue_v1 view (read by backstage_catalogue_page_v1) use only
--- aarhus_total_stock, aarhus_available and catalog columns, none of which
--- change. No other function or view references the renamed columns.
+-- Database readers: search_products_ranked, refresh_search_catalog (the
+-- pg_cron source of search_catalog / search_products_ranked_v2),
+-- get_highlide_dashboard and the backstage_catalogue_v1 view (read by
+-- backstage_catalogue_page_v1) use only aarhus_total_stock, aarhus_available
+-- and catalog columns, none of which change. No other function or view
+-- references the renamed or dropped columns.
 --
 -- Expand step: the website still selects aarhus_inventory and
 -- last_inventory_checked_at, and Backstage still reads

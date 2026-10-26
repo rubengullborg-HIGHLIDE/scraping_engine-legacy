@@ -13,3 +13,4 @@ select 'search_boss', md5(string_agg(row_to_json(r)::text, '|' order by ord)), c
 select 'search_skjorte_all', md5(string_agg(row_to_json(r)::text, '|' order by ord)), count(*), max(total_count) from (select row_number() over () ord, * from public.search_products_ranked('skjorte', '{}', p_sort => 'price_asc', p_limit => 500)) r;
 select 'search_sale_kaufmann', md5(string_agg(row_to_json(r)::text, '|' order by ord)), count(*), max(total_count) from (select row_number() over () ord, * from public.search_products_ranked('sort', array['kaufmann'], p_on_sale => true, p_limit => 500)) r;
 select 'website_compat', md5(string_agg(concat_ws('|', id, aarhus_inventory::text, last_inventory_checked_at::text, aarhus_total_stock, aarhus_available), E'\n' order by id)) from public.kaufmann_products;
+select 'search_v2_kaufmann', md5(string_agg(row_to_json(c)::text, '|' order by c.id)), count(*) from public.search_catalog c where c.source_key = 'kaufmann';
