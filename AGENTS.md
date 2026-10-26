@@ -20,8 +20,10 @@ Do not mix these two paths. Full import can collect names, descriptions, images,
 ├── deployment/
 │   ├── digitalocean.md
 │   └── systemd/
-│       ├── highlide-kaufmann-refresh.service
-│       └── highlide-kaufmann-refresh.timer
+│       ├── highlide-store-catalog-sync.service
+│       ├── highlide-store-catalog-sync.timer
+│       ├── highlide-store-refresh.service
+│       └── highlide-store-refresh.timer
 ├── migrations/
 │   ├── 001_product_inventory_snapshots.sql
 │   ├── 002_simplify_product_inventory_snapshots.sql
@@ -594,11 +596,11 @@ For each color variant, the importer stores:
 - `color`: the exact Kaufmann color name, for example `SORT`, `HVID`, `NAVY`
 - `color_group`: Kaufmann's grouped color family, for example `Sort`, `Hvid`, `Blå`
 - `webshop_sizes`: online-shop stock, kept only as reference
-- `aarhus_inventory`: clean reusable Aarhus store inventory for product detail pages
-- `aarhus_total_stock`
-- `aarhus_available`
+- `local_inventory`: clean reusable Aarhus store inventory for product detail pages
+- `local_total_stock`, `local_available`, `aarhus_total_stock`, `aarhus_available`: equal summaries, because every tracked Kaufmann shop is in Aarhus
+- `inventory_checked_at`
 
-`aarhus_inventory` is a store-agnostic JSON interface. Keep source-specific ids such as Kaufmann `warehouse_id`, `productNumber`, and size variant ids out of this object; put them in `raw` if they are useful for debugging or future scraper work.
+`local_inventory` is a store-agnostic JSON interface, shared with every other store table. Keep source-specific ids such as Kaufmann `warehouse_id`, `productNumber`, and size variant ids out of this object; put them in `raw` if they are useful for debugging or future scraper work.
 
 ```json
 {
@@ -651,7 +653,7 @@ Current Kaufmann import status as of July 8, 2026:
 - 828 distinct product pages have at least one Aarhus-available color variant.
 - The table contains 103 brands.
 - Summed local Aarhus stock across all imported color variants is 20,297 units.
-- `aarhus_inventory` uses the clean `{"stores": {...}}` interface on all rows.
+- The inventory JSON (now `local_inventory`) uses the clean `{"stores": {...}}` interface on all rows.
 - No persisted import log is guaranteed unless the script was run with shell redirection into `logs/`.
 
 Useful status SQL:
@@ -679,64 +681,32 @@ This path reads existing product rows from Supabase and updates only dynamic fie
 
 The stable update key is the database product row `id`, because the job first reads products and then patches the same row. For long-term product identity across tables, prefer `store + source_variant_id` or `store + normalized variant URL` once full import captures those fields.
 
-The existing generic refresh path is still oriented around the frontend-facing `products` table. For Kaufmann, the next planned task is to create a dedicated refresh cron script for `kaufmann_products`.
+The legacy generic refresh path (`scripts/refresh_inventory.py`) is still oriented around the frontend-facing `products` table.
 
-Kaufmann refresh is handled by `scripts/refresh_kaufmann_inventory.py`. It intentionally updates only dynamic fields on existing `kaufmann_products` rows:
+Kaufmann refreshes through the shared store path like every other store.
+`scripts/refresh_kaufmann_inventory.py` is its adapter in
+`refresh_store_inventory.STORE_REFRESHERS`:
 
-- Read existing distinct `canonical_url` or `source_parent_id` values from `kaufmann_products`.
-- Re-scrape each product page with the Kaufmann full-import parser.
-- Patch existing rows by database `id`; do not create duplicate rows.
-- Skip newly discovered color variants during refresh. Add them through full import instead.
-- Refresh only dynamic fields: `current_price`, `list_price`, `webshop_sizes`, `aarhus_inventory`, `aarhus_total_stock`, `aarhus_available`, `scraped_at`, and `updated_at`.
-- Keep the clean `aarhus_inventory` interface stable for the frontend.
-- Keep source-specific ids under `raw` from full import when useful, but do not rewrite `raw` during daily refresh.
-- If a known product page is empty, 404, or gone, mark its existing variants unavailable with empty inventory instead of deleting rows.
-- Write logs to `logs/kaufmann_refresh.log` when run as cron.
-- Use UTC timestamps in the database.
+- Fetch Kaufmann's public variation JSON once per `source_parent_id`; no Playwright.
+- Patch existing rows by database `id` through the shared patch and history code; never insert rows. Unknown colours are left to the weekly catalog batch.
+- A known colour missing from a successful response increments `consecutive_source_misses` without a history observation; the second consecutive miss marks it unavailable (`color_missing_from_variation_twice`).
+- A confirmed 404/410 product page or variation endpoint marks the style's known rows unavailable with zeroed inventory; prices are kept.
+- `source_available` and `publication_status` follow Kaufmann's colour `available` flag and are part of the Kaufmann history fingerprint.
 
-Kaufmann refresh history is stored in `kaufmann_inventory_history`. It stores
-one row per consecutive dynamic state rather than copying identical JSON every
-day:
+Kaufmann history is `store_inventory_history` with `store = 'kaufmann'`;
+operational runs are the shared `store_inventory_refresh_runs`. The
+`kaufmann_inventory_history` view and the archived snapshot tables are gone.
+`kaufmann_inventory_refresh_runs` and the read-only `aarhus_inventory` /
+`last_inventory_checked_at` aliases remain only until the website and
+Backstage read the shared names; then apply
+`maintenance/drop_kaufmann_compatibility.sql`.
 
-```text
-kaufmann_inventory_history
-├── kaufmann_product_id
-├── state_hash
-├── observed_from
-├── observed_through
-├── last_observed_bucket
-├── observation_count
-├── refresh_status
-├── current_price
-├── list_price
-├── aarhus_inventory
-├── aarhus_total_stock
-├── aarhus_available
-├── source_available
-├── publication_status
-└── status_reason
-```
-
-The database trigger fingerprints each incoming observation. An unchanged
-state extends `observed_through` and increments `observation_count` at most
-once per UTC day; a changed state inserts a new interval. Webshop sizes are
-intentionally not retained in history. Product URLs and source identifiers are
-joined from `kaufmann_products` through `kaufmann_product_id` instead of being
-repeated. `kaufmann_inventory_refresh_runs` records one small operational row
-per invocation so daily execution can be audited without daily inventory JSON
-copies.
-
-`kaufmann_inventory_snapshots` is the archived legacy daily table. Its rows
-were compacted into the history table and it was truncated on September 2,
-2026. Current refresh code must not write to it.
-
-The sequential non-Kaufmann refresh is handled by
-`scripts/refresh_store_inventory.py`. It refreshes Rains, Rømerhus, SuitClub,
-CEJF, Skagen Clothing, Shoe Chapter, STOY, and LAKOR in a fixed sequence and
+The sequential store refresh is handled by
+`scripts/refresh_store_inventory.py`. It refreshes every store table in a fixed sequence and
 patches existing product rows by database `id` only. It must not create catalog
 rows or rewrite stable metadata.
 
-Non-Kaufmann history is stored in the shared `store_inventory_history` table.
+History for every store is stored in the shared `store_inventory_history` table.
 It stores one interval per consecutive dynamic state. The database trigger
 fingerprints each incoming observation: an unchanged state extends the current
 interval and increments `observation_count` at most once per UTC day; a changed
@@ -763,52 +733,17 @@ rows become active again automatically.
 Useful Kaufmann refresh commands:
 
 ```bash
-python scripts/refresh_kaufmann_inventory.py --dry-run --url https://www.kaufmann.dk/produkt/boss-orange-196321 --no-delay
-python scripts/refresh_kaufmann_inventory.py --limit 5 --no-delay
-python scripts/refresh_kaufmann_inventory.py
+python scripts/refresh_store_inventory.py --store kaufmann --dry-run --limit 5 --no-delay
+python scripts/refresh_store_inventory.py --store kaufmann --limit 1 --no-delay
 ```
 
-Recommended Kaufmann daily cron entry:
-
-```cron
-15 2 * * * cd /opt/highlide/scraping_engine && .venv/bin/python scripts/refresh_kaufmann_inventory.py >> logs/kaufmann_refresh.log 2>&1
-```
-
-Current deployment status as of July 30, 2026:
-
-- The Kaufmann refresh has been deployed on the DigitalOcean droplet at `~/scraping_engine`.
-- The systemd timer `highlide-kaufmann-refresh.timer` is enabled and active.
-- The droplet timezone is UTC, so the configured `02:15` timer runs around `04:15` Copenhagen summer time, plus up to `15m` randomized delay.
-- A manual full service run was started successfully and logs showed progress such as `[15/4878] Refreshing ...`.
-- Early observed droplet load during the run was about 77% CPU and 50% memory.
-- Logs are written to `~/scraping_engine/logs/kaufmann_refresh.log` on the droplet.
-
-July 31, 2026 refresh incident:
-
-- The July 30 and July 31 Kaufmann refresh runs did not complete the full table.
-- On July 31, Supabase showed about 5,457 of 8,023 variant rows updated, covering about 3,269 of 4,878 product pages.
-- The remaining 2,566 variants still had July 8 `updated_at` values.
-- `kaufmann_inventory_snapshots` showed similar partial coverage: 4,671 variants on July 30 and about 5,462 variants on July 31 at the time of inspection.
-- The service has `TimeoutStartSec=12h`, so long runs can be killed by systemd before reaching the end.
-- The original refresh script ordered work by `id`, so each daily run repeated the first part of the catalogue and never prioritized the stale tail if it timed out.
-- The script has since been changed to read existing variants ordered by `updated_at.asc,id.asc`, so the oldest/stalest product pages refresh first.
-- Product and snapshot writes have also been changed from per-variant REST writes to page-level batched upserts, reducing Supabase HTTP write overhead.
-- The first batched write attempt failed on the droplet with `400 Bad Request ... kaufmann_products?on_conflict=id` because the upsert rows only included `id` plus dynamic fields. Supabase/PostgREST still needs required NOT NULL identity columns for the insert side of an upsert. `scripts/refresh_kaufmann_inventory.py` now includes existing `source_parent_id`, `source_color_id`, and `source_url` in each product upsert row while still only changing dynamic values in practice.
-
-Useful droplet commands:
-
-```bash
-systemctl list-timers highlide-kaufmann-refresh.timer
-systemctl status highlide-kaufmann-refresh.timer
-systemctl status highlide-kaufmann-refresh.service
-tail -f ~/scraping_engine/logs/kaufmann_refresh.log
-journalctl -u highlide-kaufmann-refresh.service -n 100
-```
+Scheduled runs go through `scripts/run_inventory_batches.py` and
+`highlide-store-refresh.timer`; see `deployment/digitalocean.md`.
 
 Parallel refresh guidance:
 
 - It is okay to run different store refresh scripts in parallel later if they touch separate store tables/rows and the droplet has enough CPU and memory.
-- Do not run multiple full Kaufmann refresh services at the same time. The systemd service uses `flock` to prevent overlap.
+- Do not run multiple Kaufmann refreshes at the same time. The shared batch runner uses `flock` to prevent overlap.
 - If Kaufmann ever needs parallelization, partition deliberately with `--offset` and `--limit`, use separate service names and lock files, and monitor Supabase/API load. Do not let two workers refresh the same `kaufmann_product_id` set for the same `checked_bucket`.
 - With the current observed load, keep Kaufmann at one worker unless runtime becomes a real problem.
 
@@ -853,9 +788,12 @@ kaufmann_products
 ├── category
 ├── images
 ├── webshop_sizes
-├── aarhus_inventory
+├── local_inventory
+├── local_total_stock
+├── local_available
 ├── aarhus_total_stock
 ├── aarhus_available
+├── inventory_checked_at
 └── raw
 ```
 
@@ -942,12 +880,6 @@ Recommended DigitalOcean cron entry:
 0 */2 * * * cd /opt/highlide/scraping_engine && .venv/bin/python scripts/refresh_inventory.py >> logs/refresh_inventory.log 2>&1
 ```
 
-Recommended Kaufmann refresh cron entry:
-
-```cron
-15 2 * * * cd /opt/highlide/scraping_engine && .venv/bin/python scripts/refresh_kaufmann_inventory.py >> logs/kaufmann_refresh.log 2>&1
-```
-
 Make sure the server has:
 
 - Python virtualenv installed
@@ -956,7 +888,7 @@ Make sure the server has:
 - `.env` present with Supabase secret credentials
 - `logs/` directory created
 
-Prefer the systemd timer files in `deployment/systemd/` for the Kaufmann daily refresh on DigitalOcean. They include no-overlap locking with `flock`, daily scheduling, and a 12-hour timeout for long Playwright runs. See `deployment/digitalocean.md` for the full server runbook.
+Prefer the shared systemd timer files in `deployment/systemd/` on DigitalOcean. See `deployment/digitalocean.md` for the full server runbook.
 
 ## Known Limitation: Color Variants
 
@@ -1000,12 +932,12 @@ Until then, treat size availability on multi-color products as best-effort.
 - Use UTC timestamps in the database.
 - Avoid schema churn in the frontend-facing `products` table unless the frontend is updated with it.
 
-### Resumable weekly non-Kaufmann catalog cycles
+### Resumable weekly catalog cycles
 
 `run_catalog_batches.py` is the systemd catalog entry point. It freezes discovery
 with `catalog_manifest.py`, advances only successful batches, and releases the
-shared inventory lock between them. All twelve shared catalog stores participate;
-Kaufmann retains its separate weekly runner. Do not add an outer flock to this
+shared inventory lock between them. Twelve stores use generic catalog
+reconciliation; Kaufmann and Weekday use journaled special batches (below). Do not add an outer flock to this
 service. Do not reconcile absence from a partial manifest or count intervening
 daily inventory timestamps as catalog observations. Keep the checkpoint and its
 manifest directory together. Refer to the October 19 follow-up in
@@ -1020,7 +952,7 @@ together using `inventory_checked_at`, `scraped_at`, and `updated_at`. `run_spec
 provides journaled catalog batches for both; do not apply generic catalog-miss
 reconciliation to them. Daily operational cycles use the shared run table,
 with Kaufmann history copied into the shared table without losing interval
-counts or lifecycle fields. The old name is a read-only compatibility view;
-`kaufmann_inventory_history_archive` is the frozen original backup.
-The shared timers replace both legacy Kaufmann timers. Weekday catalog tracking
+counts or lifecycle fields. Since October 26 Kaufmann's daily refresh is an
+ordinary shared adapter; only its weekly catalog sweep remains special.
+The shared timers replaced the legacy Kaufmann timers, which are removed. Weekday catalog tracking
 requires `20261019133636_weekday_catalog_batch_runs.sql` before deployment.

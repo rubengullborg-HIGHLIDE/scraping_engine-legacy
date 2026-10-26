@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import Mock
 
-from scripts import refresh_kaufmann_inventory as kaufmann
+from scripts import special_store_batches as special
 from scripts import refresh_store_inventory as stores
 from scripts.sync_store_catalogs import CatalogLifecycleClient
 
@@ -29,15 +29,12 @@ class DailyAarhusSelectionTests(unittest.TestCase):
                 self.assertEqual(params["aarhus_available"], "eq.true")
 
     def test_kaufmann_weekly_sweep_still_includes_sold_out_and_unpublished(self):
-        client = mock_client(kaufmann.SupabaseKaufmannRefreshClient)
-        client.list_existing_variants("kaufmann_products")
-        params = client.session.get.call_args.kwargs["params"]
-        self.assertEqual(params["aarhus_available"], "eq.true")
-        self.assertEqual(params["publication_status"], "eq.active")
-        client.list_existing_variants("kaufmann_products", include_unavailable=True)
+        client = mock_client(stores.SupabaseInventoryClient)
+        special.read_rows(client, "kaufmann", include_unavailable=True)
         params = client.session.get.call_args.kwargs["params"]
         self.assertNotIn("aarhus_available", params)
         self.assertNotIn("publication_status", params)
+        self.assertIn("consecutive_source_misses", params["select"])
 
     def test_weekly_catalogue_selection_remains_unfiltered_for_every_store(self):
         client = mock_client(CatalogLifecycleClient)

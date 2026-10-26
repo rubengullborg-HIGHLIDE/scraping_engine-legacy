@@ -45,6 +45,12 @@ class StoreSpec:
     match_column: str
     dynamic_columns: tuple[str, ...]
     unavailable_totals_unknown: bool = False
+    # Source lifecycle fields refreshed alongside inventory.
+    status_columns: tuple[str, ...] = ()
+    # Lifecycle fields the shared history trigger fingerprints for this store.
+    history_columns: tuple[str, ...] = ()
+    # Existing-row fields an adapter needs beyond the shared selection.
+    read_columns: tuple[str, ...] = ()
 
 
 @dataclass
@@ -75,6 +81,13 @@ TIMESTAMP_COLUMNS = (
     "inventory_checked_at",
     "scraped_at",
     "updated_at",
+)
+
+LIFECYCLE_COLUMNS = (
+    "publication_status",
+    "status_reason",
+    "status_checked_at",
+    "discontinued_at",
 )
 
 STORE_SPECS: "OrderedDict[str, StoreSpec]" = OrderedDict(
@@ -173,7 +186,20 @@ for _store in ("axel", "quint", "salling", "magasin"):
         match_column="source_color_id",
         dynamic_columns=COMMON_DYNAMIC_COLUMNS + TOTAL_COLUMNS + TIMESTAMP_COLUMNS,
         unavailable_totals_unknown=_store == "magasin",
+        status_columns=LIFECYCLE_COLUMNS if _store in ("axel", "quint") else (),
+        read_columns=("webshop_sizes",) if _store == "salling" else (),
     )
+
+STORE_SPECS["kaufmann"] = StoreSpec(
+    key="kaufmann",
+    table="kaufmann_products",
+    identity_columns=("source_parent_id", "source_color_id"),
+    match_column="source_color_id",
+    dynamic_columns=COMMON_DYNAMIC_COLUMNS + TOTAL_COLUMNS + TIMESTAMP_COLUMNS,
+    status_columns=LIFECYCLE_COLUMNS + ("source_available", "consecutive_source_misses"),
+    history_columns=("source_available", "publication_status", "status_reason"),
+    read_columns=("consecutive_source_misses",),
+)
 
 
 class LocalInventoryClient:
@@ -254,7 +280,13 @@ class SupabaseInventoryClient:
     def _table_url(self, table: str) -> str:
         return f"{self.supabase_url}/rest/v1/{quote(table)}"
 
-    def list_rows(self, spec: StoreSpec, page_size: int = 1000) -> list[dict[str, Any]]:
+    def list_rows(
+        self,
+        spec: StoreSpec,
+        page_size: int = 1000,
+        *,
+        include_unavailable: bool = False,
+    ) -> list[dict[str, Any]]:
         columns = (
             "id",
             *spec.identity_columns,
@@ -266,9 +298,13 @@ class SupabaseInventoryClient:
             "publication_status",
             "discontinued_at",
             "updated_at",
-        )
-        if spec.key == "salling":
-            columns += ("webshop_sizes",)
+        ) + spec.read_columns
+        # Daily refreshes follow Aarhus-available rows; weekly catalog sweeps
+        # also recheck sold-out and unpublished rows to recover restocks.
+        filters = {} if include_unavailable else {
+            "publication_status": "eq.active",
+            "aarhus_available": "eq.true",
+        }
         rows: list[dict[str, Any]] = []
         start = 0
         while True:
@@ -276,8 +312,7 @@ class SupabaseInventoryClient:
                 self._table_url(spec.table),
                 params={
                     "select": ",".join(columns),
-                    "publication_status": "eq.active",
-                    "aarhus_available": "eq.true",
+                    **filters,
                     "order": "updated_at.asc,id.asc",
                 },
                 headers={"Range": f"{start}-{start + page_size - 1}"},
@@ -441,6 +476,7 @@ def history_payload(
         "local_available": dynamic.get("local_available"),
         "aarhus_total_stock": dynamic.get("aarhus_total_stock"),
         "aarhus_available": dynamic.get("aarhus_available"),
+        **{column: dynamic.get(column) for column in getattr(spec, "history_columns", ())},
         "updated_at": checked_at,
     }
 
@@ -451,8 +487,8 @@ def unavailable_payload(
     checked_at: str,
 ) -> dict[str, Any]:
     payload: dict[str, Any] = {
-        "current_price": existing_row.get("current_price"),
-        "list_price": existing_row.get("list_price"),
+        # Keep the stored price. Rows journaled without prices must not null it.
+        **{column: existing_row[column] for column in ("current_price", "list_price") if column in existing_row},
         "webshop_sizes": [],
         "local_inventory": zero_inventory(existing_row.get("local_inventory")),
         "local_available": False,
@@ -467,7 +503,7 @@ def unavailable_payload(
         payload["inventory_checked_at"] = checked_at
     if "scraped_at" in spec.dynamic_columns:
         payload["scraped_at"] = checked_at
-    return {column: payload[column] for column in spec.dynamic_columns}
+    return {column: payload[column] for column in spec.dynamic_columns if column in payload}
 
 
 def explicitly_unavailable(exc: BaseException) -> bool:
@@ -500,9 +536,8 @@ def apply_full_row(
     ensure_identity(spec, existing_row, full_row)
     payload = dynamic_payload(spec, full_row)
     source_unavailable = False
-    if spec.key in {"axel", "quint"}:
-        payload.update({key: full_row[key] for key in (
-            "publication_status", "status_reason", "status_checked_at", "discontinued_at")})
+    if spec.status_columns:
+        payload.update({key: full_row[key] for key in spec.status_columns})
         source_unavailable = payload["publication_status"] == "unavailable"
         if source_unavailable:
             payload["discontinued_at"] = existing_row.get("discontinued_at") or payload["discontinued_at"]
@@ -541,15 +576,20 @@ def apply_unavailable(
     stats: RefreshStats,
     *,
     refresh_status: str = "page_unavailable",
+    status_reason: Optional[str] = None,
+    extra: Optional[dict[str, Any]] = None,
 ) -> None:
     checked_at = datetime.now(timezone.utc).isoformat()
     payload = unavailable_payload(spec, existing_row, checked_at)
     payload.update(
         {
             "publication_status": "unavailable",
-            "status_reason": "source_item_missing" if refresh_status == "source_item_missing" else "page_404_or_410",
+            "status_reason": status_reason or (
+                "source_item_missing" if refresh_status == "source_item_missing" else "page_404_or_410"
+            ),
             "status_checked_at": checked_at,
             "discontinued_at": existing_row.get("discontinued_at") or checked_at,
+            **(extra or {}),
         }
     )
     if args.dry_run:
@@ -939,6 +979,8 @@ from scripts.refresh_axel_quint_inventory import refresh_store as refresh_axel_q
 STORE_REFRESHERS.update({key: partial(refresh_axel_quint, key) for key in ("axel", "quint")})
 from scripts.refresh_department_inventory import refresh_store as refresh_department
 STORE_REFRESHERS.update({key: partial(refresh_department, key) for key in ("salling", "magasin")})
+from scripts.refresh_kaufmann_inventory import refresh_store as refresh_kaufmann
+STORE_REFRESHERS["kaufmann"] = refresh_kaufmann
 from scripts.refresh_weekday_database import refresh_store as refresh_weekday
 STORE_REFRESHERS["weekday"] = refresh_weekday
 
@@ -1091,7 +1133,7 @@ def parse_args(argv=None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
             "Sequentially refresh price, webshop availability, and local-store "
-            "inventory for existing non-Kaufmann product rows."
+            "inventory for existing product rows."
         )
     )
     parser.add_argument(
@@ -1120,7 +1162,7 @@ def parse_args(argv=None) -> argparse.Namespace:
         dest="history_table",
         default=env("STORE_INVENTORY_HISTORY_TABLE", "store_inventory_history"),
         help=(
-            "Change-based non-Kaufmann inventory history table. "
+            "Change-based inventory history table shared by every store. "
             "--snapshots-table remains as a deprecated alias."
         ),
     )
@@ -1141,11 +1183,11 @@ def parse_args(argv=None) -> argparse.Namespace:
             "STORE_INVENTORY_REFRESH_RUNS_TABLE",
             "store_inventory_refresh_runs",
         ),
-        help="Operational run table for sequential non-Kaufmann refreshes.",
+        help="Operational run table for sequential store refreshes.",
     )
     parser.add_argument("--no-delay", action="store_true", help="Disable polite inter-product delays.")
     parser.add_argument("--source-transport", choices=("requests", "system-curl"), default="requests",
-                        help="Source transport for the eight Shopify stores; database transport is unchanged.")
+                        help="Source transport for the Shopify stores; database transport is unchanged.")
     parser.add_argument("--min-delay", type=float, default=float(env("STORE_REFRESH_MIN_DELAY", "0.5")))
     parser.add_argument("--max-delay", type=float, default=float(env("STORE_REFRESH_MAX_DELAY", "1.0")))
     parser.add_argument("--variant-delay", type=float, default=float(env("STORE_REFRESH_VARIANT_DELAY", "0.2")))
@@ -1158,10 +1200,10 @@ def parse_args(argv=None) -> argparse.Namespace:
         default=env("LOG_LEVEL", "INFO"),
         choices=("DEBUG", "INFO", "WARNING", "ERROR"),
     )
-    parser.add_argument("--input", help="Local existing-row JSON for AXEL/qUINT/Salling/Magasin dry runs; no database access.")
+    parser.add_argument("--input", help="Local existing-row JSON for AXEL/qUINT/Salling/Magasin/Kaufmann dry runs; no database access.")
     arguments = parser.parse_args(argv)
-    if arguments.input and (not arguments.dry_run or arguments.all or arguments.store not in (["axel"], ["quint"], ["salling"], ["magasin"])):
-        parser.error("--input requires --dry-run and exactly one --store axel, quint, salling or magasin")
+    if arguments.input and (not arguments.dry_run or arguments.all or arguments.store not in (["axel"], ["quint"], ["salling"], ["magasin"], ["kaufmann"])):
+        parser.error("--input requires --dry-run and exactly one --store axel, quint, salling, magasin or kaufmann")
     if arguments.all and arguments.store:
         parser.error("use either --all or one or more --store values")
     if arguments.limit is not None and arguments.limit < 1:

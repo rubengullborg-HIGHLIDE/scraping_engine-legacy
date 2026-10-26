@@ -1,6 +1,6 @@
 # DigitalOcean Deployment
 
-This guide deploys HIGHLIDE's resumable daily inventory and weekly catalog cycles on a Linux droplet. The October 19 unified-store follow-up below supersedes the legacy separate Kaufmann schedules.
+This guide deploys HIGHLIDE's resumable daily inventory and weekly catalog cycles on a Linux droplet. Kaufmann runs on the same shared refresh path as every other store; the October 26 section below covers that change.
 
 ### October 19 safety and compatibility changes
 
@@ -153,9 +153,6 @@ Required:
 ```bash
 SUPABASE_URL=https://your-project-ref.supabase.co
 SUPABASE_SECRET_KEY=your-supabase-secret-key
-KAUFMANN_PRODUCTS_TABLE=kaufmann_products
-KAUFMANN_INVENTORY_HISTORY_TABLE=kaufmann_inventory_history
-KAUFMANN_INVENTORY_REFRESH_RUNS_TABLE=kaufmann_inventory_refresh_runs
 STORE_INVENTORY_HISTORY_TABLE=store_inventory_history
 STORE_INVENTORY_REFRESH_RUNS_TABLE=store_inventory_refresh_runs
 ```
@@ -179,19 +176,16 @@ and catalog-sync code.
 
 ```bash
 mkdir -p logs
-bash scripts/run_kaufmann_refresh.sh --dry-run --url https://www.kaufmann.dk/produkt/boss-orange-196321 --no-delay
-bash scripts/run_kaufmann_refresh.sh --limit 1 --no-delay
-.venv/bin/python scripts/sync_kaufmann_catalog.py --discover-only --preview 3
-.venv/bin/python scripts/sync_kaufmann_catalog.py --dry-run --limit 3 --no-delay
+bash scripts/run_store_refresh.sh --store kaufmann --limit 1 --dry-run --no-delay
 bash scripts/run_store_refresh.sh --all --limit 1 --dry-run --no-delay
 bash scripts/run_store_refresh.sh --all --limit 1 --no-delay
 bash scripts/run_store_catalog_sync.sh --store cejf --limit 1 --dry-run --no-delay
 ```
 
-The write test should log:
+The write test should log one line per store:
 
 ```text
-Kaufmann refresh complete. refreshed_variants=...
+kaufmann refresh complete. pages=1 updated=...
 ```
 
 ## 6. Install Systemd Timer
@@ -219,9 +213,7 @@ scraper service already in progress to finish safely.
 Check timer status:
 
 ```bash
-systemctl list-timers highlide-kaufmann-refresh.timer highlide-kaufmann-weekly-sweep.timer highlide-store-refresh.timer highlide-store-catalog-sync.timer
-systemctl status highlide-kaufmann-refresh.timer
-systemctl status highlide-kaufmann-weekly-sweep.timer
+systemctl list-timers highlide-store-refresh.timer highlide-store-catalog-sync.timer
 systemctl status highlide-store-refresh.timer
 systemctl status highlide-store-catalog-sync.timer
 ```
@@ -229,8 +221,6 @@ systemctl status highlide-store-catalog-sync.timer
 Run manually:
 
 ```bash
-sudo systemctl start highlide-kaufmann-refresh.service
-sudo systemctl start highlide-kaufmann-weekly-sweep.service
 sudo systemctl start highlide-store-refresh.service
 sudo systemctl start highlide-store-catalog-sync.service
 ```
@@ -238,7 +228,6 @@ sudo systemctl start highlide-store-catalog-sync.service
 Read service status:
 
 ```bash
-systemctl status highlide-kaufmann-refresh.service
 systemctl status highlide-store-refresh.service
 systemctl status highlide-store-catalog-sync.service
 ```
@@ -246,23 +235,19 @@ systemctl status highlide-store-catalog-sync.service
 Tail logs:
 
 ```bash
-tail -f /root/scraping_engine/logs/kaufmann_refresh.log
 tail -f /root/scraping_engine/logs/store_refresh.log
 tail -f /root/scraping_engine/logs/store_catalog_sync.log
-journalctl -u highlide-kaufmann-refresh.service -f
 journalctl -u highlide-store-refresh.service -f
 journalctl -u highlide-store-catalog-sync.service -f
 ```
 
-All inventory services use the same global `flock`, so they cannot run in parallel. The non-Kaufmann service waits for an active Kaufmann run to finish and then refreshes its stores sequentially. Both Kaufmann services wait up to 12 hours for the lock instead of skipping a busy slot. Lock exhaustion uses exit code 75 and systemd retries after 15 minutes. The 25-hour service timeout accommodates lock waiting and the existing refresh budget. A scraper partial/error result of 1 is not automatically restarted. The Kaufmann refresh reads the public variation endpoint and does not launch Playwright.
+Both services use the same global `flock`, so inventory and catalog writes never run in parallel. The Kaufmann refresh reads the public variation endpoint and does not launch Playwright.
 
 ## 7. Cron Fallback
 
 If you prefer cron:
 
 ```cron
-15 2 * * 1-6 cd /root/scraping_engine && /usr/bin/flock --verbose -w 43200 -E 75 /tmp/highlide-inventory-refresh.lock /bin/bash scripts/run_kaufmann_refresh.sh >> logs/kaufmann_refresh.log 2>&1
-15 2 * * 0 cd /root/scraping_engine && /usr/bin/flock --verbose -w 43200 -E 75 /tmp/highlide-inventory-refresh.lock /bin/bash scripts/run_kaufmann_weekly.sh >> logs/kaufmann_refresh.log 2>&1
 15 8 * * * cd /root/scraping_engine && /usr/bin/flock -w 43200 /tmp/highlide-inventory-refresh.lock /bin/bash scripts/run_store_refresh.sh --all >> logs/store_refresh.log 2>&1
 15 12 * * 0 cd /root/scraping_engine && /usr/bin/flock -w 86400 /tmp/highlide-inventory-refresh.lock /bin/bash scripts/run_store_catalog_sync.sh --all >> logs/store_catalog_sync.log 2>&1
 ```
@@ -273,10 +258,8 @@ If you prefer cron:
 
   | Schedule | Service | Arguments | Rows checked |
   | --- | --- | --- | --- |
-  | Monday-Saturday | `highlide-kaufmann-refresh.service` | none | `publication_status = 'active'` |
-  | Sunday | `highlide-kaufmann-weekly-sweep.service` | sitemap diff, then `--include-unavailable` | new Kaufmann pages, then every existing Kaufmann product |
-  | Daily | `highlide-store-refresh.service` | `--all` | active rows in all eight non-Kaufmann tables |
-  | Sunday | `highlide-store-catalog-sync.service` | `--all` | complete catalogs for all eight non-Kaufmann stores |
+  | Daily | `highlide-store-refresh.service` | `--scheduled` | active, Aarhus-available rows in all fourteen store tables |
+  | Sunday | `highlide-store-catalog-sync.service` | `--scheduled` | complete catalogs; Kaufmann also rechecks every known row, including unavailable ones |
 
 - `highlide-store-refresh.timer` starts at `08:15` daily. Its one Python process refreshes Rains, Rømerhus, SuitClub, CEJF, Skagen Clothing, Shoe Chapter, STOY, and LAKOR sequentially.
 
@@ -286,22 +269,20 @@ If you prefer cron:
 
 - Catalog reconciliation is skipped and the service exits unsuccessfully if fewer than 50% of the previously publishable rows were refreshed. This protects against a broken or temporarily truncated collection feed.
 
-- Every successful non-Kaufmann product update submits one observation to `store_inventory_history`. The database extends the latest interval when prices and local inventory are unchanged, or inserts a new interval when that state changes. A same-day retry does not increase `observation_count`. Writes are batched in groups of 50.
+- Every successful product update submits one observation to `store_inventory_history`. The database extends the latest interval when prices and local inventory are unchanged, or inserts a new interval when that state changes. A same-day retry does not increase `observation_count`. Writes are batched in groups of 50.
 
 - Store history contains prices, clean local inventory, total-stock summaries, availability summaries, and refresh status. It deliberately excludes webshop sizes, URLs, source identity, descriptions, images, materials, and other catalog metadata.
 
 - `store_inventory_refresh_runs` records one compact audit row per sequential daily invocation, including selected stores, test limits/offsets, whether history was enabled, counts, status, and write failures.
 
-- Active products refresh Monday through Saturday. Sunday's sweep also rechecks soft-tombstoned products so a product can become active again.
-- The two Kaufmann timers start at `02:15`; the other-store inventory timer starts at `08:15`; and the weekly catalog timer starts Sunday at `12:15`. Randomized delays and the shared lock prevent simultaneous scraper workloads.
+- Active, Aarhus-available products refresh daily. Kaufmann's weekly catalog sweep also rechecks soft-tombstoned products so a product can become active again.
 - Set the droplet timezone with `sudo timedatectl set-timezone Europe/Copenhagen` if you want the timer interpreted as Copenhagen time.
-- `kaufmann_products` remains the current/live table.
-- `kaufmann_inventory_history` stores one interval per consecutive Kaufmann
-  dynamic state and extends unchanged intervals.
-- `kaufmann_inventory_refresh_runs` records one row per refresh invocation.
+- `kaufmann_products` uses the shared inventory columns (`local_inventory`,
+  `local_total_stock`, `local_available`, `inventory_checked_at`). Its history
+  is `store_inventory_history` with `store = 'kaufmann'`.
 - The refresh does not rewrite stable catalog fields or `raw`.
 - `publication_status = 'active'` is the publishable state. `unavailable` rows are retained as soft tombstones rather than deleted.
-- Kaufmann's Sunday job runs the lightweight all-row variation sweep first. In addition to lifecycle updates, that sweep records known pages whose response contains an unknown colour ID. The catalogue step then full-imports only those affected pages plus URLs newly found in the sitemap. This detects new colours on old URLs without a second all-page pass or a weekly Playwright import of every known page.
+- Kaufmann's weekly catalog batch runs the lightweight variation sweep first. In addition to lifecycle updates, that sweep records known pages whose response contains an unknown colour ID. The catalogue step then full-imports only those affected pages plus URLs newly found in the sitemap. This detects new colours on old URLs without a second all-page pass or a weekly Playwright import of every known page.
 - Every successful full catalogue job writes a summary to `catalog_sync_runs`, including seen, new, reactivated, absent, confirmed-missing, and failed counts. Rows from one eight-store invocation share a `batch_id`.
 - Every product table already has an immutable `first_seen_at` timestamp. New-product filters should use this field; ordinary catalogue and inventory upserts do not rewrite it.
 
@@ -458,8 +439,7 @@ If another job owns it, the runner exits successfully and resumes on the next
 timer tick instead of waiting for hours. The timer runs five minutes after boot
 and 15 minutes after the service becomes inactive. A fresh catalog cycle starts
 only after the previous cycle finishes and seven days have elapsed since its
-start. It is no longer anchored to Sunday. Kaufmann and Weekday now participate through their own catalog adapters. The old
-Kaufmann timers must stay disabled.
+start. It is no longer anchored to Sunday. Kaufmann and Weekday participate through their own catalog adapters.
 
 Discovery order and collection metadata are frozen in manifests beside
 `logs/catalog-cycle.json`. Price/inventory data are fetched afresh for each
@@ -565,9 +545,7 @@ The shared inventory timer now resumes **one batch** every 30 seconds after its
 service exits. It returns without waiting when the lock is busy. After 24 hours since cycle start, the next invocation starts a new cycle,
 carrying unfinished rows and retry deadlines forward. The shared catalog
 timer retains its 15-minute resume interval and seven-day cycle interval.
-`continual_scraping_on.sh` disables the two legacy Kaufmann timers before
-starting the two shared timers. Their old service files remain available for
-explicit diagnostics; do not start them alongside a shared cycle.
+The legacy Kaufmann timers and service files were removed on October 26.
 
 Before deploying, stop all scraper writers and apply both reviewed migrations
 through the normal Supabase migration workflow:
@@ -676,3 +654,83 @@ first; database failures or stale-write conflicts still stop rollover for
 operator investigation. Version 3 checkpoints remain compatible. Keep these
 archives with checkpoints; they contain product data and have mode 0600.
 No database migration or new dependency is required for rollover.
+
+## October 26: Kaufmann on the shared store path
+
+Kaufmann now refreshes like every other store. `refresh_kaufmann_inventory.py`
+is a store adapter registered in `refresh_store_inventory.STORE_REFRESHERS`; it
+keeps the HTTP variation parser and the two-observation missing-colour rule,
+and writes through the shared patch, history and run-record code. The
+standalone runner, `sync_kaufmann_catalog.py`, the `run_kaufmann_*.sh`
+wrappers and the `highlide-kaufmann-*` units are gone. Kaufmann's weekly
+catalog batch still uses `run_special_catalog_batch.py` (shared with Weekday)
+because it sweeps known rows and hydrates only new pages instead of reimporting
+4,900 pages with Playwright.
+
+`supabase/migrations/20261026140000_align_kaufmann_inventory_columns.sql`
+renames `aarhus_inventory` to `local_inventory` and `last_inventory_checked_at`
+to `inventory_checked_at`, adds `local_total_stock`/`local_available`, drops
+`last_refresh_error*`, and drops the `kaufmann_inventory_history` view and its
+orphaned trigger function. No database function or view reads the renamed
+columns; `maintenance/verify_kaufmann_readers.sql` fingerprints every reader
+(search, dashboard, Backstage catalogue, website columns) to prove it.
+
+The website still selects `aarhus_inventory` and `last_inventory_checked_at`
+for Kaufmann, and Backstage still reads `kaufmann_inventory_refresh_runs`. The
+migration therefore adds read-only generated aliases and keeps that table. Once
+both apps read the shared names, apply `maintenance/drop_kaufmann_compatibility.sql`.
+
+The new code requires the migration, and the old code cannot write after it
+(the aliases are read-only). Deploy in this order:
+
+1. Stop scraper writers and wait for any running batch to finish:
+
+   ```bash
+   cd /root/scraping_engine
+   bash scripts/continual_scraping_off.sh
+   systemctl is-active highlide-store-refresh.service highlide-store-catalog-sync.service
+   ```
+
+2. Check the checkpoints. A pending journal holds payloads with the old
+   Kaufmann column names and cannot be replayed after the migration.
+
+   ```bash
+   python3 -c "import json; s=json.load(open('logs/daily-inventory-cycle.json')); print('journal', s['journal'], 'active', s['active_batch'], 'stores', s['stores'])"
+   grep -l '"done": false' logs/catalog-cycle.json.manifests/*/kaufmann-batch-*.json 2>/dev/null
+   ```
+
+   The journal must be `None`. The store list must still end with
+   `magasin, kaufmann, weekday`; the checkpoint identity includes it and the
+   code keeps that order, so the current cycle resumes. Pending Kaufmann rows
+   in the checkpoint are re-read at the next 24-hour rollover; until then the
+   adapter never overwrites a stored price from them. If a Kaufmann catalog
+   batch file is listed, run the catalog service once on the old code to
+   finish it before continuing.
+
+3. Fingerprint the readers, apply the migration, and compare:
+
+   ```bash
+   psql "$DB" -X -f maintenance/verify_kaufmann_readers.sql > before.txt
+   psql "$DB" -X -v ON_ERROR_STOP=1 -f supabase/migrations/20261026140000_align_kaufmann_inventory_columns.sql
+   psql "$DB" -X -f maintenance/verify_kaufmann_readers.sql > after.txt
+   diff before.txt after.txt
+   ```
+
+4. Pull, test and smoke-test on the droplet:
+
+   ```bash
+   git pull --ff-only && .venv/bin/python -m unittest discover -s tests -p 'test_*.py'
+   bash scripts/run_store_refresh.sh --store kaufmann --limit 1 --dry-run --no-delay
+   ```
+
+5. Remove the legacy units and restart the shared timers:
+
+   ```bash
+   sudo rm -f /etc/systemd/system/highlide-kaufmann-refresh.{service,timer} \
+     /etc/systemd/system/highlide-kaufmann-weekly-sweep.{service,timer}
+   sudo systemctl daemon-reload
+   bash scripts/continual_scraping_on.sh
+   ```
+
+Watch the first Kaufmann batch in `logs/store_refresh.log`. Rollback means
+restoring the old code and reversing the migration together.

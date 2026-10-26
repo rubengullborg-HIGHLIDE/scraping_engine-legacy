@@ -1,4 +1,4 @@
-"""Resume weekly non-Kaufmann catalogues, releasing the inventory lock per batch."""
+"""Resume weekly store catalogues, releasing the inventory lock per batch."""
 from __future__ import annotations
 
 import argparse
@@ -23,12 +23,12 @@ from scripts import sync_store_catalogs as sync
 from scripts.catalog_manifest import save_state
 from scripts import special_store_batches as special
 
-STORES = [*sync.CATALOG_SPECS, *special.SPECS]
+STORES = [*sync.CATALOG_SPECS, *special.CATALOG_SPECS]
 
 
 def catalog_rows(client, store):
     return (special.read_rows(client, store, include_unavailable=True)
-            if store in special.SPECS else client.list_rows(store))
+            if store in special.CATALOG_SPECS else client.list_rows(store))
 
 LOG = logging.getLogger(__name__)
 LOCK = '/tmp/highlide-inventory-refresh.lock'
@@ -121,7 +121,7 @@ def process_store(state, store, path, client, recorder, args):
         options = SimpleNamespace(log_level='INFO', dry_run=False, no_delay=False, limit=state['batch_pages'])
         command = ([sys.executable, str(ROOT / 'scripts/run_special_catalog_batch.py'),
                     '--store', store, '--limit', str(state['batch_pages'])]
-                   if store in special.SPECS else sync.importer_command(sync.CATALOG_SPECS[store], options))
+                   if store in special.CATALOG_SPECS else sync.importer_command(sync.CATALOG_SPECS[store], options))
         command += ['--catalog-manifest', str(manifest), '--offset', str(job['offset'])]
         LOG.info('%s catalog batch: offset=%s limit=%s', store, job['offset'], state['batch_pages'])
         result = run_child(command, args.batch_timeout)
@@ -130,7 +130,7 @@ def process_store(state, store, path, client, recorder, args):
         items = json.loads(manifest.read_text())['items']
         # This read occurs under the same global lock as the import. Daily
         # refreshes between batches cannot masquerade as catalogue observations.
-        if store in special.SPECS:
+        if store in special.CATALOG_SPECS:
             from scripts.run_special_catalog_batch import report_path
             report = json.loads(report_path(manifest, job['offset']).read_text())
             if not report['done']:
@@ -145,7 +145,7 @@ def process_store(state, store, path, client, recorder, args):
         job.pop('error', None)
         save_state(path, state)
     if job['offset'] == len(items):
-        if store in special.SPECS:
+        if store in special.CATALOG_SPECS:
             # These stores use direct observations, not generic catalog-miss
             # tombstones. Kaufmann's sweep already confirmed missing colours;
             # Weekday never treats listing absence as physical unavailability.

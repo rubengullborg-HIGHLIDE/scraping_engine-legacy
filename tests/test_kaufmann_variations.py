@@ -14,17 +14,9 @@ from scrapers.stores.kaufmann_variations import (
     parse_price,
     variation_rows_from_payload,
 )
-from scripts.refresh_kaufmann_inventory import (
-    dynamic_product_upsert_row,
-    missing_color_product_payload,
-    partial_product_upsert_row,
-    refresh_status_for_row,
-    snapshot_payload,
-    unavailable_product_payload,
-    uniform_key_batches,
-    unknown_source_color_ids,
-    write_new_variant_candidates,
-)
+from scripts import refresh_kaufmann_inventory as kaufmann
+from scripts.refresh_store_inventory import parse_args
+from scripts.run_inventory_batches import StagedClient
 
 
 CHECKED_AT = "2026-08-26T08:00:00+00:00"
@@ -128,9 +120,13 @@ class KaufmannVariationParserTests(unittest.TestCase):
         self.assertEqual(4, row["webshop_sizes"][0]["stock"])
         self.assertEqual(3, row["aarhus_total_stock"])
         self.assertTrue(row["aarhus_available"])
+        self.assertEqual(3, row["local_total_stock"])
+        self.assertTrue(row["local_available"])
+        self.assertEqual(CHECKED_AT, row["inventory_checked_at"])
+        self.assertNotIn("aarhus_inventory", row)
         self.assertEqual(
             3,
-            row["aarhus_inventory"]["stores"]["bruuns-galleri"]["sizes"]["M"][
+            row["local_inventory"]["stores"]["bruuns-galleri"]["sizes"]["M"][
                 "stock"
             ],
         )
@@ -156,16 +152,15 @@ class KaufmannVariationParserTests(unittest.TestCase):
         self.assertEqual(0, row["aarhus_total_stock"])
         self.assertFalse(row["aarhus_available"])
         self.assertFalse(
-            row["aarhus_inventory"]["stores"]["bruuns-galleri"]["available"]
+            row["local_inventory"]["stores"]["bruuns-galleri"]["available"]
         )
         self.assertEqual(
             0,
-            row["aarhus_inventory"]["stores"]["bruuns-galleri"]["sizes"]["M"][
+            row["local_inventory"]["stores"]["bruuns-galleri"]["sizes"]["M"][
                 "stock"
             ],
         )
         self.assertEqual(CHECKED_AT, row["discontinued_at"])
-        self.assertEqual("source_unavailable", refresh_status_for_row(row))
 
     def test_missing_available_flag_is_a_parse_error_not_unavailable(self) -> None:
         payload = variation_payload(
@@ -207,149 +202,92 @@ class KaufmannVariationParserTests(unittest.TestCase):
         )
 
 
+def refresh(rows, payload=None, *, error=None, candidates=None):
+    """Run the shared-path adapter against staged rows and a fake variation client."""
+    staged = StagedClient("kaufmann", rows)
+    client = Mock()
+    if error is not None:
+        client.fetch_payload.side_effect = error
+    else:
+        client.fetch_payload.return_value = payload
+    args = parse_args(["--store", "kaufmann", "--no-delay"])
+    with patch.object(kaufmann, "KaufmannVariationClient", return_value=client):
+        stats = kaufmann.refresh_store(staged, args, candidates=candidates)
+    return staged, stats
+
+
 class KaufmannRefreshLifecycleTests(unittest.TestCase):
-    def test_unknown_colour_ids_are_detected_without_treating_known_colours_as_new(self) -> None:
-        scraped_rows = [
-            {"source_color_id": "known-colour"},
-            {"source_color_id": "new-colour"},
-        ]
-        existing_rows = [product_row(source_color_id="known-colour")]
-
-        self.assertEqual(
-            {"new-colour"},
-            unknown_source_color_ids(scraped_rows, existing_rows),
-        )
-
-    def test_unknown_colour_candidate_file_is_sorted_and_deduplicated(self) -> None:
-        with TemporaryDirectory() as directory:
-            path = Path(directory) / "candidates.json"
-            write_new_variant_candidates(
-                str(path),
-                {
-                    "https://www.kaufmann.dk/produkt/item-2",
-                    "https://www.kaufmann.dk/produkt/item-1",
-                },
-            )
-
-            self.assertEqual(
-                '[\n  "https://www.kaufmann.dk/produkt/item-1",\n'
-                '  "https://www.kaufmann.dk/produkt/item-2"\n]\n',
-                path.read_text(encoding="utf-8"),
-            )
-
-    def test_mixed_full_and_partial_updates_form_uniform_postgrest_batches(self) -> None:
-        scraped = variation_rows_from_payload(
-            variation_payload(
-                source_available=True,
-                webshop_stock=1,
-                aarhus_stock=1,
-            ),
-            "parent-1",
-            "https://www.kaufmann.dk/produkt/example",
-            checked_at=CHECKED_AT,
-        )[0]
-        full_updates = [
-            dynamic_product_upsert_row(product_row(id=row_id), scraped)
-            for row_id in range(1, 51)
-        ]
-        missing_payload, _ = missing_color_product_payload(product_row(), CHECKED_AT)
-        partial_update = partial_product_upsert_row(
-            product_row(id=2620),
-            missing_payload,
-        )
-
-        batches = uniform_key_batches(full_updates + [partial_update])
-
-        self.assertEqual([50, 1], [len(batch) for batch in batches])
-        for batch in batches:
-            expected_keys = set(batch[0])
-            self.assertTrue(all(set(row) == expected_keys for row in batch))
+    def test_unknown_available_colour_is_a_catalog_candidate_not_a_new_row(self) -> None:
+        payload = variation_payload(source_available=True, webshop_stock=1, aarhus_stock=1)
+        candidates = set()
+        staged, _ = refresh([product_row(source_color_id="color-1")], payload, candidates=candidates)
+        self.assertEqual(set(), candidates)
+        payload["options"]["color"]["new-colour"] = payload["options"]["color"]["color-1"]
+        staged, _ = refresh([product_row(source_color_id="color-1")], payload, candidates=candidates)
+        self.assertEqual({"https://www.kaufmann.dk/produkt/example"}, candidates)
+        self.assertEqual([785], [patch["id"] for patch in staged.patches])
 
     def test_missing_color_requires_two_successful_confirmations(self) -> None:
-        first_payload, first_confirmed = missing_color_product_payload(
-            product_row(),
-            CHECKED_AT,
-        )
-        self.assertFalse(first_confirmed)
-        self.assertEqual(1, first_payload["consecutive_source_misses"])
-        self.assertNotIn("publication_status", first_payload)
+        payload = variation_payload(source_available=True, webshop_stock=1, aarhus_stock=1)
+        staged, _ = refresh([product_row(id=1, source_color_id="gone")], payload)
+        first = staged.patches[0]["payload"]
+        self.assertEqual(1, first["consecutive_source_misses"])
+        self.assertNotIn("publication_status", first)
+        self.assertNotIn("local_inventory", first)
+        self.assertEqual([], staged.history)
 
-        second_payload, second_confirmed = missing_color_product_payload(
-            product_row(consecutive_source_misses=1),
-            CHECKED_AT,
-        )
-        self.assertTrue(second_confirmed)
-        self.assertEqual(2, second_payload["consecutive_source_misses"])
-        self.assertEqual("unavailable", second_payload["publication_status"])
-        self.assertEqual(
-            "color_missing_from_variation_twice",
-            second_payload["status_reason"],
-        )
+        staged, stats = refresh(
+            [product_row(id=1, source_color_id="gone", consecutive_source_misses=1)], payload)
+        second = staged.patches[0]["payload"]
+        self.assertEqual(2, second["consecutive_source_misses"])
+        self.assertEqual("unavailable", second["publication_status"])
+        self.assertEqual("color_missing_from_variation_twice", second["status_reason"])
+        self.assertFalse(second["source_available"])
+        self.assertEqual("color_missing", staged.history[0]["refresh_status"])
+        self.assertEqual(1, stats.unavailable)
 
-    def test_404_style_unavailable_payload_keeps_first_discontinued_time(self) -> None:
-        payload = unavailable_product_payload(
-            product_row(discontinued_at="2026-08-25T08:00:00+00:00"),
-            CHECKED_AT,
-            "variation_http_404",
-        )
+    def test_404_style_unavailable_keeps_first_discontinued_time_and_price(self) -> None:
+        row = product_row(discontinued_at="2026-08-25T08:00:00+00:00", current_price=299.0, list_price=None,
+                          local_inventory={"stores": {"aarhus-c": {"stock_known": True, "sizes": {"M": {"stock": 2}}}}})
+        error = KaufmannVariationUnavailable(404, "https://www.kaufmann.dk/widgets/product/variation/parent-1")
+        staged, _ = refresh([row], error=error)
+        payload = staged.patches[0]["payload"]
         self.assertEqual("unavailable", payload["publication_status"])
         self.assertEqual("variation_http_404", payload["status_reason"])
         self.assertEqual("2026-08-25T08:00:00+00:00", payload["discontinued_at"])
+        self.assertEqual(299.0, payload["current_price"])
         self.assertEqual([], payload["webshop_sizes"])
         self.assertFalse(payload["aarhus_available"])
+        self.assertEqual(0, payload["local_inventory"]["stores"]["aarhus-c"]["sizes"]["M"]["stock"])
+        self.assertEqual("page_unavailable", staged.history[0]["refresh_status"])
 
-    def test_upsert_and_snapshot_include_lifecycle_fields(self) -> None:
-        scraped = variation_rows_from_payload(
-            variation_payload(
-                source_available=False,
-                webshop_stock=0,
-                aarhus_stock=0,
-            ),
-            "parent-1",
-            "https://www.kaufmann.dk/produkt/example",
-            checked_at=CHECKED_AT,
-        )[0]
-        row = product_row()
-        upsert = dynamic_product_upsert_row(row, scraped)
-        snapshot = snapshot_payload(
-            row,
-            scraped,
-            CHECKED_AT,
-            refresh_status="source_unavailable",
-        )
+    def test_legacy_journaled_row_without_prices_never_nulls_them(self) -> None:
+        error = KaufmannVariationUnavailable(404, "https://www.kaufmann.dk/produkt/example")
+        staged, _ = refresh([product_row()], error=error)
+        self.assertNotIn("current_price", staged.patches[0]["payload"])
+        self.assertEqual("product_page_http_404", staged.patches[0]["payload"]["status_reason"])
 
-        self.assertFalse(upsert["source_available"])
-        self.assertEqual("unavailable", upsert["publication_status"])
-        self.assertFalse(snapshot["source_available"])
-        self.assertEqual("unavailable", snapshot["publication_status"])
-        self.assertEqual("source_unavailable", snapshot["refresh_status"])
-        self.assertEqual(CHECKED_AT, snapshot["observed_from"])
-        self.assertEqual(CHECKED_AT, snapshot["observed_through"])
-        self.assertEqual("2026-08-26", snapshot["last_observed_bucket"])
-        self.assertEqual(1, snapshot["observation_count"])
-        self.assertNotIn("webshop_sizes", snapshot)
-        self.assertNotIn("canonical_url", snapshot)
-        self.assertNotIn("source_parent_id", snapshot)
-
-    def test_repeat_unavailable_refresh_preserves_first_discontinued_time(self) -> None:
-        scraped = variation_rows_from_payload(
-            variation_payload(
-                source_available=False,
-                webshop_stock=0,
-                aarhus_stock=0,
-            ),
-            "parent-1",
-            "https://www.kaufmann.dk/produkt/example",
-            checked_at=CHECKED_AT,
-        )[0]
+    def test_source_unavailable_colour_writes_lifecycle_and_history(self) -> None:
+        payload = variation_payload(source_available=False, webshop_stock=0, aarhus_stock=0)
         first_discontinued_at = "2026-08-20T08:00:00+00:00"
+        staged, stats = refresh([product_row(discontinued_at=first_discontinued_at)], payload)
+        patch_payload = staged.patches[0]["payload"]
+        history = staged.history[0]
+        self.assertFalse(patch_payload["source_available"])
+        self.assertEqual("unavailable", patch_payload["publication_status"])
+        self.assertEqual(first_discontinued_at, patch_payload["discontinued_at"])
+        self.assertNotIn("source_url", patch_payload)
+        self.assertFalse(history["source_available"])
+        self.assertEqual("unavailable", history["publication_status"])
+        self.assertEqual("source_unavailable", history["refresh_status"])
+        self.assertEqual(1, history["observation_count"])
+        self.assertNotIn("webshop_sizes", history)
+        self.assertEqual(1, stats.unavailable)
 
-        upsert = dynamic_product_upsert_row(
-            product_row(discontinued_at=first_discontinued_at),
-            scraped,
-        )
-
-        self.assertEqual(first_discontinued_at, upsert["discontinued_at"])
+    def test_parse_failure_retains_existing_rows(self) -> None:
+        staged, stats = refresh([product_row()], error=KaufmannVariationParseError("bad payload"))
+        self.assertEqual([], staged.patches)
+        self.assertEqual(1, stats.failed)
 
 
 if __name__ == "__main__":
