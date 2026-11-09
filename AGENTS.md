@@ -523,7 +523,7 @@ guarded collection pagination, `money` for both øre `.js` and kroner
 ### Takeoff Copenhagen Full Import
 
 Location: `scrapers/full_import/takeoff.py`, `scripts/import_takeoff_products.py`,
-`supabase/migrations/20261109130000_takeoff_kingsqueens_products.sql`.
+`supabase/migrations/20261109103103_takeoff_kingsqueens_products.sql`.
 
 Discover from the `all` collection and keep product types `Sneakers`,
 `T-shirts`, `Hoodies & Sweatshirts`, `Jackets`, `Pants & Shorts` and
