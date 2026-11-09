@@ -14,6 +14,9 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
+from scrapers.inventory import require_nonempty, unique_sizes
+from scrapers.source_http import SourcePayloadError
+
 
 BASE_URL = "https://www.dk.rains.com"
 INVENTORY_URL = "https://rains-locations-api.vercel.app/api/get-inventory"
@@ -206,7 +209,11 @@ class RainsScraper:
 
         missing = sorted(set(TRACKED_WAREHOUSES) - set(metadata))
         if missing:
-            raise RuntimeError(f"Rains inventory endpoint omitted expected warehouses: {missing}")
+            raise SourcePayloadError(f"Rains inventory endpoint omitted expected warehouses: {missing}")
+        for warehouse_id in TRACKED_WAREHOUSES:
+            # A missing SKU means zero stock, so an empty or truncated warehouse
+            # would silently zero the whole store. A real shop is never empty.
+            require_nonempty(stock_by_warehouse[warehouse_id], f"Rains warehouse {warehouse_id} inventory")
 
         return {
             "checked_at": datetime.now(timezone.utc).isoformat(),
@@ -316,8 +323,9 @@ class RainsScraper:
                 for source in TRACKED_WAREHOUSES.values()
             }
         }
+        sizes = unique_sizes(variants, lambda variant: self._variant_size(variant, product), "Rains colour")
         for variant in variants:
-            size = self._variant_size(variant, product)
+            size = sizes[str(variant["id"])]
             sku = self._normalize_inventory_sku(variant.get("sku"))
             barcode = self._normalize_inventory_sku(variant.get("barcode"))
             for warehouse_id, source in TRACKED_WAREHOUSES.items():

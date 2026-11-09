@@ -16,6 +16,8 @@ if str(ROOT) not in sys.path:
 
 from scripts.import_rains_products import SupabaseCatalogClient, env, load_dotenv
 
+from scripts.import_outcomes import ItemOutcomes
+from scrapers.source_http import StoreRateLimited
 from scripts.catalog_manifest import manifest_items, add_manifest_argument
 
 LOG = logging.getLogger("import_suitclub_products")
@@ -33,6 +35,7 @@ def import_suitclub_products(args: argparse.Namespace) -> int:
 
     scraper = SuitClubScraper()
     client = SupabaseCatalogClient(supabase_url, supabase_key) if not args.dry_run else None
+    outcomes = ItemOutcomes("suitclub", LOG)
     try:
         if args.url:
             summaries = []
@@ -54,10 +57,11 @@ def import_suitclub_products(args: argparse.Namespace) -> int:
             for index, summary in enumerate(summaries):
                 if index and not args.no_delay:
                     time.sleep(random.uniform(args.min_delay, args.max_delay))
-                product = scraper.fetch_product(summary['handle'])
-                product['_discovery_collections'] = summary.get('_discovery_collections') or []
-                if scraper.is_catalog_product(product):
-                    fresh_products.append(product)
+                with outcomes.item(str(summary['handle'])):
+                    product = scraper.fetch_product(summary['handle'])
+                    product['_discovery_collections'] = summary.get('_discovery_collections') or []
+                    if scraper.is_catalog_product(product):
+                        fresh_products.append(product)
             summaries = fresh_products
         LOG.info("Selected %s SuitClub clothing and footwear products.", len(summaries))
 
@@ -73,11 +77,23 @@ def import_suitclub_products(args: argparse.Namespace) -> int:
             return 0
         if not summaries:
             LOG.info("No SuitClub products selected.")
-            return 0
+            return outcomes.exit_code()
 
-        first_handle = summaries[0].get("handle") or summaries[0].get("url")
-        first_page_html = scraper.fetch_product_page(str(first_handle))
-        page_cache = {scraper._handle_from_url(str(first_handle)): first_page_html}
+        # The Storefront API configuration is read from any live product page.
+        first_page_html, page_cache, config_error = None, {}, None
+        for candidate in summaries:
+            candidate_handle = scraper._handle_from_url(str(candidate.get("handle") or candidate.get("url")))
+            try:
+                first_page_html = scraper.fetch_product_page(candidate_handle)
+            except StoreRateLimited:
+                raise
+            except Exception as exc:
+                config_error = exc
+                continue
+            page_cache[candidate_handle] = first_page_html
+            break
+        if first_page_html is None:
+            raise RuntimeError("No live SuitClub product page for Storefront configuration") from config_error
         inventory_snapshot = scraper.fetch_inventory_snapshot(
             [product["id"] for product in summaries],
             first_page_html,
@@ -97,14 +113,11 @@ def import_suitclub_products(args: argparse.Namespace) -> int:
                 time.sleep(random.uniform(args.min_delay, args.max_delay))
             handle = scraper._handle_from_url(str(product.get("handle") or product.get("url")))
             LOG.info("[%s/%s] Hydrating %s", index, len(summaries), handle)
-            page_html = page_cache.pop(handle, None) or scraper.fetch_product_page(handle)
-            row = scraper.product_to_row(product, page_html, inventory_snapshot)
-
-            if args.dry_run:
-                dry_run_rows.append(row)
-                continue
-            pending_rows.append(row)
-            if len(pending_rows) >= args.write_batch_size:
+            with outcomes.item(handle):
+                page_html = page_cache.pop(handle, None) or scraper.fetch_product_page(handle)
+                row = scraper.product_to_row(product, page_html, inventory_snapshot)
+                (dry_run_rows if args.dry_run else pending_rows).append(row)
+            if not args.dry_run and len(pending_rows) >= args.write_batch_size:
                 assert client is not None
                 client.upsert_products(table, pending_rows, on_conflict="source_product_id")
                 LOG.info("Upserted %s SuitClub rows to %s.", len(pending_rows), table)
@@ -116,8 +129,8 @@ def import_suitclub_products(args: argparse.Namespace) -> int:
             assert client is not None
             client.upsert_products(table, pending_rows, on_conflict="source_product_id")
             LOG.info("Upserted final %s SuitClub rows to %s.", len(pending_rows), table)
-        LOG.info("SuitClub import complete. rows=%s", len(dry_run_rows) if args.dry_run else len(summaries))
-        return 0
+        LOG.info("SuitClub import complete. rows=%s", len(dry_run_rows) if args.dry_run else outcomes.succeeded)
+        return outcomes.exit_code()
     except Exception:
         LOG.exception("SuitClub import failed")
         return 1

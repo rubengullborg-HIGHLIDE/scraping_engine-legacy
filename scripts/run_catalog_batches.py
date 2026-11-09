@@ -5,6 +5,7 @@ import argparse
 import fcntl
 import json
 import logging
+import shutil
 import signal
 import subprocess
 import sys
@@ -21,6 +22,7 @@ if str(ROOT) not in sys.path:
 
 from scripts import sync_store_catalogs as sync
 from scripts.catalog_manifest import save_state
+from scripts.import_outcomes import EXIT_PARTIAL
 from scripts import special_store_batches as special
 
 STORES = [*sync.CATALOG_SPECS, *special.CATALOG_SPECS]
@@ -125,7 +127,13 @@ def process_store(state, store, path, client, recorder, args):
         command += ['--catalog-manifest', str(manifest), '--offset', str(job['offset'])]
         LOG.info('%s catalog batch: offset=%s limit=%s', store, job['offset'], state['batch_pages'])
         result = run_child(command, args.batch_timeout)
-        if result:
+        if result == EXIT_PARTIAL:
+            # Some products failed; the rest were imported. Advance, but this
+            # sweep is no longer a complete observation of the catalogue.
+            job['incomplete'] = job.get('incomplete', 0) + 1
+            LOG.warning('%s batch at offset %s was partial; catalog misses will not advance this cycle.',
+                        store, job['offset'])
+        elif result:
             raise RuntimeError(f'{store} importer exited {result}; batch retained for retry')
         items = json.loads(manifest.read_text())['items']
         # This read occurs under the same global lock as the import. Daily
@@ -165,7 +173,8 @@ def process_store(state, store, path, client, recorder, args):
                 sync.parse_timestamp(job['started_at']), checked_at, plan,
                 miss_confirmations=args.miss_confirmations, min_seen_ratio=args.min_seen_ratio,
                 seen_product_ids={int(key) for key in job['observed']},
-                observed_at={int(key): value for key, value in job['observed'].items()})
+                observed_at={int(key): value for key, value in job['observed'].items()},
+                advance_misses=not job.get('incomplete'))
             job['plan'] = dict(patches=plan.patches, history=plan.history,
                                checked_at=checked_at, stats=asdict(stats))
             save_state(path, state)
@@ -176,8 +185,10 @@ def process_store(state, store, path, client, recorder, args):
             products_seen=stats['seen'], new_products=stats['new'], reactivated_products=stats['reactivated'],
             absent_products=stats['first_misses'] + stats['confirmed_missing'],
             confirmed_missing_products=stats['confirmed_missing'], missing_check_skipped=stats['missing_check_skipped'],
-            error_message='Catalog coverage below safety threshold' if stats['missing_check_skipped'] else None,
-            details={'resumable': True, 'completed_pages': job['offset'], 'total_pages': job['total']})
+            error_message=(f"{job['incomplete']} partial batch(es); catalog misses not advanced" if job.get('incomplete')
+                           else 'Catalog coverage below safety threshold' if stats['missing_check_skipped'] else None),
+            details={'resumable': True, 'completed_pages': job['offset'], 'total_pages': job['total'],
+                     'partial_batches': job.get('incomplete', 0)})
         job['done'] = True
         save_state(path, state)
     else:
@@ -186,6 +197,19 @@ def process_store(state, store, path, client, recorder, args):
             'completed_pages': job['offset'], 'total_pages': job['total']})
     LOG.info('%s catalog progress: %s/%s discovery pages; complete=%s',
              store, job['offset'], job['total'], job.get('done', False))
+
+
+def close_superseded(state, recorder, path):
+    for store, job in state['jobs'].items():
+        if job.get('done') or job.get('run_id') is None:
+            continue
+        recorder.finish(job['run_id'], status='partial', completed_at=sync.utc_now(),
+            error_message=('Superseded by the next weekly cycle before finishing; '
+                           'catalog misses not advanced. Last error: ' + str(job.get('error') or 'none'))[:2000],
+            details={'resumable': True, 'superseded': True, 'completed_pages': job.get('offset', 0),
+                     'total_pages': job.get('total'), 'partial_batches': job.get('incomplete', 0)})
+    manifests = path.parent / (path.name + '.manifests') / state['cycle_id']
+    shutil.rmtree(manifests, ignore_errors=True)
 
 
 def sunday_start(timestamp):
@@ -218,7 +242,15 @@ def tick(args):
         scheduled = getattr(args, 'scheduled', False)
         timestamp = time.time()
         completed = state is not None and all(job.get('done') for job in state['jobs'].values())
-        if state is None or completed:
+        superseded = None
+        if state is not None and not completed and timestamp >= state['next_cycle_at']:
+            # A store that keeps failing (e.g. blocked by its CDN) must not hold
+            # every other store's weekly catalogue back. Close the unfinished
+            # stores without reconciliation and start the overdue cycle now.
+            LOG.warning('Catalog cycle %s is past its next scheduled start; superseding unfinished stores: %s',
+                        state['cycle_id'], [store for store, job in state['jobs'].items() if not job.get('done')])
+            superseded, state = state, None
+        elif state is None or completed:
             if scheduled and not catalog_cycle_due(timestamp, state):
                 LOG.info('No unfinished catalog cycle; waiting for Sunday 12:15 UTC')
                 return 0
@@ -237,6 +269,8 @@ def tick(args):
         client = sync.CatalogLifecycleClient(url, key, history_table=sync.env('STORE_INVENTORY_HISTORY_TABLE', 'store_inventory_history'))
         recorder = sync.CatalogSyncRunRecorder(url, key, table=sync.env('CATALOG_SYNC_RUNS_TABLE', 'catalog_sync_runs'))
         failures = 0
+        if superseded is not None:
+            close_superseded(superseded, recorder, path)
         try:
             start = state['next_store']
             for index in [(start + offset) % len(state['stores']) for offset in range(len(state['stores']))]:

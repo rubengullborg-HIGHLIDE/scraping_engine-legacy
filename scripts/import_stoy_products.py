@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.import_rains_products import SupabaseCatalogClient, env, load_dotenv
 
+from scripts.import_outcomes import ItemOutcomes
 from scripts.catalog_manifest import manifest_items, add_manifest_argument
 
 LOG = logging.getLogger("import_stoy_products")
@@ -32,6 +33,7 @@ def import_stoy_products(args: argparse.Namespace) -> int:
         raise RuntimeError("SUPABASE_URL and SUPABASE_SECRET_KEY are required for writes.")
     scraper = StoyScraper()
     client = SupabaseCatalogClient(url, key) if not args.dry_run else None
+    outcomes = ItemOutcomes("stoy", LOG)
     try:
         summaries = [{"handle": item} for item in args.url] if args.url else manifest_items(args, "stoy", lambda: scraper.discover_products(args.collection or MEN_COLLECTION_HANDLES))
         summaries = summaries[args.offset :]
@@ -49,11 +51,10 @@ def import_stoy_products(args: argparse.Namespace) -> int:
                 time.sleep(random.uniform(args.min_delay, args.max_delay))
             handle = summary.get("handle") or summary.get("url")
             LOG.info("[%s/%s] Hydrating %s", index, len(summaries), handle)
-            row = scraper.product_to_row(scraper.fetch_product(handle), scraper.fetch_product_page(handle))
-            if args.dry_run:
-                dry_run_rows.append(row)
-            else:
-                pending.append(row)
+            with outcomes.item(str(handle)):
+                row = scraper.product_to_row(scraper.fetch_product(handle), scraper.fetch_product_page(handle))
+                (dry_run_rows if args.dry_run else pending).append(row)
+            if not args.dry_run:
                 if len(pending) >= args.write_batch_size:
                     assert client is not None
                     client.upsert_products(table, pending)
@@ -65,7 +66,7 @@ def import_stoy_products(args: argparse.Namespace) -> int:
             assert client is not None
             client.upsert_products(table, pending)
             LOG.info("Upserted final %s STOY rows to %s.", len(pending), table)
-        return 0
+        return outcomes.exit_code()
     except Exception:
         LOG.exception("STOY import failed")
         return 1

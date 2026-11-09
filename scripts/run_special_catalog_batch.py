@@ -12,6 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from scripts.catalog_manifest import save_state
+from scripts.import_outcomes import EXIT_OK, EXIT_PARTIAL, is_gone
+from scrapers.source_http import StoreRateLimited
 from scripts import special_store_batches as special
 from scripts.run_inventory_batches import BatchInventoryClient, StagedClient, now
 from scripts import sync_store_catalogs as sync
@@ -76,13 +78,15 @@ def prepare(store, urls, rows):
     known = {row['canonical_url'] for row in rows}
     new_urls = set(urls) - known
     new_rows = []
+    failed = []
     if store == 'kaufmann':
         # The selected rows include sold-out and unpublished colours, so the
         # shared adapter rechecks them and reports unknown available colours.
         candidates = set()
         stats = refresh_kaufmann(staged, args, candidates=candidates)
-        if stats.failed:
-            raise ValueError('Incomplete Kaufmann sweep; retry the batch without advancing missing-colour counters')
+        # Failed rows staged no patch, so their saved data and miss counters
+        # stay as they were; successful observations are still applied.
+        failed.extend(['kaufmann-sweep-row'] * stats.failed)
         from scrapers.full_import.kaufmann import KaufmanScraper
         from scrapers.stores.kaufmann_variations import KaufmannVariationClient, KaufmannVariationUnavailable
         scraper = KaufmanScraper(launch_browser=False)
@@ -94,11 +98,15 @@ def prepare(store, urls, rows):
                     time.sleep(3)
                 try:
                     imported = available_catalog_rows(scraper, variations, url)
+                except StoreRateLimited:
+                    raise
                 except KaufmannVariationUnavailable:
-                    if url not in new_urls:
-                        raise
-                    # A stale sitemap entry with a confirmed 404/410 has no row
-                    # to import; known products were handled by the sweep above.
+                    # A confirmed 404/410 has no row to import; known products
+                    # were handled by the sweep above.
+                    continue
+                except Exception:
+                    LOG.exception('Kaufmann catalog product %s failed; skipped for this batch.', url)
+                    failed.append(url)
                     continue
                 new_rows.extend(row for row in imported
                                 if (row['source_parent_id'], row['source_color_id']) not in keys)
@@ -107,33 +115,43 @@ def prepare(store, urls, rows):
             variations.close()
     else:
         stats = special.run(staged, args)
-        if stats.failed or stats.skipped:
-            raise ValueError('Incomplete Weekday sweep; batch retained')
+        failed.extend(['weekday-sweep-row'] * (stats.failed + stats.skipped))
         from scrapers.full_import.weekday import Client, in_scope, catalog_row
         from scripts.weekday_database import database_row, exclusion_reasons
         client = Client(delay=3)
         try:
             for url in sorted(new_urls):
-                product = client.fetch_detail(url)
-                if not in_scope(product):
+                try:
+                    product = client.fetch_detail(url)
+                    if not in_scope(product):
+                        continue
+                    inventory = client.fetch_inventory(product)
+                    checked = now()
+                    row, flags = catalog_row(product, inventory, url, checked)
+                    if flags:
+                        raise ValueError(f'Incomplete Weekday catalog inventory: {flags}')
+                except StoreRateLimited:
+                    raise
+                except Exception as exc:
+                    if is_gone(exc):
+                        continue
+                    LOG.exception('Weekday catalog product %s failed; skipped for this batch.', url)
+                    failed.append(url)
                     continue
-                inventory = client.fetch_inventory(product)
-                checked = now()
-                row, flags = catalog_row(product, inventory, url, checked)
-                if flags:
-                    raise ValueError('Incomplete Weekday catalog inventory; batch retained')
                 row.update(price_observed_at=checked, inventory_observed_at=checked,
                            inventory_complete=True, inventory_warnings=[])
                 if row['aarhus_available'] is True:
                     reasons = exclusion_reasons(row)
                     if reasons:
-                        raise ValueError('Ineligible Weekday catalog product: ' + ', '.join(reasons))
+                        LOG.warning('Weekday catalog product %s not imported: %s', url, ', '.join(reasons))
+                        continue
                     new_rows.append(database_row(row))
         finally:
             client.close()
     # Linked source URLs can resolve to the same colour.
     unique = {(row['source_parent_id'], row['source_color_id']): row for row in new_rows}
-    return dict(patches=staged.patches, history=staged.history, new_rows=list(unique.values()), done=False)
+    return dict(patches=staged.patches, history=staged.history, new_rows=list(unique.values()),
+                failed=len(failed), done=False)
 
 
 def apply(database, store, plan):
@@ -187,7 +205,7 @@ def main(argv=None):
             if plan['store'] != args.store or plan['limit'] != args.limit:
                 raise ValueError('Catalog journal configuration mismatch')
             if plan['done']:
-                return 0
+                return EXIT_PARTIAL if plan.get('failed') else EXIT_OK
         else:
             rows = special.read_rows(database, args.store, include_unavailable=True)
             if args.catalog_manifest.exists():
@@ -203,7 +221,7 @@ def main(argv=None):
         plan['observed'] = apply(database, args.store, plan)
         plan['done'] = True
         save_state(path, plan)
-        return 0
+        return EXIT_PARTIAL if plan.get('failed') else EXIT_OK
     finally:
         database.close()
 

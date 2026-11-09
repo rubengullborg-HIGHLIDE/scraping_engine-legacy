@@ -121,7 +121,7 @@ class CatalogBatchTests(unittest.TestCase):
             runner.apply_plan(self.client, plan)
         self.client.insert_history.assert_not_called()
 
-    def test_daily_updates_do_not_count_as_catalogue_seen_or_get_marked_missing(self):
+    def test_daily_updates_neither_count_as_seen_nor_shield_from_misses(self):
         before = [rains_row(i, updated_at='2020-01-01T00:00:00+00:00') for i in (1,2,3)]
         after = copy.deepcopy(before)
         after[0]['updated_at'] = '2026-08-26T10:30:00+00:00'
@@ -131,7 +131,9 @@ class CatalogBatchTests(unittest.TestCase):
             miss_confirmations=2, min_seen_ratio=.5, seen_product_ids={1},
             observed_at={1:after[0]['updated_at']})
         self.assertEqual(1, stats.seen)
-        self.assertEqual([3], [row_id for _, row_id, _ in client.row_patches])
+        # Row 2 was only touched by the daily inventory refresh. That is not a
+        # catalogue sighting, so it records a miss just like row 3.
+        self.assertEqual([2, 3], [row_id for _, row_id, _ in client.row_patches])
 
     def test_newer_daily_unavailability_is_not_reactivated(self):
         row = rains_row(1, updated_at='2026-08-26T10:40:00+00:00', publication_status='unavailable')
@@ -139,7 +141,10 @@ class CatalogBatchTests(unittest.TestCase):
         reconcile_catalog('rains', [row], [row], STARTED_AT, CHECKED_AT, client,
             miss_confirmations=2, min_seen_ratio=.5, seen_product_ids={1},
             observed_at={1:'2026-08-26T10:30:00+00:00'})
-        self.assertEqual([], client.bulk_patches)
+        # Seen, so its miss counter resets, but it is not reactivated over
+        # the newer daily observation.
+        self.assertEqual([('rains_products', [1], {'last_seen_in_catalog_at': CHECKED_AT,
+                                                    'consecutive_catalog_misses': 0})], client.bulk_patches)
 
     def test_tick_waits_for_inventory_lock_then_runs_catalog(self):
         args = SimpleNamespace(checkpoint=str(self.path), store=['rains'], batch_pages=1,
@@ -192,7 +197,7 @@ class CatalogBatchTests(unittest.TestCase):
                                miss_confirmations=2, min_seen_ratio=.5)
         state = dict(version=2, cycle_id='retained', stores=args.store, batch_pages=1,
             settings=dict(batch_pages=1, miss_confirmations=2, min_seen_ratio=.5),
-            next_store=1, next_cycle_at=0, jobs={'rains':{}, 'stoy':{}})
+            next_store=1, next_cycle_at=runner.time.time() + 3600, jobs={'rains':{}, 'stoy':{}})
         args.scheduled = True
         save_state(self.path, state)
         lock_path = str(self.path.parent/'inventory.lock')
@@ -221,6 +226,58 @@ class CatalogBatchTests(unittest.TestCase):
         with patch.object(runner.sync, 'CatalogLifecycleClient') as client:
             self.assertEqual(0, runner.tick(args))
             client.assert_not_called()
+
+    def test_partial_sweep_updates_seen_rows_but_does_not_advance_misses(self):
+        before = [rains_row(i, updated_at='2020-01-01T00:00:00+00:00') for i in (1, 2)]
+        after = copy.deepcopy(before)
+        after[0]['updated_at'] = '2026-08-26T10:30:00+00:00'
+        client = FakeLifecycleClient()
+        stats = reconcile_catalog('rains', before, after, STARTED_AT, CHECKED_AT, client,
+            miss_confirmations=2, min_seen_ratio=.5, seen_product_ids={1},
+            observed_at={1: after[0]['updated_at']}, advance_misses=False)
+        self.assertTrue(stats.missing_check_skipped)
+        self.assertEqual([], client.row_patches)
+        self.assertEqual([1], client.bulk_patches[0][1])
+
+    def test_partial_importer_exit_advances_batch_and_marks_job_incomplete(self):
+        save_state(self.manifest, {'version':1, 'store':'rains', 'items':[{'handle':'a'}, {'handle':'b'}]})
+        self.state['jobs']['rains'] = dict(before=[self.old], started_at='2020-02-01T00:00:00+00:00',
+                                           offset=0, observed={}, run_id=42)
+        self.client.list_rows.return_value = [self.old]
+        with patch.object(runner, 'run_child', return_value=runner.EXIT_PARTIAL):
+            runner.process_store(self.state, 'rains', self.path, self.client, self.recorder, self.args)
+        job = self.state['jobs']['rains']
+        self.assertEqual(1, job['offset'])
+        self.assertEqual(1, job['incomplete'])
+        self.assertNotIn('retry_at', job)
+
+    def test_overdue_unfinished_cycle_is_superseded_by_a_new_one(self):
+        args = SimpleNamespace(checkpoint=str(self.path), store=['rains', 'stoy'], batch_pages=1,
+                               miss_confirmations=2, min_seen_ratio=.5, scheduled=True)
+        old = dict(version=2, cycle_id='stuck', stores=args.store, batch_pages=1,
+            settings=dict(batch_pages=1, miss_confirmations=2, min_seen_ratio=.5), next_store=0,
+            next_cycle_at=runner.time.time() - 60,
+            jobs={'rains': {'done': True, 'run_id': 1}, 'stoy': {'run_id': 2, 'offset': 3, 'error': 'exited 1'}})
+        save_state(self.path, old)
+        stale_manifests = self.path.parent / (self.path.name + '.manifests') / 'stuck'
+        stale_manifests.mkdir(parents=True)
+        seen = []
+        with patch.object(runner, 'LOCK', str(self.path.parent/'inventory.lock')), \
+             patch.object(runner.sync, 'env', return_value='test'), \
+             patch.object(runner.sync, 'CatalogLifecycleClient', return_value=self.client), \
+             patch.object(runner.sync, 'CatalogSyncRunRecorder', return_value=self.recorder), \
+             patch.object(runner, 'process_store', side_effect=lambda state, *a: seen.append(state['cycle_id'])), \
+             patch.object(runner.time, 'sleep'):
+            self.assertEqual(0, runner.tick(args))
+        # Only the unfinished store's run is closed, as partial.
+        self.recorder.finish.assert_called_once()
+        self.assertEqual(2, self.recorder.finish.call_args.args[0])
+        self.assertEqual('partial', self.recorder.finish.call_args.kwargs['status'])
+        self.assertFalse(stale_manifests.exists())
+        new_state = json.loads(self.path.read_text())
+        self.assertNotEqual('stuck', new_state['cycle_id'])
+        self.assertGreater(new_state['next_cycle_at'], runner.time.time())
+        self.assertTrue(seen and all(cycle == new_state['cycle_id'] for cycle in seen))
 
 
 if __name__ == '__main__':

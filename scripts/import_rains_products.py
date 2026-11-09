@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from scripts.import_outcomes import ItemOutcomes
 from scripts.catalog_manifest import manifest_items, add_manifest_argument
 
 LOG = logging.getLogger("import_rains_products")
@@ -78,6 +79,7 @@ def import_rains_products(args: argparse.Namespace) -> int:
 
     scraper = RainsScraper()
     client = SupabaseCatalogClient(supabase_url, supabase_key) if not args.dry_run else None
+    outcomes = ItemOutcomes("rains", LOG)
     try:
         if args.url:
             summaries = [{"handle": url, "_collection_handles": []} for url in args.url]
@@ -115,10 +117,12 @@ def import_rains_products(args: argparse.Namespace) -> int:
                 time.sleep(random.uniform(args.min_delay, args.max_delay))
             handle = summary.get("handle") or summary.get("url")
             LOG.info("[%s/%s] Hydrating %s", index, len(summaries), handle)
-            product = scraper.fetch_product(handle)
-            product["_collection_handles"] = summary.get("_collection_handles") or []
-            page_html = scraper.fetch_product_page(handle)
-            rows = scraper.product_to_rows(product, page_html, inventory_snapshot)
+            rows = []
+            with outcomes.item(str(handle)):
+                product = scraper.fetch_product(handle)
+                product["_collection_handles"] = summary.get("_collection_handles") or []
+                page_html = scraper.fetch_product_page(handle)
+                rows = scraper.product_to_rows(product, page_html, inventory_snapshot)
             total_rows += len(rows)
             LOG.info("[%s/%s] Built %s colour rows (total=%s)", index, len(summaries), len(rows), total_rows)
 
@@ -142,7 +146,7 @@ def import_rains_products(args: argparse.Namespace) -> int:
             LOG.info("Upserted final %s Rains rows to %s.", len(pending_rows), table)
 
         LOG.info("Rains import complete. styles=%s colour_rows=%s", len(summaries), total_rows)
-        return 0
+        return outcomes.exit_code()
     except Exception:
         LOG.exception("Rains import failed")
         return 1

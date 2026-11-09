@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.import_rains_products import SupabaseCatalogClient, env, load_dotenv
 
+from scripts.import_outcomes import ItemOutcomes
 from scripts.catalog_manifest import manifest_items, add_manifest_argument
 
 LOG = logging.getLogger("import_cejf_products")
@@ -33,6 +34,7 @@ def import_cejf_products(args: argparse.Namespace) -> int:
 
     scraper = CejfScraper()
     client = SupabaseCatalogClient(supabase_url, supabase_key) if not args.dry_run else None
+    outcomes = ItemOutcomes("cejf", LOG)
     try:
         if args.url:
             products = []
@@ -56,10 +58,11 @@ def import_cejf_products(args: argparse.Namespace) -> int:
             for index, summary in enumerate(products):
                 if index and not args.no_delay:
                     time.sleep(random.uniform(args.min_delay, args.max_delay))
-                product = scraper.fetch_product(summary['handle'])
-                product['_discovery_collections'] = summary.get('_discovery_collections') or []
-                if scraper.is_mens_product(product):
-                    fresh_products.append(product)
+                with outcomes.item(str(summary['handle'])):
+                    product = scraper.fetch_product(summary['handle'])
+                    product['_discovery_collections'] = summary.get('_discovery_collections') or []
+                    if scraper.is_mens_product(product):
+                        fresh_products.append(product)
             products = fresh_products
         LOG.info("Selected %s CEJF men's products.", len(products))
 
@@ -76,10 +79,13 @@ def import_cejf_products(args: argparse.Namespace) -> int:
             LOG.info("No CEJF products selected.")
             return 0
 
-        rows = [scraper.product_to_row(product) for product in products]
+        rows = []
+        for product in products:
+            with outcomes.item(str(product.get("handle") or product.get("id"))):
+                rows.append(scraper.product_to_row(product))
         if args.dry_run:
             LOG.info("Dry run rows:\n%s", json.dumps(rows, ensure_ascii=False, indent=2))
-            return 0
+            return outcomes.exit_code()
 
         assert client is not None
         for offset in range(0, len(rows), args.write_batch_size):
@@ -87,7 +93,7 @@ def import_cejf_products(args: argparse.Namespace) -> int:
             client.upsert_products(table, batch, on_conflict="source_product_id")
             LOG.info("Upserted %s CEJF rows to %s.", len(batch), table)
         LOG.info("CEJF import complete. rows=%s", len(rows))
-        return 0
+        return outcomes.exit_code()
     except Exception:
         LOG.exception("CEJF import failed")
         return 1

@@ -119,6 +119,15 @@ class ShoeChapterScraperTests(unittest.TestCase):
         ], materials)
         self.assertEqual(materials, sources)
 
+    def test_page_without_inventory_markup_raises(self) -> None:
+        from scrapers.source_http import SourcePayloadError
+
+        variants = [{"id": 1, "public_title": "42"}]
+        for html in ("<html><body>No inventory here</body></html>",
+                     '<variant-inventory><span data-variant-id="999">Kun 1 enhed tilbage</span></variant-inventory>'):
+            with self.subTest(html=html), self.assertRaises(SourcePayloadError):
+                ShoeChapterScraper._inventory_from_page(html, variants)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -25,7 +25,7 @@ def batch_can_continue(before, after, returncode):
     fresh = batch.get('id') != before.get('last_batch', {}).get('id')
     progress = (set(after.get('completed', [])) != set(before.get('completed', [])) or
                 set(after.get('deferred', [])) != set(before.get('deferred', [])))
-    return fresh and progress and batch.get('status') in ('success', 'partial') and returncode in (0, 1)
+    return fresh and progress and batch.get('status') in ('success', 'partial') and returncode in (0, 1, 3)
 
 
 def run_batch(command, timeout):

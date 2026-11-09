@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.import_rains_products import SupabaseCatalogClient, env, load_dotenv
 
+from scripts.import_outcomes import ItemOutcomes
 from scripts.catalog_manifest import manifest_items, add_manifest_argument
 
 LOG = logging.getLogger("import_shoechapter_products")
@@ -32,6 +33,7 @@ def import_shoechapter_products(args: argparse.Namespace) -> int:
         raise RuntimeError("SUPABASE_URL and SUPABASE_SECRET_KEY are required for writes.")
     scraper = ShoeChapterScraper()
     client = SupabaseCatalogClient(url, key) if not args.dry_run else None
+    outcomes = ItemOutcomes("shoechapter", LOG)
     try:
         summaries = [{"handle": item} for item in args.url] if args.url else manifest_items(args, "shoechapter", lambda: scraper.discover_products(args.collection))
         summaries = summaries[args.offset :]
@@ -60,20 +62,19 @@ def import_shoechapter_products(args: argparse.Namespace) -> int:
             if index > 1 and not args.no_delay:
                 time.sleep(random.uniform(args.min_delay, args.max_delay))
             LOG.info("[%s] Hydrating %s", index, handle)
-            product = scraper.fetch_product(handle)
-            if not scraper.is_footwear(product):
-                LOG.info("Skipping non-footwear product: %s (%s)", product.get("title"), product.get("type"))
-                continue
-            page_html = scraper.fetch_product_page(handle)
-            row = scraper.product_to_row(product, page_html)
-            for sibling_handle in row["raw"].get("color_handles") or []:
-                if sibling_handle not in queued_handles:
-                    queued_handles.add(sibling_handle)
-                    pending_handles.append(sibling_handle)
-            if args.dry_run:
-                dry_run_rows.append(row)
-            else:
-                pending_rows.append(row)
+            with outcomes.item(str(handle)):
+                product = scraper.fetch_product(handle)
+                if not scraper.is_footwear(product):
+                    LOG.info("Skipping non-footwear product: %s (%s)", product.get("title"), product.get("type"))
+                    continue
+                page_html = scraper.fetch_product_page(handle)
+                row = scraper.product_to_row(product, page_html)
+                for sibling_handle in row["raw"].get("color_handles") or []:
+                    if sibling_handle not in queued_handles:
+                        queued_handles.add(sibling_handle)
+                        pending_handles.append(sibling_handle)
+                (dry_run_rows if args.dry_run else pending_rows).append(row)
+            if not args.dry_run:
                 if len(pending_rows) >= args.write_batch_size:
                     assert client is not None
                     client.upsert_products(table, pending_rows)
@@ -86,7 +87,7 @@ def import_shoechapter_products(args: argparse.Namespace) -> int:
             client.upsert_products(table, pending_rows)
             LOG.info("Upserted final %s Shoe Chapter rows to %s.", len(pending_rows), table)
         LOG.info("Shoe Chapter import complete. rows=%s", len(dry_run_rows) if args.dry_run else "written")
-        return 0
+        return outcomes.exit_code()
     except Exception:
         LOG.exception("Shoe Chapter import failed")
         return 1

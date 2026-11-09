@@ -10,6 +10,9 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
+from scrapers.inventory import require_present
+from scrapers.source_http import SourcePayloadError
+
 
 BASE_URL = "https://bestseller-stores.dk"
 NEWS_COLLECTION_HANDLE = "nyheder-test"
@@ -31,8 +34,9 @@ NEWS_ALLOWED_CATEGORY_PREFIXES = (
     "tailoring_",
     "trousers_",
 )
+AARHUS_LOCATION_ID = 61382557882
 TRACKED_STORE_SLUGS = {
-    61382557882: "romerhus-aarhus",
+    AARHUS_LOCATION_ID: "romerhus-aarhus",
     111209972098: "gammeltorv-copenhagen",
 }
 
@@ -131,6 +135,7 @@ class RomerhusScraper:
         description, fields = self._description_fields(product.get("description") or product.get("content") or "")
         inventory = {"stores": {store["slug"]: self._empty_store(store["name"]) for store in stores.values()}}
         webshop_sizes: list[dict[str, Any]] = []
+        self._require_variant_stock(product, stock_by_variant)
         for variant in product.get("variants", []):
             if variant.get("id") is None:
                 continue
@@ -151,7 +156,7 @@ class RomerhusScraper:
         list_price = self._price(product.get("compare_at_price_min") or product.get("compare_at_price"))
         if list_price is not None and current_price is not None and list_price <= current_price:
             list_price = None
-        aarhus = inventory["stores"].get("romerhus-aarhus", self._empty_store("BESTSELLER Aarhus - Rømerhus"))
+        aarhus = inventory["stores"]["romerhus-aarhus"]
         scraped_at = datetime.now(timezone.utc).isoformat()
         style_reference = fields.get("style_reference") or self._style_reference(product)
         canonical_url = f"{BASE_URL}/products/{handle}"
@@ -240,6 +245,26 @@ class RomerhusScraper:
             for location_id, slug in TRACKED_STORE_SLUGS.items()
             if (location := locations.get(location_id)) and location.get("localPickupEnabled")
         }
-        if not stores:
-            raise RuntimeError("Neither expected Rømerhus Click & Collect store was returned by the storefront.")
+        if AARHUS_LOCATION_ID not in stores:
+            raise SourcePayloadError(
+                "Rømerhus Aarhus Click & Collect location is missing or has pickup disabled; retaining previous stock."
+            )
         return stores
+
+    @staticmethod
+    def _require_variant_stock(product: dict[str, Any], stock_by_variant: dict[int, dict[str, Any]]) -> None:
+        """Every variant needs a stock record that includes Aarhus.
+
+        The endpoint lists Aarhus for every variant (with explicit zeros), while
+        Gammeltorv is left out for sizes it never stocked, so a missing
+        Gammeltorv entry means 0 but a missing variant or Aarhus entry is
+        incomplete data.
+        """
+        variant_ids = [int(variant["id"]) for variant in product.get("variants", []) if variant.get("id") is not None]
+        require_present(stock_by_variant, variant_ids, "Rømerhus variant-stock response")
+        for variant_id in variant_ids:
+            locations = stock_by_variant[variant_id].get("locations")
+            if not isinstance(locations, list) or not any(
+                isinstance(item, dict) and str(item.get("id")) == str(AARHUS_LOCATION_ID) for item in locations
+            ):
+                raise SourcePayloadError(f"Rømerhus variant {variant_id} has no Aarhus stock entry")
