@@ -1,0 +1,210 @@
+{
+ "feed": {
+  "id": 9941806023003,
+  "title": "Air Max 1 White Pure Platinum Black Leather",
+  "handle": "air-max-1-white-pure-platinum-black-leather",
+  "body_html": "<p>The Air Max 1 White Pure Platinum Black Leather delivers a clean look.</p><p><strong>SKU: </strong>FZ5808-102</p>",
+  "published_at": "2025-06-06T14:51:05+02:00",
+  "updated_at": "2026-11-09T11:22:19+01:00",
+  "vendor": "Nike",
+  "product_type": "Sneakers",
+  "tags": [
+   "color:Black",
+   "color:White",
+   "delivery:rare",
+   "fit:tts",
+   "sizeguide/nike-size-chart"
+  ],
+  "variants": [
+   {
+    "id": 50752165445979,
+    "title": "39",
+    "option1": "39",
+    "option2": null,
+    "option3": null,
+    "sku": "FZ5808-102",
+    "available": true,
+    "price": "1550.00",
+    "compare_at_price": "0.00"
+   },
+   {
+    "id": 50752165478747,
+    "title": "40",
+    "option1": "40",
+    "option2": null,
+    "option3": null,
+    "sku": "FZ5808-102",
+    "available": true,
+    "price": "1550.00",
+    "compare_at_price": "0.00"
+   },
+   {
+    "id": 50752165511515,
+    "title": "40.5",
+    "option1": "40.5",
+    "option2": null,
+    "option3": null,
+    "sku": "FZ5808-102",
+    "available": true,
+    "price": "1650.00",
+    "compare_at_price": "0.00"
+   }
+  ],
+  "images": [
+   {
+    "src": "https://cdn.shopify.com/s/files/1/0604/3897/0560/files/FZ5808-102.png?v=1749213935"
+   }
+  ],
+  "options": [
+   {
+    "name": "Size",
+    "position": 1,
+    "values": [
+     "39",
+     "40",
+     "40.5"
+    ]
+   }
+  ]
+ },
+ "inventory": {
+  "status": 200,
+  "body": {
+   "data": {
+    "product": {
+     "id": "gid://shopify/Product/9941806023003",
+     "variants": {
+      "edges": [
+       {
+        "node": {
+         "id": "gid://shopify/ProductVariant/50752165445979",
+         "availableForSale": true,
+         "storeAvailability": {
+          "edges": [
+           {
+            "node": {
+             "location": {
+              "name": "Takeoff Aarhus",
+              "address": {
+               "formatted": [
+                "Guldsmedgade 24A",
+                "8000 Aarhus C",
+                "Denmark"
+               ]
+              }
+             },
+             "available": true,
+             "quantityAvailable": 0
+            }
+           },
+           {
+            "node": {
+             "location": {
+              "name": "Takeoff Copenhagen",
+              "address": {
+               "formatted": [
+                "Vingårdstræde 20",
+                "1070 København K",
+                "Denmark"
+               ]
+              }
+             },
+             "available": true,
+             "quantityAvailable": 0
+            }
+           }
+          ]
+         }
+        }
+       },
+       {
+        "node": {
+         "id": "gid://shopify/ProductVariant/50752165478747",
+         "availableForSale": true,
+         "storeAvailability": {
+          "edges": [
+           {
+            "node": {
+             "location": {
+              "name": "Takeoff Aarhus",
+              "address": {
+               "formatted": [
+                "Guldsmedgade 24A",
+                "8000 Aarhus C",
+                "Denmark"
+               ]
+              }
+             },
+             "available": true,
+             "quantityAvailable": 0
+            }
+           },
+           {
+            "node": {
+             "location": {
+              "name": "Takeoff Copenhagen",
+              "address": {
+               "formatted": [
+                "Vingårdstræde 20",
+                "1070 København K",
+                "Denmark"
+               ]
+              }
+             },
+             "available": true,
+             "quantityAvailable": 2
+            }
+           }
+          ]
+         }
+        }
+       },
+       {
+        "node": {
+         "id": "gid://shopify/ProductVariant/50752165511515",
+         "availableForSale": true,
+         "storeAvailability": {
+          "edges": [
+           {
+            "node": {
+             "location": {
+              "name": "Takeoff Aarhus",
+              "address": {
+               "formatted": [
+                "Guldsmedgade 24A",
+                "8000 Aarhus C",
+                "Denmark"
+               ]
+              }
+             },
+             "available": true,
+             "quantityAvailable": 1
+            }
+           },
+           {
+            "node": {
+             "location": {
+              "name": "Takeoff Copenhagen",
+              "address": {
+               "formatted": [
+                "Vingårdstræde 20",
+                "1070 København K",
+                "Denmark"
+               ]
+              }
+             },
+             "available": true,
+             "quantityAvailable": 1
+            }
+           }
+          ]
+         }
+        }
+       }
+      ]
+     }
+    }
+   }
+  }
+ }
+}

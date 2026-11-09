@@ -1,0 +1,71 @@
+{
+ "id": 10839656038747,
+ "title": "GAINESVILLE SS TEE",
+ "handle": "dk0a8cckblk1-black",
+ "body_html": "Dickies Gainesville SS Tee er en klassisk bomulds-T-shirt med rund hals.",
+ "vendor": "Dickies",
+ "product_type": "T-shirts til mænd",
+ "tags": [
+  "Dickies",
+  "New",
+  "t-shirt-med-print-til-herre"
+ ],
+ "variants": [
+  {
+   "id": 54514768380251,
+   "title": "BLACK / S",
+   "option1": "BLACK",
+   "option2": "S",
+   "option3": null,
+   "sku": "130_DK0A8CCKBLK1_BLACK_S",
+   "available": true,
+   "price": "299.00",
+   "compare_at_price": null
+  },
+  {
+   "id": 54514768413019,
+   "title": "BLACK / M",
+   "option1": "BLACK",
+   "option2": "M",
+   "option3": null,
+   "sku": "130_DK0A8CCKBLK1_BLACK_M",
+   "available": true,
+   "price": "299.00",
+   "compare_at_price": null
+  },
+  {
+   "id": 54514768445787,
+   "title": "BLACK / L",
+   "option1": "BLACK",
+   "option2": "L",
+   "option3": null,
+   "sku": "130_DK0A8CCKBLK1_BLACK_L",
+   "available": true,
+   "price": "299.00",
+   "compare_at_price": null
+  }
+ ],
+ "images": [
+  {
+   "src": "https://cdn.shopify.com/s/files/1/0872/6868/8219/files/BLACK.jpg?v=1793012588"
+  }
+ ],
+ "options": [
+  {
+   "name": "Color",
+   "position": 1,
+   "values": [
+    "BLACK"
+   ]
+  },
+  {
+   "name": "Size",
+   "position": 2,
+   "values": [
+    "S",
+    "M",
+    "L"
+   ]
+  }
+ ]
+}

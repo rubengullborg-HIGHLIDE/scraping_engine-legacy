@@ -509,6 +509,88 @@ python scripts/import_cejf_products.py --url https://cejf.dk/products/classic-me
 python scripts/import_cejf_products.py
 ```
 
+### Shared Shopify layer (use for every new Shopify store)
+
+New Shopify stores are built on `scrapers/shopify.py` (storefront client with
+guarded collection pagination, `money` for both øre `.js` and kroner
+`products.json` prices, `variant_prices`, `option_value`, `images`,
+`plain_text`, shared `color_group` vocabulary) and imported through
+`scripts/shopify_import.py`. A store module supplies discovery scope and a
+`product_to_row`; its import script is a `ShopifyStore` definition plus a
+`hydrate` function. Rows key on the Shopify product id
+(`source_product_id`), never on a derived style id.
+
+### Takeoff Copenhagen Full Import (parked)
+
+**Status, November 9, 2026: parked; do not run or register.** The inventory
+endpoint below answers `401 Unauthorized` to anything but Takeoff's own
+website, and Shopify's public pickup-availability fragment reports "Pickup
+available" at both shops even for sizes with zero shop stock (Takeoff keeps
+sourceable sizes open), so there is no usable public Aarhus stock source. Do
+not imitate the website's origin to get past the 401. Resume only if Takeoff
+installs the HIGHLIDE Shopify app or grants access to the endpoint; the code
+and the empty `takeoff_products` table are kept for that.
+
+Location: `scrapers/full_import/takeoff.py`, `scripts/import_takeoff_products.py`,
+`supabase/migrations/20261109103103_takeoff_kingsqueens_products.sql`.
+
+Discover from the `all` collection and keep product types `Sneakers`,
+`T-shirts`, `Hoodies & Sweatshirts`, `Jackets`, `Pants & Shorts` and
+`Preloved`; collectibles, accessories, headwear, watches and bags stay out.
+Preloved rows get `condition = 'preloved'`.
+
+Exact per-size stock for both shops comes from Takeoff's own endpoint,
+which its product page uses for the store-availability drawer:
+
+```text
+GET https://sell.takeoffcph.dk/api/shopify/inventorylevels?q=<shopify product id>
+
+takeoff-aarhus       Takeoff Aarhus, Guldsmedgade 24A
+takeoff-copenhagen   Takeoff Copenhagen, Vingårdstræde 20
+```
+
+A size is in a shop when pickup is available and `quantityAvailable > 0`.
+Shopify's online `available` flag is not stock: Takeoff sells most sizes on
+5–10 day sourcing. Prices differ per size; `current_price` is the lowest.
+
+```bash
+python scripts/import_takeoff_products.py --discover-only --preview 10
+python scripts/import_takeoff_products.py --url https://takeoffcph.dk/products/air-max-1-white-pure-platinum-black-leather --dry-run --no-delay
+python scripts/import_takeoff_products.py
+```
+
+### Kings & Queens Full Import
+
+Location: `scrapers/full_import/kings_queens.py`,
+`scripts/import_kingsqueens_products.py`, same migration as Takeoff.
+
+Import the `herre` collection except `Accessories til herre`,
+`Halstørklæder til herre` and gift cards. Underwear, socks and swimwear are
+in scope. Untyped products in `herre` are clothing and are kept.
+
+Aarhus availability is Shopify's pickup-availability fragment, one request
+per size (`/variants/<id>/?section_id=pickup-availability`). Every size
+lists all shops, sold-out sizes included, as
+`li.pickup-availability-list__item.is-available|is-unavailable`. Track only:
+
+```text
+kingsqueens-aarhus   Kings & Queens Aarhus, Bruun's Galleri (source name "K&Q Århus Bruuns")
+```
+
+No quantities are published: `stock_known: false`, size `stock: null`, and
+`aarhus_total_stock`/`local_total_stock` null. A fragment without the Aarhus
+entry or its marker is a source error.
+
+```bash
+python scripts/import_kingsqueens_products.py --discover-only --preview 10
+python scripts/import_kingsqueens_products.py --url https://kingsqueens.dk/products/dk0a8cckblk1-black --dry-run --no-delay
+python scripts/import_kingsqueens_products.py
+```
+
+Neither store is registered in `STORE_SPECS`/`CATALOG_SPECS` yet: adding a
+store changes the checkpointed store list of the running daily/weekly cycles,
+so registration is its own step after the initial local import.
+
 ### Rømerhus Full Import
 
 Location:
