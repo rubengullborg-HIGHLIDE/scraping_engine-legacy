@@ -36,12 +36,17 @@ LOG = logging.getLogger(__name__)
 LOCK = '/tmp/highlide-inventory-refresh.lock'
 
 
+PLAN_CHUNK = 100
+
+
 class ReconciliationPlan:
     def __init__(self):
         self.patches, self.history = [], []
 
     def patch_ids(self, table, ids, payload):
-        self.patches.extend({'table': table, 'id': row_id, 'payload': payload} for row_id in ids)
+        ids = list(ids)
+        self.patches.extend({'table': table, 'ids': ids[start:start + PLAN_CHUNK], 'payload': payload}
+                            for start in range(0, len(ids), PLAN_CHUNK))
 
     def patch_row(self, table, row_id, payload):
         self.patch_ids(table, [row_id], payload)
@@ -51,20 +56,28 @@ class ReconciliationPlan:
 
 
 def apply_plan(client, plan):
-    # The saved plan makes partial reconciliation replay idempotent. Never replay
-    # it over an inventory observation made since the plan was prepared.
+    # The saved plan makes partial reconciliation replay idempotent. It never
+    # overwrites a row written since the plan was prepared: that newer write
+    # wins, and the row's catalog-missing history entry is dropped with it.
+    skipped = set()
     for patch in plan['patches']:
+        ids = patch.get('ids') or [patch['id']]  # 'id': plans saved before chunking
         response = client.session.patch(
             client._table_url(patch['table']),
-            params={'id': f"eq.{patch['id']}", 'updated_at': f"lte.{plan['checked_at']}", 'select': 'id'},
+            params={'id': f"in.({','.join(str(row_id) for row_id in ids)})",
+                    'updated_at': f"lte.{plan['checked_at']}", 'select': 'id'},
             headers={'Prefer': 'return=representation'}, json=patch['payload'],
             timeout=client.timeout_seconds,
         )
         response.raise_for_status()
-        if response.json() != [{'id': patch['id']}]:
-            raise RuntimeError('Catalog reconciliation journal is stale; manual review required')
-    for start in range(0, len(plan['history']), 50):
-        client.insert_history(plan['history'][start:start + 50])
+        newer = set(ids) - {row['id'] for row in response.json()}
+        if newer:
+            LOG.warning('Catalog plan skipped %s row(s) written after the plan was prepared: %s',
+                        len(newer), sorted(newer)[:10])
+            skipped |= newer
+    history = [entry for entry in plan['history'] if entry.get('product_id') not in skipped]
+    for start in range(0, len(history), 50):
+        client.insert_history(history[start:start + 50])
 
 
 def run_child(command, timeout):
@@ -112,7 +125,11 @@ def ensure_run(recorder, state, store, job):
 def process_store(state, store, path, client, recorder, args):
     job = state['jobs'][store]
     if 'before' not in job:
-        job.update(before=catalog_rows(client, store), started_at=sync.utc_now(), offset=0, observed={})
+        # Reconciliation only needs each row's id and status from the start
+        # of the cycle; keeping whole rows bloats the checkpoint.
+        job.update(before=[{'id': row['id'], 'publication_status': row.get('publication_status')}
+                           for row in catalog_rows(client, store)],
+                   started_at=sync.utc_now(), offset=0, observed={})
         save_state(path, state)
     ensure_run(recorder, state, store, job)
     save_state(path, state)
@@ -145,9 +162,8 @@ def process_store(state, store, path, client, recorder, args):
                 raise ValueError('Special catalog batch did not commit')
             job['observed'].update(report['observed'])
         else:
-            for row in client.list_rows(store):
-                if sync.parse_timestamp(row.get('updated_at')) >= began:
-                    job['observed'][str(row['id'])] = row['updated_at']
+            for row in client.updated_since(store, began.isoformat()):
+                job['observed'][str(row['id'])] = row['updated_at']
         job['offset'] = min(len(items), job['offset'] + state['batch_pages'])
         job['total'] = len(items)
         job.pop('error', None)

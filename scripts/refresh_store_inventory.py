@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scrapers.source_http import SourceRetry, StoreRateLimited, stop_on_source_rate_limit
+from scrapers.source_http import SourcePayloadError, SourceRetry, StoreRateLimited, stop_on_source_rate_limit
 
 LOG = logging.getLogger("refresh_store_inventory")
 EMPTY_LOCAL_INVENTORY = {"stores": {}}
@@ -368,9 +368,11 @@ class SupabaseInventoryClient:
         self.pending_history.clear()
 
     def create_refresh_run(self, payload: dict[str, Any]) -> None:
+        # Upsert on the client-generated id: a retried POST after a lost
+        # response must not fail with a duplicate key.
         response = self.session.post(
             self._table_url(self.runs_table),
-            headers={"Prefer": "return=minimal"},
+            headers={"Prefer": "resolution=merge-duplicates,return=minimal"},
             data=json.dumps(payload, ensure_ascii=False),
             timeout=self.timeout_seconds,
         )
@@ -678,9 +680,10 @@ def refresh_single_row_store(
         for index, existing_row in enumerate(rows, start=1):
             maybe_delay(index, args)
             stats.pages += 1
-            url = row_url(existing_row)
+            url = existing_row.get("canonical_url") or existing_row.get("source_url")
             LOG.info("%s [%s/%s] Refreshing %s", spec.key, index, len(rows), url)
             try:
+                url = row_url(existing_row)
                 full_row = builder(scraper, existing_row, args)
                 apply_full_row(spec, database, existing_row, full_row, args, stats)
             except (SupabasePatchError, StoreRateLimited):
@@ -938,6 +941,13 @@ def refresh_suitclub(
             url = row_url(existing_row)
             LOG.info("suitclub [%s/%s] Refreshing %s", index, len(available_rows), url)
             try:
+                product_key = str(existing_row["source_product_id"]).rsplit("/", 1)[-1]
+                if (inventory_snapshot.get("products") or {}).get(product_key) is None:
+                    # Unpublished from the Storefront channel or a null node:
+                    # unknown stock, so keep the saved observation.
+                    raise SourcePayloadError(
+                        f"SuitClub Storefront API returned no inventory for product {existing_row['source_product_id']}"
+                    )
                 product = scraper.fetch_product(url)
                 page_html = page_cache.pop(int(existing_row["id"]), None)
                 if page_html is None:
@@ -1042,6 +1052,12 @@ def refresh_stores(args: argparse.Namespace) -> int:
             except SupabasePatchError as exc:
                 LOG.error("Stopping all store refreshes after database write failure: %s", exc)
                 write_failed = True
+                if not args.dry_run and not args.no_history:
+                    # Rows patched before the failure still need their history.
+                    try:
+                        database.flush_history()
+                    except SupabasePatchError as history_exc:
+                        LOG.error("Queued history could not be written either: %s", history_exc)
                 break
             except Exception as store_error:
                 if isinstance(store_error, StoreRateLimited) and store_error.stats is not None:

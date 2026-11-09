@@ -204,6 +204,26 @@ class CatalogLifecycleClient:
                 return rows
             start += page_size
 
+    def updated_since(self, store_key: str, since: str, page_size: int = 1000) -> list[dict[str, Any]]:
+        """Only ``id`` and ``updated_at`` of rows written at or after ``since``."""
+        spec = STORE_SPECS[store_key]
+        rows: list[dict[str, Any]] = []
+        start = 0
+        while True:
+            response = self.session.get(
+                self._table_url(spec.table),
+                params={"select": "id,updated_at", "updated_at": f"gte.{since}", "order": "id.asc"},
+                headers={"Range": f"{start}-{start + page_size - 1}"},
+                timeout=self.timeout_seconds,
+            )
+            if not response.ok:
+                raise self._response_error(response, f"GET {spec.table} updated since {since}")
+            batch = response.json()
+            rows.extend(batch)
+            if len(batch) < page_size:
+                return rows
+            start += page_size
+
     def patch_ids(
         self,
         table: str,

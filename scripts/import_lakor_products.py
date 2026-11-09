@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.import_outcomes import ItemOutcomes
+from scripts.import_rains_products import SupabaseCatalogClient
 from scripts.catalog_manifest import manifest_items, add_manifest_argument
 
 LOG = logging.getLogger("import_lakor_products")
@@ -34,29 +35,6 @@ def load_dotenv(path: Path) -> None:
 def env(name: str, default: Optional[str] = None) -> Optional[str]:
     value = os.getenv(name)
     return default if value is None or value == "" else value
-
-
-class SupabaseCatalogClient:
-    def __init__(self, supabase_url: str, supabase_key: str) -> None:
-        import requests
-
-        self.supabase_url = supabase_url.rstrip("/")
-        self.session = requests.Session()
-        headers = {"apikey": supabase_key, "Content-Type": "application/json"}
-        if supabase_key.count(".") == 2:
-            headers["Authorization"] = f"Bearer {supabase_key}"
-        self.session.headers.update(headers)
-
-    def upsert_products(self, table: str, rows: list[dict[str, Any]]) -> None:
-        if not rows:
-            return
-        response = self.session.post(
-            f"{self.supabase_url}/rest/v1/{quote(table)}",
-            params={"on_conflict": "source_parent_id,source_color_id"},
-            headers={"Prefer": "resolution=merge-duplicates,return=minimal"},
-            data=json.dumps(rows, ensure_ascii=False),
-        )
-        response.raise_for_status()
 
 
 def import_lakor_products(args: argparse.Namespace) -> int:

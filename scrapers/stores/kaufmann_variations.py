@@ -168,6 +168,13 @@ def variation_rows_from_payload(
             )
 
             source_stores = _stock_by_store(size_option)
+            missing_stores = [store["seo_url"] for store in AARHUS_STORES if store["seo_url"] not in source_stores]
+            if source_available and missing_stores:
+                # Kaufmann lists every shop for every size; a missing Aarhus
+                # shop is an incomplete payload, not zero stock.
+                raise KaufmannVariationParseError(
+                    f"Size {size_name!r} has no stock entry for {missing_stores}; retaining previous stock."
+                )
             for store in AARHUS_STORES:
                 store_key = store["seo_url"]
                 source_store = source_stores.get(store_key) or {}

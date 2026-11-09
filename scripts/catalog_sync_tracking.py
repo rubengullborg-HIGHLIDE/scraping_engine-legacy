@@ -39,7 +39,9 @@ class CatalogSyncRunRecorder:
             status=max_retries,
             backoff_factor=0.75,
             status_forcelist=(429, 500, 502, 503, 504),
-            allowed_methods=frozenset({"POST", "PATCH"}),
+            # Not POST: start() inserts a server-numbered row, so a retry after
+            # a lost response would duplicate it. ensure_run recovers instead.
+            allowed_methods=frozenset({"GET", "PATCH"}),
             respect_retry_after_header=True,
             raise_on_status=False,
         )

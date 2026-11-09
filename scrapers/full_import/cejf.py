@@ -11,6 +11,8 @@ from urllib.parse import urljoin, urlparse
 import requests
 from bs4 import BeautifulSoup
 
+from scrapers.shopify import variant_prices
+
 
 BASE_URL = "https://cejf.dk"
 MEN_COLLECTION_HANDLE = "men"
@@ -88,8 +90,7 @@ class CejfScraper:
         specifications = {"fabric_description": fabric_description} if fabric_description else {}
         color = self._color(name, description)
         category = self._category(name)
-        current_price = self._minimum_variant_price(variants, "price")
-        list_price = self._minimum_sale_list_price(variants)
+        current_price, list_price = variant_prices(variants, self._source_price)
         scraped_at = datetime.now(timezone.utc).isoformat()
 
         webshop_sizes = []
@@ -332,22 +333,6 @@ class CejfScraper:
             if str(name or "").casefold() in {"size", "størrelse", "storrelse"}:
                 return cls._text(value)
         return cls._text(variant.get("public_title") or variant.get("title"))
-
-    @classmethod
-    def _minimum_variant_price(cls, variants: list[dict[str, Any]], key: str) -> float | None:
-        values = [cls._source_price(variant.get(key)) for variant in variants]
-        values = [value for value in values if value is not None]
-        return min(values) if values else None
-
-    @classmethod
-    def _minimum_sale_list_price(cls, variants: list[dict[str, Any]]) -> float | None:
-        sale_values = []
-        for variant in variants:
-            price = cls._source_price(variant.get("price"))
-            compare_at = cls._source_price(variant.get("compare_at_price"))
-            if price is not None and compare_at is not None and compare_at > price:
-                sale_values.append(compare_at)
-        return min(sale_values) if sale_values else None
 
     @staticmethod
     def _source_price(value: Any) -> float | None:

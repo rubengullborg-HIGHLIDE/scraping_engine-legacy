@@ -77,7 +77,8 @@ class CatalogBatchTests(unittest.TestCase):
         return 0
 
     def test_resume_stable_offset_and_single_run_reconcile_only_after_last_batch(self):
-        self.client.list_rows.side_effect = [[self.old], [self.fresh], [self.fresh], [self.fresh]]
+        self.client.list_rows.side_effect = [[self.old], [self.fresh]]
+        self.client.updated_since.return_value = [{'id': 1, 'updated_at': self.fresh['updated_at']}]
         with patch.object(runner, 'run_child', side_effect=self.child) as child, patch.object(runner, 'apply_plan') as apply:
             runner.process_store(self.state, 'rains', self.path, self.client, self.recorder, self.args)
             apply.assert_not_called()
@@ -114,12 +115,27 @@ class CatalogBatchTests(unittest.TestCase):
             apply.assert_called_once()
         self.assertTrue(saved['jobs']['rains']['done'])
 
-    def test_recovery_refuses_newer_product_before_history_write(self):
-        self.client.session.patch.return_value.json.return_value = []
-        plan = dict(checked_at=CHECKED_AT, patches=[dict(table='rains_products', id=1, payload={})], history=[{}])
-        with self.assertRaisesRegex(RuntimeError, 'stale'):
+    def test_replay_skips_rows_written_after_the_plan_and_their_history(self):
+        # Row 2 was written after the plan was prepared: its patch is skipped
+        # (the newer write wins) and so is its catalog-missing history entry.
+        self.client.session.patch.return_value.json.return_value = [{'id': 1}]
+        plan = dict(checked_at=CHECKED_AT, history=[{'product_id': 1}, {'product_id': 2}],
+                    patches=[dict(table='rains_products', ids=[1, 2], payload={})])
+        with self.assertLogs(runner.LOG, level='WARNING'):
             runner.apply_plan(self.client, plan)
-        self.client.insert_history.assert_not_called()
+        self.assertEqual('in.(1,2)', self.client.session.patch.call_args.kwargs['params']['id'])
+        self.client.insert_history.assert_called_once_with([{'product_id': 1}])
+
+    def test_plans_saved_before_chunking_still_apply(self):
+        self.client.session.patch.return_value.json.return_value = [{'id': 7}]
+        runner.apply_plan(self.client, dict(checked_at=CHECKED_AT, history=[],
+                                            patches=[dict(table='rains_products', id=7, payload={})]))
+        self.assertEqual('in.(7)', self.client.session.patch.call_args.kwargs['params']['id'])
+
+    def test_plan_patches_are_chunked(self):
+        plan = runner.ReconciliationPlan()
+        plan.patch_ids('rains_products', list(range(250)), {'x': 1})
+        self.assertEqual([100, 100, 50], [len(patch['ids']) for patch in plan.patches])
 
     def test_daily_updates_neither_count_as_seen_nor_shield_from_misses(self):
         before = [rains_row(i, updated_at='2020-01-01T00:00:00+00:00') for i in (1,2,3)]
@@ -244,6 +260,7 @@ class CatalogBatchTests(unittest.TestCase):
         self.state['jobs']['rains'] = dict(before=[self.old], started_at='2020-02-01T00:00:00+00:00',
                                            offset=0, observed={}, run_id=42)
         self.client.list_rows.return_value = [self.old]
+        self.client.updated_since.return_value = []
         with patch.object(runner, 'run_child', return_value=runner.EXIT_PARTIAL):
             runner.process_store(self.state, 'rains', self.path, self.client, self.recorder, self.args)
         job = self.state['jobs']['rains']
