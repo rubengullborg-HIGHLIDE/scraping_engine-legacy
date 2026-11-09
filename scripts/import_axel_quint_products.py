@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scrapers.full_import.axel_quint import AxelQuintScraper, SourceUnavailable
+from scripts.import_outcomes import EXIT_FAILED, EXIT_OK, EXIT_PARTIAL, is_gone
 from scrapers.source_http import SourcePayloadError, StoreRateLimited
 from scripts.import_rains_products import SupabaseCatalogClient, env, load_dotenv
 
@@ -67,7 +68,7 @@ def import_products(store, args, scraper_factory=None):
     lifecycle = None
     existing_by_key = {}
     rows, pending, keys = [], [], set()
-    failed = 0
+    failed = gone = 0
     checkpoint_path = getattr(args, 'checkpoint', None)
     checkpoint = None
     completed = set()
@@ -182,6 +183,13 @@ def import_products(store, args, scraper_factory=None):
             except Exception as exc:
                 if covered_before is not None:
                     scraper.covered_urls = covered_before
+                if is_gone(exc):
+                    # Delisted since discovery: not seen, which reconciliation
+                    # handles. It must not hold the batch back.
+                    gone += 1
+                    acknowledged_pages.add(url)
+                    LOG.warning('%s product %s is gone (404/410); skipped.', store, url)
+                    continue
                 failed += 1
                 response = getattr(exc, 'response', None)
                 server_error = (isinstance(exc, requests.HTTPError) and response is not None and
@@ -252,8 +260,11 @@ def import_products(store, args, scraper_factory=None):
                 print(rendered)
         if availability_first:
             LOG.info('%s HTTP-screened unavailable colours: existing_updated=%s new_skipped=%s', store, updated_unavailable, skipped_unavailable)
-        LOG.info('%s import %s. rows=%s failed_pages=%s', store, 'stopped' if blocked else 'finished', len(keys), failed)
-        return 1 if failed else 0
+        LOG.info('%s import %s. rows=%s failed_pages=%s gone_pages=%s', store,
+                 'stopped' if blocked else 'finished', len(keys), failed, gone)
+        if blocked or (failed and not keys and not gone):
+            return EXIT_FAILED
+        return EXIT_PARTIAL if failed else EXIT_OK
     except KeyboardInterrupt:
         LOG.info('Stopping %s import; saving fully parsed pending families.', store)
         if flush is not None and client is not None:

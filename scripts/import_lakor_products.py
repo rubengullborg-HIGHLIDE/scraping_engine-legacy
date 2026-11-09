@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from scripts.import_outcomes import ItemOutcomes
 from scripts.catalog_manifest import manifest_items, add_manifest_argument
 
 LOG = logging.getLogger("import_lakor_products")
@@ -70,6 +71,7 @@ def import_lakor_products(args: argparse.Namespace) -> int:
 
     scraper = LakorScraper()
     client = SupabaseCatalogClient(supabase_url, supabase_key) if not args.dry_run else None
+    outcomes = ItemOutcomes("lakor", LOG)
     try:
         summaries = [{"handle": url} for url in args.url] if args.url else manifest_items(args, "lakor", lambda: scraper.discover_products(args.collection or CLOTHING_COLLECTION_HANDLE))
         summaries = summaries[args.offset :]
@@ -87,7 +89,7 @@ def import_lakor_products(args: argparse.Namespace) -> int:
             if summary.get("handle") or summary.get("url")
         ]
         queued_handles = {handle for handle in pending_handles if handle}
-        products: list[tuple[dict[str, Any], str]] = []
+        rows: list[dict[str, Any]] = []
         index = 0
         while pending_handles:
             handle = pending_handles.pop(0)
@@ -97,25 +99,26 @@ def import_lakor_products(args: argparse.Namespace) -> int:
             if index > 1 and not args.no_delay:
                 time.sleep(random.uniform(args.min_delay, args.max_delay))
             LOG.info("[%s] Hydrating %s", index, handle)
-            product = scraper.fetch_product(handle)
-            if not scraper.is_clothing(product):
-                LOG.info("Skipping non-clothing product: %s (%s)", product.get("title"), product.get("type"))
-                continue
-            page_html = scraper.fetch_product_page(handle)
-            products.append((product, page_html))
-            for sibling_handle in scraper.color_handles(page_html):
-                if sibling_handle not in queued_handles:
-                    queued_handles.add(sibling_handle)
-                    pending_handles.append(sibling_handle)
-        LOG.info("Selected %s LAKOR clothing colour products for import.", len(products))
-        rows = scraper.build_catalog_rows(products, variant_delay=args.variant_delay, no_delay=args.no_delay)
+            with outcomes.item(handle):
+                product = scraper.fetch_product(handle)
+                if not scraper.is_clothing(product):
+                    LOG.info("Skipping non-clothing product: %s (%s)", product.get("title"), product.get("type"))
+                    continue
+                page_html = scraper.fetch_product_page(handle)
+                for sibling_handle in scraper.color_handles(page_html):
+                    if sibling_handle not in queued_handles:
+                        queued_handles.add(sibling_handle)
+                        pending_handles.append(sibling_handle)
+                rows.append(scraper.product_to_row(
+                    product, page_html, variant_delay=args.variant_delay, no_delay=args.no_delay))
+        LOG.info("Built %s LAKOR clothing colour rows for import.", len(rows))
         if args.dry_run:
             LOG.info("Dry run rows:\n%s", json.dumps(rows, ensure_ascii=False, indent=2))
-        else:
+        elif rows:
             assert client is not None
             client.upsert_products(table, rows)
         LOG.info("LAKOR import complete. rows=%s", len(rows))
-        return 0
+        return outcomes.exit_code()
     except Exception:
         LOG.exception("LAKOR import failed")
         return 1

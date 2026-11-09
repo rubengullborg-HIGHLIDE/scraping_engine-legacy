@@ -10,6 +10,8 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup, Tag
 
+from scrapers.source_http import SourcePayloadError
+
 
 BASE_URL = "https://shoechapter.com"
 MEN_COLLECTION_HANDLE = "men"
@@ -201,10 +203,10 @@ class ShoeChapterScraper:
         }
         raw: dict[str, Any] = {}
         spans = soup.select("variant-inventory [data-variant-id]")
-        if not spans:
-            store["stock_known"] = False
-            store["total_stock"] = None
-            return {"stores": {"shoechapter-aarhus": store}}, by_variant, raw
+        # Sold-out products still render one span per variant (with 0 stock),
+        # so a page without matching spans means the markup changed.
+        if not any(str(span.get("data-variant-id") or "") in size_by_variant for span in spans):
+            raise SourcePayloadError("Shoe Chapter page has no variant inventory markup; retaining previous stock")
         for span in spans:
             variant_id = str(span.get("data-variant-id") or "")
             text = span.get_text(" ", strip=True)

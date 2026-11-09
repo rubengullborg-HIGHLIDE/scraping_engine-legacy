@@ -943,6 +943,36 @@ daily inventory timestamps as catalog observations. Keep the checkpoint and its
 manifest directory together. Refer to the October 19 follow-up in
 `deployment/digitalocean.md` for scheduling, retries and recovery limits.
 
+### Incomplete source data and per-product failures
+
+Every store parser raises `SourcePayloadError` (`scrapers/source_http.py`)
+when a source answers but omits data needed to describe stock: a missing
+variant, a tracked store or warehouse that is absent or empty, unrecognised
+availability wording, missing inventory markup, or duplicate size labels.
+Never translate such a response into zero stock or "unavailable". The daily
+refresh counts the row as failed and keeps the saved observation. Shared
+checks live in `scrapers/inventory.py`; reuse them for new stores.
+
+Know each source's real "nothing in stock" shape before adding a check:
+LAKOR renders an empty `.product-availability` for sizes no shop holds, and
+Rømerhus omits Gammeltorv (never Aarhus) for sizes Gammeltorv never stocked.
+
+Catalogue importers wrap each product in `ItemOutcomes.item()`
+(`scripts/import_outcomes.py`) and keep database writes outside that block:
+
+- 404/410: the product is gone; skip it (reconciliation counts it as unseen).
+- Other per-product errors: skip it and exit `EXIT_PARTIAL` (3). The runner
+  advances the batch but does not advance catalogue misses for that store in
+  this cycle.
+- `StoreRateLimited`, or every product in the batch failing: exit 1 and retry.
+
+A weekly cycle still unfinished at its next scheduled Sunday is superseded:
+unfinished stores are closed as `partial` without reconciliation and a new
+cycle starts, so one blocked store cannot stop every other catalogue.
+Catalogue sightings come only from the runner's per-batch observations; a
+daily inventory write to `updated_at` is never a sighting and never shields
+a row from a miss.
+
 ### Unified store batches (supersedes separate Kaufmann scheduling)
 
 Both batch runners now include Kaufmann and Weekday, for 14 stores including

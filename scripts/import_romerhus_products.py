@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from scripts.import_outcomes import ItemOutcomes
 from scripts.catalog_manifest import manifest_items, add_manifest_argument
 
 LOG = logging.getLogger("import_romerhus_products")
@@ -70,6 +71,7 @@ def import_romerhus_products(args: argparse.Namespace) -> int:
 
     scraper = RomerhusScraper()
     client = SupabaseCatalogClient(supabase_url, supabase_key) if not args.dry_run else None
+    outcomes = ItemOutcomes("romerhus", LOG)
     try:
         products = [scraper.fetch_product(url) for url in args.url] if args.url else manifest_items(args, "romerhus", lambda: scraper.discover_products(args.collection or MEN_COLLECTION_HANDLES))
         products = products[args.offset :]
@@ -87,17 +89,29 @@ def import_romerhus_products(args: argparse.Namespace) -> int:
                 if index > 1 and not args.no_delay:
                     time.sleep(random.uniform(args.min_delay, args.max_delay))
                 LOG.info("[%s/%s] Hydrating %s", index, len(summaries), summary.get("handle"))
-                products.append(scraper.fetch_product(summary["handle"]))
+                with outcomes.item(str(summary.get("handle"))):
+                    products.append(scraper.fetch_product(summary["handle"]))
         elif products and not args.no_delay:
             time.sleep(random.uniform(args.min_delay, args.max_delay))
-        rows = scraper.build_catalog_rows(products)
+        rows = []
+        if products:
+            # Store locations and stock are fetched once per batch; failures
+            # there are store-wide and fail the batch.
+            locations = {int(location["id"]): location for location in scraper.fetch_store_locations() if location.get("id") is not None}
+            stores = scraper._tracked_stores(locations)
+            stock_by_variant = scraper.fetch_variant_stock(
+                int(variant["id"]) for product in products for variant in product.get("variants", []) if variant.get("id") is not None
+            )
+            for product in products:
+                with outcomes.item(str(product.get("handle") or product.get("id"))):
+                    rows.append(scraper.product_to_row(product, stock_by_variant, stores))
         if args.dry_run:
             LOG.info("Dry run rows:\n%s", json.dumps(rows, ensure_ascii=False, indent=2))
-        else:
+        elif rows:
             assert client is not None
             client.upsert_products(table, rows)
         LOG.info("Rømerhus import complete. rows=%s", len(rows))
-        return 0
+        return outcomes.exit_code()
     except Exception:
         LOG.exception("Rømerhus import failed")
         return 1

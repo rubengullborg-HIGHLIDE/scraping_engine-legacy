@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.import_rains_products import SupabaseCatalogClient, env, load_dotenv
 
+from scripts.import_outcomes import ItemOutcomes
 from scripts.catalog_manifest import manifest_items, add_manifest_argument
 
 LOG = logging.getLogger("import_skagen_clothing_products")
@@ -33,6 +34,7 @@ def import_skagen_clothing_products(args: argparse.Namespace) -> int:
 
     scraper = SkagenClothingScraper()
     client = SupabaseCatalogClient(supabase_url, supabase_key) if not args.dry_run else None
+    outcomes = ItemOutcomes("skagen_clothing", LOG)
     try:
         summaries = (
             [{"handle": item, "_discovery_collections": []} for item in args.url]
@@ -70,23 +72,21 @@ def import_skagen_clothing_products(args: argparse.Namespace) -> int:
             if len(processed_handles) > 1 and not args.no_delay:
                 time.sleep(random.uniform(args.min_delay, args.max_delay))
             LOG.info("[%s] Hydrating %s", len(processed_handles), handle)
-            product = scraper.fetch_product(handle)
-            if not scraper.is_clothing(product):
-                LOG.info("Skipping non-clothing product: %s (%s)", product.get("title"), product.get("type"))
-                continue
-            summary = discovery_by_handle.get(handle) or {}
-            product["_discovery_collections"] = summary.get("_discovery_collections") or []
-            page_html = scraper.fetch_product_page(handle)
-            row = scraper.product_to_row(product, page_html)
-            for sibling_handle in scraper.color_handles(page_html):
-                if sibling_handle not in queued_handles:
-                    queued_handles.add(sibling_handle)
-                    pending_handles.append(sibling_handle)
-            if args.dry_run:
-                dry_run_rows.append(row)
-                continue
-            pending_rows.append(row)
-            if len(pending_rows) >= args.write_batch_size:
+            with outcomes.item(str(handle)):
+                product = scraper.fetch_product(handle)
+                if not scraper.is_clothing(product):
+                    LOG.info("Skipping non-clothing product: %s (%s)", product.get("title"), product.get("type"))
+                    continue
+                summary = discovery_by_handle.get(handle) or {}
+                product["_discovery_collections"] = summary.get("_discovery_collections") or []
+                page_html = scraper.fetch_product_page(handle)
+                row = scraper.product_to_row(product, page_html)
+                for sibling_handle in scraper.color_handles(page_html):
+                    if sibling_handle not in queued_handles:
+                        queued_handles.add(sibling_handle)
+                        pending_handles.append(sibling_handle)
+                (dry_run_rows if args.dry_run else pending_rows).append(row)
+            if not args.dry_run and len(pending_rows) >= args.write_batch_size:
                 assert client is not None
                 client.upsert_products(table, pending_rows)
                 LOG.info("Upserted %s Skagen Clothing rows to %s.", len(pending_rows), table)
@@ -140,7 +140,7 @@ def import_skagen_clothing_products(args: argparse.Namespace) -> int:
             assert client is not None
             client.upsert_products(table, pending_rows)
             LOG.info("Upserted final %s Skagen Clothing rows to %s.", len(pending_rows), table)
-        return 0
+        return outcomes.exit_code()
     except Exception:
         LOG.exception("Skagen Clothing import failed")
         return 1

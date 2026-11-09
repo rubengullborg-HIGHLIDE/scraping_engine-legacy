@@ -17,7 +17,7 @@ class CheckpointTests(unittest.TestCase):
             path = Path(directory) / 'checkpoint.json'
             scraper = self.scraper()
             scraper.fetch_snapshot.side_effect = [SourcePayloadError('Empty HTTP 200'), {}]
-            self.assertEqual(self.run_batch(path, Mock(), scraper, pages=2), 1)
+            self.assertEqual(self.run_batch(path, Mock(), scraper, pages=2), 3)  # EXIT_PARTIAL
             state = json.loads(path.read_text())
             self.assertEqual(state['completed'], ['https://example.com/2'])
             self.assertEqual(state['last_batch']['status'], 'partial')
@@ -41,7 +41,7 @@ class CheckpointTests(unittest.TestCase):
             path = Path(directory) / 'checkpoint.json'
             scraper = self.scraper()
             scraper.fetch_snapshot.side_effect = [self.server_error(), {}]
-            self.assertEqual(self.run_batch(path, Mock(), scraper, pages=2), 1)
+            self.assertEqual(self.run_batch(path, Mock(), scraper, pages=2), 3)  # EXIT_PARTIAL
             state = json.loads(path.read_text())
             self.assertEqual(state['completed'], ['https://example.com/2'])
             self.assertEqual(state['deferred'], ['https://example.com/1'])
@@ -97,7 +97,7 @@ class CheckpointTests(unittest.TestCase):
             path = Path(directory) / 'checkpoint.json'
             scraper = self.scraper()
             scraper.fetch_snapshot.side_effect = [ValueError('Missing price'), {}]
-            self.assertEqual(self.run_batch(path, Mock(), scraper, pages=2), 1)
+            self.assertEqual(self.run_batch(path, Mock(), scraper, pages=2), 3)  # EXIT_PARTIAL
             state = json.loads(path.read_text())
             self.assertEqual(state['deferred'], ['https://example.com/1'])
             self.assertEqual(state['failures']['https://example.com/1']['error'], 'Missing price')
@@ -221,7 +221,7 @@ class CheckpointTests(unittest.TestCase):
             scraper.fetch_snapshot.side_effect = snapshot
             scraper.rows_from_snapshot.side_effect = [ValueError('Incomplete family'),
                 [{'source_parent_id': 'two', 'source_color_id': 'blue'}]]
-            self.assertEqual(self.run_batch(path, Mock(), scraper, pages=2), 1)
+            self.assertEqual(self.run_batch(path, Mock(), scraper, pages=2), 3)  # EXIT_PARTIAL
             self.assertEqual(scraper.fetch_snapshot.call_count, 2)
             self.assertEqual(json.loads(path.read_text())['completed'], ['https://example.com/2'])
 

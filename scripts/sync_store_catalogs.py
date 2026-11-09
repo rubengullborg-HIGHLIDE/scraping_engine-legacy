@@ -284,6 +284,7 @@ def reconcile_catalog(
     min_seen_ratio: float,
     seen_product_ids: Optional[set[int]] = None,
     observed_at: Optional[dict[int, str]] = None,
+    advance_misses: bool = True,
 ) -> CatalogStats:
     spec = STORE_SPECS[store_key]
     stats = CatalogStats(rows_before=len(rows_before), rows_after=len(rows_after))
@@ -309,6 +310,11 @@ def reconcile_catalog(
         if row.get("publication_status") in {"missing", "unavailable"}
     )
 
+    # Being seen in the catalogue always resets the miss counter, even when the
+    # daily refresh has written the row since. Only *reactivation* is skipped
+    # for rows whose newer inventory observation could have unpublished them.
+    seen_only_ids = set(seen_ids)
+
     # AXEL/qUINT publish explicit colour availability, including discontinued
     # colours still listed in the sitemap. Being seen must not reactivate these.
     active_seen_ids = {
@@ -327,10 +333,12 @@ def reconcile_catalog(
             before_by_id.get(row_id, {}).get("publication_status") in {"missing", "unavailable"}
             for row_id in active_seen_ids
         )
-        if unavailable_ids:
-            client.patch_ids(spec.table, sorted(unavailable_ids), {
-                "last_seen_in_catalog_at": checked_at, "consecutive_catalog_misses": 0,
-            })
+
+    bookkeeping_ids = seen_only_ids - active_seen_ids
+    if bookkeeping_ids:
+        client.patch_ids(spec.table, sorted(bookkeeping_ids), {
+            "last_seen_in_catalog_at": checked_at, "consecutive_catalog_misses": 0,
+        })
 
     if active_seen_ids:
         client.patch_ids(
@@ -345,6 +353,11 @@ def reconcile_catalog(
                 "consecutive_catalog_misses": 0,
             },
         )
+
+    if not advance_misses:
+        stats.missing_check_skipped = True
+        LOG.warning("%s: catalogue sweep was partial; seen rows updated, catalog misses not advanced.", store_key)
+        return stats
 
     seen_baseline = len(seen_ids & baseline_ids)
     seen_ratio = seen_baseline / len(baseline_ids) if baseline_ids else 1.0
@@ -366,11 +379,11 @@ def reconcile_catalog(
         row_id = int(row["id"])
         if row_id in seen_ids or row.get("publication_status") == "missing":
             continue
-        if seen_product_ids is not None and (
-            row_id not in before_ids or parse_timestamp(row.get('updated_at')) >= import_started_at
-        ):
-            # A different import/refresh observed this row while the cycle yielded.
-            # Do not turn that newer observation into an absence.
+        if seen_product_ids is not None and row_id not in before_ids:
+            # Inserted by another writer while the cycle yielded; it was never
+            # in this cycle's manifest, so it cannot be absent from it. Inventory
+            # refresh writes are not catalogue sightings: the resumable runner
+            # records sightings itself, under the import lock.
             continue
         misses = int(row.get("consecutive_catalog_misses") or 0) + 1
         if misses < miss_confirmations:

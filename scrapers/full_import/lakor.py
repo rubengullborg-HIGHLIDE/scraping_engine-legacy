@@ -12,6 +12,8 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
+from scrapers.source_http import SourcePayloadError
+
 
 BASE_URL = "https://www.lakor.dk"
 CLOTHING_COLLECTION_HANDLE = "all-clothing"
@@ -97,11 +99,18 @@ class LakorScraper:
     def _store_availability_from_html(html: str) -> dict[str, Any]:
         """Parse LAKOR's store availability fragment without inferring quantities."""
         soup = BeautifulSoup(html, "html.parser")
+        # LAKOR renders an empty <p class="product-availability"> when no shop
+        # has the size, and adds an .availability-text notice when one does.
+        # A response without the section is not an availability answer.
+        if not soup.select_one(".product-availability"):
+            raise SourcePayloadError("LAKOR store-availability section is missing; retaining previous stock")
         notice = soup.select_one(".availability-text")
         text = notice.get_text(" ", strip=True) if notice else ""
-        available = bool(re.search(r"\b(på lager|få tilbage|kun tilbage)\b", text, flags=re.IGNORECASE)) and not bool(
-            re.search(r"ikke\s+på\s+lager", text, flags=re.IGNORECASE)
-        )
+        negative = bool(re.search(r"ikke\s+på\s+lager|udsolgt", text, flags=re.IGNORECASE))
+        positive = bool(re.search(r"\b(på lager|få tilbage|kun tilbage)\b", text, flags=re.IGNORECASE))
+        if text and not (positive or negative):
+            raise SourcePayloadError(f"Unrecognised LAKOR availability notice: {text[:200]!r}")
+        available = positive and not negative
         low_stock = bool(re.search(r"\b(få tilbage|kun\s+få tilbage)\b", text, flags=re.IGNORECASE))
         stores: set[str] = set()
         if notice:
@@ -116,6 +125,8 @@ class LakorScraper:
             store_scope = "all_tracked_stores"
         elif available and stores:
             store_scope = "named_stores"
+        elif available:
+            raise SourcePayloadError(f"LAKOR availability notice names no known shop: {text[:200]!r}")
         else:
             store_scope = "none"
         return {
