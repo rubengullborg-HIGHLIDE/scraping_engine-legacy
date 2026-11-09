@@ -520,7 +520,16 @@ guarded collection pagination, `money` for both øre `.js` and kroner
 `hydrate` function. Rows key on the Shopify product id
 (`source_product_id`), never on a derived style id.
 
-### Takeoff Copenhagen Full Import
+### Takeoff Copenhagen Full Import (parked)
+
+**Status, November 9, 2026: parked; do not run or register.** The inventory
+endpoint below answers `401 Unauthorized` to anything but Takeoff's own
+website, and Shopify's public pickup-availability fragment reports "Pickup
+available" at both shops even for sizes with zero shop stock (Takeoff keeps
+sourceable sizes open), so there is no usable public Aarhus stock source. Do
+not imitate the website's origin to get past the 401. Resume only if Takeoff
+installs the HIGHLIDE Shopify app or grants access to the endpoint; the code
+and the empty `takeoff_products` table are kept for that.
 
 Location: `scrapers/full_import/takeoff.py`, `scripts/import_takeoff_products.py`,
 `supabase/migrations/20261109103103_takeoff_kingsqueens_products.sql`.
@@ -530,7 +539,7 @@ Discover from the `all` collection and keep product types `Sneakers`,
 `Preloved`; collectibles, accessories, headwear, watches and bags stay out.
 Preloved rows get `condition = 'preloved'`.
 
-Exact per-size stock for both shops comes from Takeoff's own public endpoint,
+Exact per-size stock for both shops comes from Takeoff's own endpoint,
 which its product page uses for the store-availability drawer:
 
 ```text
