@@ -235,7 +235,7 @@ class LakorScraper:
             "webshop_sizes": webshop_sizes,
             "local_inventory": inventory,
             "local_available": local_available,
-            "aarhus_available": True if aarhus["available"] else None,
+            "aarhus_available": bool(aarhus["available"]),
             "raw": {
                 "shopify_product_id": str(product_id),
                 "shopify_handle": handle,

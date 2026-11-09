@@ -46,6 +46,15 @@ class SupabaseCatalogClient:
         if supabase_key.count(".") == 2:
             headers["Authorization"] = f"Bearer {supabase_key}"
         self.session.headers.update(headers)
+        from requests.adapters import HTTPAdapter
+        from urllib3.util.retry import Retry
+
+        # Upserts use merge-duplicates, so retrying a POST is idempotent. A
+        # transient 5xx would otherwise fail the batch and defer it 24 hours.
+        retry = Retry(total=3, connect=3, read=3, status=3, backoff_factor=1.0,
+                      status_forcelist=(500, 502, 503, 504), allowed_methods=frozenset({"POST"}),
+                      raise_on_status=False)
+        self.session.mount("https://", HTTPAdapter(max_retries=retry))
 
     def upsert_products(
         self,
