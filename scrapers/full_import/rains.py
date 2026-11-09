@@ -15,6 +15,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from scrapers.inventory import require_nonempty, unique_sizes
+from scrapers.shopify import variant_prices
 from scrapers.source_http import SourcePayloadError
 
 
@@ -508,15 +509,7 @@ class RainsScraper:
 
     @classmethod
     def _color_prices(cls, variants: list[dict[str, Any]]) -> tuple[float | None, float | None]:
-        prices = [price for variant in variants if (price := cls._price(variant.get("price"))) is not None]
-        current_price = min(prices) if prices else None
-        compare_prices = [
-            price for variant in variants if (price := cls._price(variant.get("compare_at_price"))) is not None
-        ]
-        list_price = max(compare_prices) if compare_prices else None
-        if list_price is not None and current_price is not None and list_price <= current_price:
-            list_price = None
-        return current_price, list_price
+        return variant_prices(variants, cls._price)
 
     @classmethod
     def _color_images(

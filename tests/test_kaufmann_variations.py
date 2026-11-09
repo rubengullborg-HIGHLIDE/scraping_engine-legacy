@@ -52,6 +52,8 @@ def variation_payload(*, source_available: bool, webshop_stock: int, aarhus_stoc
                                     "available": aarhus_stock > 0,
                                     "stock": aarhus_stock,
                                 },
+                                "warehouse-nord": {"seoUrl": "storcenter-nord", "available": False, "stock": 0},
+                                "warehouse-c": {"seoUrl": "aarhus-c", "available": False, "stock": 0},
                             },
                         }
                     },
@@ -288,6 +290,16 @@ class KaufmannRefreshLifecycleTests(unittest.TestCase):
         staged, stats = refresh([product_row()], error=KaufmannVariationParseError("bad payload"))
         self.assertEqual([], staged.patches)
         self.assertEqual(1, stats.failed)
+
+
+class KaufmannIncompletePayloadTests(unittest.TestCase):
+    def test_available_colour_missing_an_aarhus_store_raises(self) -> None:
+        from scrapers.stores.kaufmann_variations import KaufmannVariationParseError, variation_rows_from_payload
+
+        payload = variation_payload(source_available=True, webshop_stock=1, aarhus_stock=1)
+        del payload["options"]["color"]["color-1"]["sizes"]["size-1"]["stock"]["warehouse-c"]
+        with self.assertRaises(KaufmannVariationParseError):
+            variation_rows_from_payload(payload, "parent-1", "https://www.kaufmann.dk/produkt/example")
 
 
 if __name__ == "__main__":

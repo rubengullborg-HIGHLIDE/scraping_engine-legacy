@@ -692,7 +692,12 @@ class SuitClubScraper:
 
     @classmethod
     def _variant_price(cls, variants: list[dict[str, Any]], key: str) -> float | None:
-        prices = [cls._price(variant.get(key)) for variant in variants]
+        # Product .js feeds give integer øre (99900); products.json gives
+        # kroner strings ("999.00").
+        prices = [
+            cls._price(variant.get(key), cents=isinstance(variant.get(key), int) and not isinstance(variant.get(key), bool))
+            for variant in variants
+        ]
         prices = [price for price in prices if price is not None]
         return min(prices) if prices else None
 

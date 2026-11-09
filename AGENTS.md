@@ -43,8 +43,9 @@ Do not mix these two paths. Full import can collect names, descriptions, images,
 │   └── 016_cejf_products.sql
 ├── scrapers/
 │   ├── base.py
+│   ├── inventory.py        # shared SourcePayloadError completeness checks
+│   ├── shopify.py          # shared Shopify helpers (variant_prices)
 │   ├── full_import/
-│   │   ├── base.py
 │   │   ├── cejf.py
 │   │   ├── kaufmann.py
 │   │   ├── lakor.py
@@ -53,8 +54,7 @@ Do not mix these two paths. Full import can collect names, descriptions, images,
 │   │   ├── shoechapter.py
 │   │   ├── skagen_clothing.py
 │   │   ├── stoy.py
-│   │   ├── suitclub.py
-│   │   └── st_valentin.py
+│   │   └── suitclub.py
 │   └── stores/
 │       ├── kaufmann.py
 │       └── st_valentin.py
